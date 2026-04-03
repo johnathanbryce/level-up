@@ -13,11 +13,14 @@ Daily algorithm practice running alongside all other sections. **Language split:
 
 ## Runner Setup
 
-**Python:** Uses `pytest-watch` (`ptw`) for live reloading. Run `ptw` in the `01-algorithms/python/` directory — tests auto-rerun on save. Each challenge should have a solution file and a test file (e.g., `two_sum.py` + `test_two_sum.py`). Install once: `pip install pytest-watch`.
+File watchers that rerun scripts on save. Output is via `print()` (Python) or `console.log()` (TypeScript) in the terminal. No test framework needed — just write code, save, see output.
 
-**TypeScript:** Uses `tsx --watch` for live reloading. Run `tsx --watch solution.ts` — re-runs on save. Install once: `npm install -g tsx`.
+**Python:** Uses `nodemon --exec python`. Install once: `npm install -g nodemon`.
+**TypeScript:** Uses `tsx watch`. Install once: `npm install -g tsx`.
 
-**First session setup:** If these aren't installed yet, guide John through the install — it's two commands and takes 30 seconds.
+**How to start:** Open the file you're working on in VSCode, hit `Cmd+Shift+P` → "Run Task" → pick "Algo: Python Watcher" or "Algo: TypeScript Watcher." The watcher runs in a dedicated terminal panel and reruns the file every time you save.
+
+**First session setup:** If `nodemon` or `tsx` aren't installed yet, guide John through the install — it's two commands (`npm install -g nodemon tsx`) and takes 30 seconds.
 
 ## Current Level
 

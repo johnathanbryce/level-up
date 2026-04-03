@@ -230,10 +230,11 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ### Algorithm Runner Setup (01-algorithms/)
 
-Lightweight, no project scaffolding needed:
+Lightweight, no project scaffolding needed. Just file watchers that rerun scripts on save — output via `print()` / `console.log()` in terminal.
 
-- **Python:** Use `pytest-watch` (`ptw`) for live reloading. John runs `ptw` in the terminal, writes tests + solution, saves the file, tests auto-rerun. Install: `pip install pytest-watch`.
-- **TypeScript:** Use `tsx --watch solution.ts` for live reloading. Save the file, it re-runs automatically. Install: `npm install -g tsx`.
+- **Python:** Uses `nodemon --exec python` for live reloading. Install once: `npm install -g nodemon`.
+- **TypeScript:** Uses `tsx watch` for live reloading. Install once: `npm install -g tsx`.
+- **VSCode Tasks:** Pre-configured in `.vscode/tasks.json`. Open the file you're working on, hit `Cmd+Shift+P` → "Run Task" → pick "Algo: Python Watcher" or "Algo: TypeScript Watcher." It watches the current file and reruns on save.
 - No venv, no package.json needed in the algorithms directory. These are standalone scripts.
 
 ### Project Directories (backend, AI, devops, etc.)
