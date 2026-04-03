@@ -117,7 +117,7 @@ Track patterns or concepts that consistently cause trouble. Revisit these period
 
 ## TypeScript Sessions
 
-~40% of algorithm sessions should be in TypeScript. Same patterns and progression as Python but adapted for TS idioms. Claude manages the rotation (roughly 2 out of every 5 sessions). Track TS progression separately — John may be at different skill levels in each language for the same pattern.
+~40% of algorithm sessions should be in JavaScript/TypeScript. **Write modern JavaScript syntax** — `const`, `let`, arrow functions, array methods, destructuring, etc. Do NOT focus on TypeScript-specific features (generics, interfaces, complex type annotations) during algorithm warmups. The goal is practicing logic and patterns in JS, not wrestling with the type system. Files can be `.ts` for the runner but the code itself should be plain modern JS. Claude manages the rotation (roughly 2 out of every 5 sessions). Track JS/TS progression separately — John may be at different skill levels in each language for the same pattern.
 
 | Date | Pattern | Problem | Result | Time | Notes |
 |------|---------|---------|--------|------|-------|

@@ -104,7 +104,7 @@ If John tries to end a session without updating, remind him that tracking must h
 ## Daily Session Structure
 
 **Block 1 — Algorithm Warmup (15-30 min)**
-Generate a coding challenge calibrated to current level. **Language split: ~60% Python, ~40% TypeScript.** Python is the primary skill to rebuild, but TypeScript fluency must be maintained. Claude manages the rotation — roughly 3 Python sessions for every 2 TypeScript sessions. John can override this on any given day. Start with fundamentals if early in progression, increase difficulty over time. Track patterns practiced and identify weak spots.
+Generate a coding challenge calibrated to current level. **Language split: ~60% Python, ~40% JavaScript/TypeScript.** Python is the primary skill to rebuild, but JS fluency must be maintained. JS sessions use modern JavaScript syntax (not TypeScript-specific features like generics or complex types — the focus is logic, not the type system). Claude manages the rotation — roughly 3 Python sessions for every 2 JS sessions. John can override this on any given day. Start with fundamentals if early in progression, increase difficulty over time. Track patterns practiced and identify weak spots.
 
 **Block 2 — Roadmap Topic (45-120 min)**
 Work through the current section's sub-topics. Mix conceptual learning with hands-on coding. Enforce the definition of done before advancing to the next section.
