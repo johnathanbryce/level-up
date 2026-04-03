@@ -12,13 +12,32 @@ Can whiteboard a system, explain where it breaks first, justify every component 
 
 ## Sub-Topics
 
+### Internet & Networking Fundamentals
+
+Foundational knowledge that interviewers expect you to explain cold. "What happens when you type a URL in your browser?" is a classic interview question that touches all of these.
+
+- [ ] How the internet works: IP addresses, TCP vs UDP, ports, packets (high-level, not networking-engineer depth)
+- [ ] What is DNS — how domain name resolution works, DNS caching, TTL, recursive vs iterative lookup
+- [ ] What is HTTP — request/response cycle as a protocol, headers, methods, versions (HTTP/1.1 vs HTTP/2 vs HTTP/3 awareness)
+- [ ] What is HTTPS/TLS — what TLS does, how the handshake works (conceptual), certificates, why it matters
+- [ ] Web request lifecycle (DNS → TCP → TLS → HTTP → server → response) and latency at each stage
+- [ ] WebSockets — what they are, how they differ from HTTP, persistent connections, when to use them (real-time chat, live updates)
+- [ ] SSH — what it is, how it works (conceptual), key-based auth vs password
+
 ### Core Concepts
 
-- [ ] Web request lifecycle (DNS → TCP → TLS → HTTP → server → response) and latency at each stage
 - [ ] Vertical vs horizontal scaling — when each applies, cost implications
 - [ ] CAP theorem — what it actually means in practice (not just the acronym)
 - [ ] Consistency models: strong vs eventual — real-world examples of each
 - [ ] Latency vs throughput — how to think about performance
+
+### Architectural Patterns
+
+- [ ] Monolithic architecture — what it is, why it's usually the right choice for startups and small teams
+- [ ] Microservices — what problems they solve, what problems they create (network complexity, data consistency, operational overhead), when to actually use them
+- [ ] Monolith vs microservices trade-offs — the honest decision framework (not "microservices are always better")
+- [ ] Serverless — what it means (FaaS, BaaS), trade-offs (cold starts, vendor lock-in, cost model, debugging difficulty)
+- [ ] Event-driven architecture — pub/sub pattern, event sourcing (conceptual), when it makes sense
 
 ### Caching
 

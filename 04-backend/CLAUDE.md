@@ -21,6 +21,7 @@ Can build a clean, well-structured REST API in both Python/FastAPI and Node/Expr
 - [ ] Pagination patterns (cursor-based vs offset)
 - [ ] API versioning strategies
 - [ ] Request validation and data sanitization
+- [ ] GraphQL — what it is, how it differs from REST (client specifies what data it wants), when you'd choose it vs REST (not a deep dive, conversational awareness only)
 
 ### Python/FastAPI Track (~60%)
 
@@ -64,6 +65,17 @@ Can build a clean, well-structured REST API in both Python/FastAPI and Node/Expr
 - [ ] Session storage with Redis
 - [ ] Rate limiting with Redis (token bucket implementation)
 - [ ] Measure: query with cache vs without cache (prove it helps)
+
+### Testing
+
+- [ ] Unit tests vs integration tests vs end-to-end tests — what each tests, when to use which
+- [ ] Test structure: arrange-act-assert (AAA) / given-when-then
+- [ ] What to test and what NOT to test (test behavior, not implementation details)
+- [ ] Mocking — what it is, when it's appropriate, when it's harmful (over-mocking hides real bugs)
+- [ ] Test coverage — what it means, why 100% coverage is a trap, what "good enough" looks like
+- [ ] Python: pytest basics (fixtures, parametrize, assert patterns)
+- [ ] Node: jest or vitest basics (describe, it, expect, mocking)
+- [ ] Write meaningful tests for both API projects (not just "it runs without crashing")
 
 ### Authentication & Authorization (Implementation)
 

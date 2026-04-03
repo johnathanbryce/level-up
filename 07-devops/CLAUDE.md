@@ -12,16 +12,39 @@ Can Dockerize any project, write a Docker Compose file for multi-service local d
 
 ## Sub-Topics
 
-### Docker Fundamentals
+### Docker: How It Works (conceptual — understand before building)
 
-- [ ] What Docker is and why it matters (reproducible environments, isolation)
-- [ ] Images vs containers — the mental model
-- [ ] Layers and caching: how Docker builds images, why order in Dockerfile matters
-- [ ] Writing a Dockerfile: FROM, COPY, RUN, CMD, EXPOSE, ENV
-- [ ] Multi-stage builds: reducing image size
-- [ ] .dockerignore: what to exclude and why
-- [ ] Docker networking: bridge networks, container-to-container communication
-- [ ] Docker volumes: persisting data, bind mounts vs named volumes
+- [ ] What Docker actually is — OS-level virtualization, not a VM. Containers share the host kernel.
+- [ ] Containers are stateless and ephemeral — when a container stops, everything inside it is gone. Why this matters.
+- [ ] Images vs containers — an image is a blueprint, a container is a running instance. You can run many containers from one image.
+- [ ] Layers and the union filesystem — each Dockerfile instruction creates a layer, layers are cached and shared. Why order matters for build speed.
+- [ ] The container lifecycle: create → start → run → stop → remove. What persists and what doesn't at each stage.
+- [ ] Docker vs VMs — when to use each, resource overhead differences
+
+### Docker: Data Persistence
+
+- [ ] Why data disappears when containers stop (stateless by design)
+- [ ] Volumes: Docker-managed persistent storage. Data survives container restarts and removals.
+- [ ] Bind mounts: map a host directory into the container. Used for local development (live code reloading).
+- [ ] Volumes vs bind mounts — when to use each (volumes for data, bind mounts for development)
+- [ ] tmpfs mounts — in-memory storage that never touches disk (for sensitive data)
+- [ ] Named volumes vs anonymous volumes
+
+### Docker: Networking
+
+- [ ] Bridge networks: default container networking, container-to-container communication
+- [ ] How containers find each other (DNS by container name within a network)
+- [ ] Port mapping: exposing container ports to the host (`-p 8080:80`)
+- [ ] Network isolation: why containers on different networks can't talk to each other by default
+
+### Docker: Building Images
+
+- [ ] Writing a Dockerfile: FROM, COPY, RUN, CMD, EXPOSE, ENV, WORKDIR, ARG
+- [ ] CMD vs ENTRYPOINT — what each does and when to use which
+- [ ] Multi-stage builds: reducing image size by separating build and runtime
+- [ ] .dockerignore: what to exclude and why (node_modules, .git, .env)
+- [ ] Image tagging and versioning strategies
+- [ ] Base image selection: why alpine vs slim vs full matters (size, security, compatibility)
 
 ### Docker Compose
 
