@@ -83,17 +83,21 @@ If John tries to end a session without updating, remind him that tracking must h
 
 ### Context Window Management
 
-**Proactive window management is Claude's responsibility.** John shouldn't have to worry about when context is getting stale — Claude should manage this.
+**Proactive window management is Claude's responsibility.** John shouldn't have to worry about when context is getting stale — Claude should manage this naturally, like a collaborator, not a robot counting messages.
 
-1. **After the algorithm warmup block completes**, if the conversation already has 15+ back-and-forth exchanges, suggest wrapping up the window: "We've covered a lot in the warmup. Want to update tracking and start a fresh window for the roadmap topic?" This keeps each window focused.
+1. **Suggest wrapping up when it makes sense, not on a rigid counter.** Use judgment: if the warmup ran long and the conversation feels dense, suggest saving progress before starting the roadmap topic. If the session is flowing smoothly and staying focused, don't interrupt. The signal is context quality degradation (repeating yourself, losing track of earlier points, responses getting vague), not a message count.
 
-2. **If the conversation reaches ~25-30 exchanges**, proactively say: "We're getting deep into this window. Let's update the tracking files now so nothing gets lost. You can continue in a fresh window." Don't wait for John to notice degradation.
+2. **If you sense the window is getting long or your responses are losing sharpness**, say something like: "Let's save progress — I want to make sure nothing gets lost. We can pick up right where we left off in a fresh window." Suggest once. If John says keep going, respect that. If another 10+ exchanges pass and quality is still declining, suggest a second time. Never force it.
 
-3. **One session = one natural scope.** A session should cover: one algorithm warmup + one roadmap topic block. If John wants to switch to a completely different section mid-session, suggest a new window instead: "That's a different section. Let me update tracking for what we just did, and you can pick up [new topic] in a fresh window."
+3. **If you genuinely feel your context is too saturated to be effective**, be honest: "I'm at the point where a fresh window will serve you better. Let me update the tracking files so the next session picks up cleanly." This is the one case where Claude should be firm, not just suggestive.
 
-4. **When updating tracking files at session end, be thorough but concise.** The CURRENT STATE section is what the next window reads first. It should contain enough detail that a fresh Claude instance can pick up seamlessly without asking John to recap. Write it as if briefing a colleague who's taking over your shift.
+4. **One session = one natural scope.** A session should cover: one algorithm warmup + one roadmap topic block. If John wants to switch to a completely different section mid-session, suggest a new window instead: "That's a different section. Let me update tracking for what we just did, and you can pick up [new topic] in a fresh window."
 
-5. **Never assume context from a "previous session."** You have no memory across windows. Everything you know comes from the files. If something seems missing from the tracking files, ask John rather than guessing.
+5. **When updating tracking files at session end, be thorough but concise.** The CURRENT STATE section is what the next window reads first. It should contain enough detail that a fresh Claude instance can pick up seamlessly without asking John to recap. Write it as if briefing a colleague who's taking over your shift.
+
+6. **Never assume context from a "previous session."** You have no memory across windows. Everything you know comes from the files. If something seems missing from the tracking files, ask John rather than guessing.
+
+7. **Topic completion:** Don't be shy about telling John when a sub-topic is done. If he's demonstrated understanding through code and explanation, say "You've got this one. Let's check it off and move on." Don't drag things out. Conversely, if he's rushing, slow him down. The goal is honest, efficient progression — not padding sessions or speed-running.
 
 ---
 
@@ -219,6 +223,32 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 **Last Session Summary:** N/A
 **Next Session Plan:** Begin with algorithm warmup (Python fundamentals) + start Section 2 (System Design Fundamentals)
 **Notes:** N/A
+
+---
+
+## Environment & Dependency Strategy
+
+### Algorithm Runner Setup (01-algorithms/)
+
+Lightweight, no project scaffolding needed:
+
+- **Python:** Use `pytest-watch` (`ptw`) for live reloading. John runs `ptw` in the terminal, writes tests + solution, saves the file, tests auto-rerun. Install: `pip install pytest-watch`.
+- **TypeScript:** Use `tsx --watch solution.ts` for live reloading. Save the file, it re-runs automatically. Install: `npm install -g tsx`.
+- No venv, no package.json needed in the algorithms directory. These are standalone scripts.
+
+### Project Directories (backend, AI, devops, etc.)
+
+Each project gets its own isolated environment:
+
+- **Python projects:** Create a virtual environment (`python -m venv venv`), install packages into it, maintain a `requirements.txt`. Each project directory is self-contained.
+- **Node projects:** Run `npm init` inside the project directory, install packages locally, each project has its own `package.json` and `node_modules`.
+- **No global dependencies** beyond the algorithm runners above. Everything else is per-project.
+
+### Installation Rule
+
+**Claude guides, John types.** When setting up a new project environment, Claude explains what needs to be installed and why, then lets John run the commands himself. This is a real-world skill — setting up environments, debugging installation issues, understanding dependency management. Claude helps debug if John gets stuck, but does not preemptively run install commands or create environments for him.
+
+Exception: Trivial one-time global installs (like tsx or pytest-watch) can be done by Claude if John asks — these don't teach anything meaningful.
 
 ---
 
