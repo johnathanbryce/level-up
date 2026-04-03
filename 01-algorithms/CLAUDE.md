@@ -55,25 +55,58 @@ File watchers that rerun scripts on save. Output is via `print()` (Python) or `c
 
 ## Python Phase 1: Fundamentals
 
-Focus on Python syntax and stdlib before diving into algorithm patterns. Each session starts with a small drill.
+Focus on Python syntax, stdlib, and core language features before diving into algorithm patterns. This is the foundation — don't rush it.
 
+**Data Types & Basic Operations**
 - [ ] String manipulation (slicing, reversal, common methods)
+- [ ] String formatting (f-strings)
 - [ ] List operations (append, extend, insert, pop, slicing)
 - [ ] List comprehensions (basic, conditional, nested)
 - [ ] Dictionary operations (creation, iteration, get, setdefault)
 - [ ] Dictionary comprehensions
 - [ ] Set operations (union, intersection, difference)
 - [ ] Tuple unpacking and usage patterns
+- [ ] range() and its uses (basic iteration, custom ranges, reverse ranges)
+
+**Functions & Scope**
+- [ ] Function definitions (def, return, multiple return values)
+- [ ] Default parameters and keyword arguments
+- [ ] `*args` and `**kwargs` — what they are, when to use them
+- [ ] Scope: local, global, nonlocal — how Python resolves variable names
+- [ ] Lambda functions
+- [ ] Higher-order functions (functions that take/return functions)
+
+**Standard Library Essentials**
 - [ ] collections module: Counter
 - [ ] collections module: defaultdict
 - [ ] collections module: deque
 - [ ] itertools basics (zip, enumerate, map, filter)
-- [ ] Lambda functions
-- [ ] String formatting (f-strings)
-- [ ] File I/O basics
-- [ ] Error handling (try/except patterns)
+- [ ] heapq basics (heappush, heappop, nlargest, nsmallest)
+- [ ] functools: lru_cache (memoization decorator — critical for dynamic programming later)
+
+**Error Handling & I/O**
+- [ ] Error handling (try/except/else/finally patterns)
+- [ ] Common exception types (ValueError, KeyError, TypeError, IndexError)
+- [ ] File I/O basics (open, read, write, context manager `with` statement)
+- [ ] Context managers — what the `with` statement does and why it matters
+
+**OOP Fundamentals (REQUIRED — prerequisite for Phase 2 data structures)**
+- [ ] Class definition: `class`, `__init__`, `self`
+- [ ] Instance methods, instance variables
+- [ ] Inheritance: single inheritance, `super()`
+- [ ] Dunder methods: `__str__`, `__repr__`, `__len__`, `__eq__`
+- [ ] Class methods (`@classmethod`) vs static methods (`@staticmethod`)
+- [ ] Property decorator (`@property`) — getters and setters
+- [ ] Build a simple class from scratch (e.g., Stack, Queue, or LinkedList node)
+
+**Intermediate Python Patterns**
+- [ ] Decorators — what they are, how to write a basic one, common built-in decorators
+- [ ] Generators and `yield` — lazy iteration, memory efficiency
+- [ ] Generator expressions vs list comprehensions (when to use which)
 - [ ] Type hints basics
-- [ ] range() and its uses (basic iteration, custom ranges, reverse ranges)
+- [ ] Ternary expressions (`x if condition else y`)
+- [ ] Walrus operator (`:=`) — basic awareness
+- [ ] Regular expressions basics (re.match, re.search, re.findall — enough to use, not master)
 
 **Status:** NOT STARTED
 
@@ -129,6 +162,20 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Higher-order functions (functions that take/return functions)
 - [ ] IIFE pattern (know what it is, even if rarely used now)
 
+**`this` Keyword (common interview topic)**
+- [ ] `this` in regular functions vs arrow functions
+- [ ] `this` in object methods
+- [ ] Explicit binding: `call()`, `apply()`, `bind()` — what each does and when to use
+- [ ] `this` in event handlers and callbacks (and why arrow functions solve the problem)
+- [ ] Can you predict what `this` refers to in a given code snippet? (interview question format)
+
+**Prototypes & Inheritance (how JS actually works under the hood)**
+- [ ] Prototype chain — what happens when you access a property that doesn't exist on an object
+- [ ] `Object.create()` and prototypal inheritance
+- [ ] How `class` syntax maps to prototypes (classes are syntactic sugar)
+- [ ] `instanceof` and how it works
+- [ ] Why this matters: understanding what's actually happening when you write `class Foo extends Bar`
+
 **Modern JS Patterns**
 - [ ] Destructuring in function parameters (`function({ name, age })`)
 - [ ] Spread/rest in different contexts (arrays, objects, function args)
@@ -136,6 +183,8 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] `for...of` vs `for...in` — which iterates what
 - [ ] Short-circuit evaluation patterns (`&&`, `||`, `??`)
 - [ ] Ternary chaining and when it becomes unreadable
+- [ ] Iterators and generators (`function*`, `yield`, `Symbol.iterator`) — basic awareness
+- [ ] Modules: `import`/`export` vs `require()`/`module.exports` — know the difference
 
 **Async Fundamentals**
 - [ ] Promises: creation, `.then`, `.catch`, `.finally`
@@ -143,6 +192,11 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] `async`/`await` — syntactic sugar over Promises
 - [ ] Error handling with try/catch in async functions
 - [ ] Event loop basics — can you explain why `setTimeout(fn, 0)` doesn't run immediately?
+
+**Error Handling**
+- [ ] try/catch/finally patterns
+- [ ] Custom error types (`class AppError extends Error`)
+- [ ] Error handling in async code (try/catch with await vs .catch() on promises)
 
 **Status:** NOT STARTED
 
