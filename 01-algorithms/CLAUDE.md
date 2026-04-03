@@ -11,6 +11,18 @@ Daily algorithm practice running alongside all other sections. **Language split:
 3. Develop ability to solve medium-difficulty problems independently within 25 minutes
 4. Build comfort with timed problem-solving under interview conditions
 
+## Challenge Delivery Rules
+
+When presenting an algorithm challenge, Claude should:
+
+1. **If the challenge involves a concept John hasn't seen yet in this system** (check the Phase checklists and Problem Logs), give a brief contextual intro — 2-3 sentences explaining what the concept is, why it matters, and a quick example of how it works. Then present the challenge. This is NOT a lecture — just enough context to attempt the problem without Googling.
+
+2. **If the challenge involves a concept John has already covered and demonstrated understanding of**, skip the intro. Just present the problem. He should recognize the pattern.
+
+3. **If John fumbles a concept he's supposedly already learned**, that's a signal. Flag it as a weak spot, note it in the Weak Spots section, and schedule a revisit in a future session.
+
+This creates a natural reinforcement loop: first encounter = explanation + practice, subsequent encounters = just practice, failure on a known concept = flagged for review.
+
 ## Runner Setup
 
 File watchers that rerun scripts on save. Output is via `print()` (Python) or `console.log()` (TypeScript) in the terminal. No test framework needed — just write code, save, see output.
