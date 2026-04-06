@@ -108,13 +108,14 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 - [ ] Walrus operator (`:=`) — basic awareness
 - [ ] Regular expressions basics (re.match, re.search, re.findall — enough to use, not master)
 
-**Status:** NOT STARTED
+**Status:** IN PROGRESS — started string manipulation
 
 ### Python Problem Log
 
 | Date | Problem Description | Pattern | Result | Time | Notes |
 |------|-------------------|---------|--------|------|-------|
-| — | — | — | — | — | — |
+| 2026-04-06 | String compression (consecutive char counting) | String iteration, state tracking, f-strings | Solved with hints | ~15-20 min | Needed guidance on: tracking state across loop, appending on group change vs every iteration, flushing last group after loop. Got there with progressive hints. |
+| 2026-04-06 | First non-repeating character | Hash map / dictionary, two-pass pattern | Solved with minor hint | ~5-10 min | Faster than first challenge. Tripped on if/else logic (both branches firing). Knows .items() iteration and break. Hasn't learned Counter yet. |
 
 ---
 
@@ -269,4 +270,4 @@ Append a brief entry after each algorithm session.
 
 | Date | Language | What Was Practiced | Assessment | Next Focus |
 |------|---------|-------------------|------------|------------|
-| — | — | — | — | — |
+| 2026-04-06 | Python | String compression + first non-repeating char | Compression needed progressive hints. Hash map problem solved faster with only minor guidance. Improving within session. | Continue Python Phase 1 — list operations, comprehensions |

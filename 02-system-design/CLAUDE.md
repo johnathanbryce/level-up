@@ -16,13 +16,13 @@ Can whiteboard a system, explain where it breaks first, justify every component 
 
 Foundational knowledge that interviewers expect you to explain cold. "What happens when you type a URL in your browser?" is a classic interview question that touches all of these.
 
-- [ ] How the internet works: IP addresses, TCP vs UDP, ports, packets (high-level, not networking-engineer depth)
-- [ ] What is DNS — how domain name resolution works, DNS caching, TTL, recursive vs iterative lookup
-- [ ] What is HTTP — request/response cycle as a protocol, headers, methods, versions (HTTP/1.1 vs HTTP/2 vs HTTP/3 awareness)
-- [ ] What is HTTPS/TLS — what TLS does, how the handshake works (conceptual), certificates, why it matters
-- [ ] Web request lifecycle (DNS → TCP → TLS → HTTP → server → response) and latency at each stage
-- [ ] WebSockets — what they are, how they differ from HTTP, persistent connections, when to use them (real-time chat, live updates)
-- [ ] SSH — what it is, how it works (conceptual), key-based auth vs password
+- [x] How the internet works: IP addresses, TCP vs UDP, ports, packets (high-level, not networking-engineer depth)
+- [x] What is DNS — how domain name resolution works, DNS caching, TTL, recursive vs iterative lookup
+- [x] What is HTTP — request/response cycle as a protocol, headers, methods, versions (HTTP/1.1 vs HTTP/2 vs HTTP/3 awareness)
+- [x] What is HTTPS/TLS — what TLS does, how the handshake works (conceptual), certificates, why it matters
+- [x] Web request lifecycle (DNS → TCP → TLS → HTTP → server → response) and latency at each stage
+- [x] WebSockets — what they are, how they differ from HTTP, persistent connections, when to use them (real-time chat, live updates)
+- [x] SSH — what it is, how it works (conceptual), key-based auth vs password
 
 ### Back-of-Envelope Estimation
 
@@ -134,7 +134,7 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 
 | Date | Topics Covered | Assessment | Next Focus |
 |------|---------------|------------|------------|
-| — | — | — | — |
+| 2026-04-06 | Internet & Networking Fundamentals (all sub-topics) | Solid grasp. Had working knowledge of HTTP from job experience. DNS chain, TLS handshake, and request lifecycle learned fresh — passed 5/5 quiz cold. | Back-of-Envelope Estimation |
 
 ---
 

@@ -217,12 +217,12 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** Not yet started
-**Current Section:** None — first session pending
-**Current Sub-topic:** N/A
-**Last Session Summary:** N/A
-**Next Session Plan:** Begin with algorithm warmup (Python fundamentals) + start Section 2 (System Design Fundamentals)
-**Notes:** N/A
+**Last Updated:** 2026-04-06
+**Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design Fundamentals)
+**Current Sub-topic:** Algorithms: Python Phase 1 (string manipulation started). System Design: Internet & Networking Fundamentals COMPLETE.
+**Last Session Summary:** First session. Two Python challenges: string compression (~15-20 min, progressive hints needed) and first non-repeating character (~5-10 min, minor hint only — noticeably faster). Covered all Internet & Networking Fundamentals — passed 5/5 quiz cold.
+**Next Session Plan:** Algorithm warmup (Python fundamentals, continue Phase 1 — list operations or comprehensions) + Section 2: Back-of-Envelope Estimation
+**Notes:** John takes notes in per-topic .md files under each section's notes/ folder (e.g. 02-system-design/notes/networking.md). Python writing fluency is the main skill to rebuild — comprehension is ahead of production. HTTP knowledge was strongest (from work experience), DNS/TLS were new. John prefers not to go too deep on low-level networking (TCP/UDP internals) — keep it practical.
 
 ---
 
