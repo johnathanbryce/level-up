@@ -12,6 +12,26 @@ Can Dockerize any project, write a Docker Compose file for multi-service local d
 
 ## Sub-Topics
 
+### Shell Scripting Basics
+
+You'll be reading and writing shell commands in Dockerfiles, CI/CD pipelines, and debugging containers. This isn't "become a bash wizard" — it's "stop being confused by the glue that holds DevOps together."
+
+- [ ] Variables, quoting, and string interpolation (`$VAR`, `"$VAR"`, `'$VAR'` — know the difference)
+- [ ] Conditionals: `if/then/else/fi`, test operators (`-f`, `-d`, `-z`, `-n`, `-eq`), `[[ ]]` vs `[ ]`
+- [ ] Loops: `for`, `while`, iterating over files and command output
+- [ ] Exit codes: `$?`, `set -e` (exit on error), `set -o pipefail`
+- [ ] Piping and redirection: `|`, `>`, `>>`, `2>&1`, `/dev/null`
+- [ ] Essential commands: `grep` (search), `awk` (extract columns), `sed` (find/replace), `xargs` (pipe to args), `find` (locate files)
+- [ ] Reading and writing scripts that appear in Dockerfiles (chained `RUN` commands) and GitHub Actions (multi-line `run:` blocks)
+- [ ] Environment variables: `export`, `.env` files, `source`, how they propagate to child processes
+
+#### Shell Scripting Challenges
+
+- [ ] Write a script that checks if a required environment variable is set, exits with an error if not
+- [ ] Write a script that finds all `.log` files older than 7 days and deletes them
+- [ ] Read and explain a real-world Dockerfile `RUN` block with chained commands (`apt-get update && apt-get install -y ... && rm -rf /var/lib/apt/lists/*`)
+- [ ] Write a health-check script that curls an endpoint and exits 0/1 based on response code
+
 ### Docker: How It Works (conceptual — understand before building)
 
 - [ ] What Docker actually is — OS-level virtualization, not a VM. Containers share the host kernel.
@@ -45,6 +65,8 @@ Can Dockerize any project, write a Docker Compose file for multi-service local d
 - [ ] .dockerignore: what to exclude and why (node_modules, .git, .env)
 - [ ] Image tagging and versioning strategies
 - [ ] Base image selection: why alpine vs slim vs full matters (size, security, compatibility)
+- [ ] Container security basics: run as non-root user (USER directive), don't use `latest` tag in production (pin versions), scan images for vulnerabilities (conceptual — know it exists, not tool-specific)
+- [ ] Principle of least privilege in containers: only install what you need, minimize attack surface, don't run as root
 
 ### Docker Compose
 
@@ -64,8 +86,18 @@ Can Dockerize any project, write a Docker Compose file for multi-service local d
 - [ ] Test stage: run unit tests, integration tests
 - [ ] Deploy stage: push Docker image, deploy to environment (simulated)
 - [ ] Secrets management in CI/CD (GitHub Secrets)
+- [ ] Secrets management concepts: why secrets in code/images/env vars are dangerous, awareness of tools (HashiCorp Vault, AWS Secrets Manager, Doppler), the pattern of "never commit secrets, inject at runtime"
+- [ ] Common secrets anti-patterns: hardcoded API keys, secrets in Docker images, `.env` files committed to git
 - [ ] Build a complete pipeline for the backend project
 - [ ] Branch protection and required checks (conceptual)
+
+### Monitoring & Logging in Containers
+
+Light coverage — ties into Observability in System Design (Section 2). Focus is on what it looks like in a containerized setup, not tool mastery.
+
+- [ ] Structured logging in containers: why JSON logs matter, how `docker logs` works, the problem with logging to files inside containers
+- [ ] Log aggregation concepts: how logs get from containers to a centralized system (stdout → log driver → aggregator), awareness of ELK/Loki/CloudWatch (know they exist, not how to configure them)
+- [ ] Basic health monitoring: Docker healthchecks, liveness vs readiness (conceptual — what they check and why), knowing what metrics matter (CPU, memory, restart count, response time)
 
 ### Deployment Strategies
 

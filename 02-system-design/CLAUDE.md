@@ -24,6 +24,16 @@ Foundational knowledge that interviewers expect you to explain cold. "What happe
 - [ ] WebSockets — what they are, how they differ from HTTP, persistent connections, when to use them (real-time chat, live updates)
 - [ ] SSH — what it is, how it works (conceptual), key-based auth vs password
 
+### Back-of-Envelope Estimation
+
+This comes up in every system design interview. You'll be asked to estimate scale before designing anything. The goal is quick, reasonable napkin math — not precision.
+
+- [ ] Key latency numbers: memory access (~100ns), SSD read (~100μs), network round-trip (~1ms), disk seek (~10ms) — order of magnitude, not exact
+- [ ] Throughput estimation: QPS (queries per second) from daily active users → requests per day → divide by 86,400 → peak = 2-3x average
+- [ ] Storage estimation: number of records × size per record × retention period. Know that 1 million rows × 1KB = ~1GB.
+- [ ] Bandwidth estimation: QPS × average response size
+- [ ] Practice: estimate storage and QPS for each case study (URL shortener, chat system, etc.) before designing
+
 ### Core Concepts
 
 - [ ] Vertical vs horizontal scaling — when each applies, cost implications
@@ -73,7 +83,18 @@ Foundational knowledge that interviewers expect you to explain cold. "What happe
 - [ ] Database replication — primary/replica, read replicas
 - [ ] Database sharding — horizontal partitioning, shard keys, trade-offs
 - [ ] Connection pooling — why it matters, how it works
+- [ ] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
 - [ ] Polyglot persistence — using the right DB for each job
+
+### Search Engines & Full-Text Search
+
+Relevant to current job (Elasticsearch) and ties into hybrid search in Section 5 (AI Production). Conceptual understanding + awareness of when to reach for a search engine vs other tools.
+
+- [ ] What full-text search is — inverted indexes (conceptual: word → list of documents containing it), tokenization, analyzers
+- [ ] When to use a search engine vs database LIKE/ILIKE queries vs vector search — decision framework
+- [ ] Elasticsearch/OpenSearch awareness: what it is, common use cases (search, log aggregation, analytics), basic concepts (index, document, mapping, query DSL at a high level)
+- [ ] How search fits into a system: search as a read-optimized view, syncing data from primary DB to search index, eventual consistency trade-off
+- [ ] Relevance scoring basics: TF-IDF / BM25 (conceptual — know what they optimize for, not the math)
 
 ### Resilience & Reliability
 
