@@ -116,6 +116,8 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 |------|-------------------|---------|--------|------|-------|
 | 2026-04-06 | String compression (consecutive char counting) | String iteration, state tracking, f-strings | Solved with hints | ~15-20 min | Needed guidance on: tracking state across loop, appending on group change vs every iteration, flushing last group after loop. Got there with progressive hints. |
 | 2026-04-06 | First non-repeating character | Hash map / dictionary, two-pass pattern | Solved with minor hint | ~5-10 min | Faster than first challenge. Tripped on if/else logic (both branches firing). Knows .items() iteration and break. Hasn't learned Counter yet. |
+| 2026-04-07 | Running sum of 1d array | List iteration, accumulator pattern | Solved with hints | ~15 min | Initial attempt overcomplicated: declared accumulator inside loop, added a meaningless `if nums[0]:` branch. Once reframed as "two-line loop body: update total, append total" it clicked. Wrong return type annotation (`-> int`) and returned `result[-1]` instead of full list. Briefly discussed why list comprehensions don't fit stateful accumulation; saw `itertools.accumulate` as the idiomatic stdlib option. |
+| 2026-04-07 | Move zeros (in-place) | Array mutation, intro to two pointers | Naive solved, two-pointer deferred | ~15 min | Naive: built two buckets and concatenated. Forgot to mutate `nums` — important Python gotcha covered: `nums = result` rebinds local name vs `nums[:] = result` mutates in place. Two-pointer pattern (same-direction writer/reader) introduced and walked through with a trace, but John felt it was too much for current phase. Bookmarked for Phase 2 — do not grind now. |
 
 ---
 
@@ -262,7 +264,9 @@ Timed problems (25 min solve + 5 min review). Mix of all patterns. Both language
 
 Track patterns or concepts that consistently cause trouble in either language. Revisit these periodically.
 
-- (none yet)
+- **Two pointers (same-direction writer/reader):** Introduced 2026-04-07 on Move Zeros. Concept felt overwhelming. Bookmarked — revisit when Phase 2 Tier 1 begins formally. Naive approach is fine for now.
+- **In-place vs rebinding in Python:** `nums = result` (rebind, caller untouched) vs `nums[:] = result` (mutate). Watch for this in any in-place problem.
+- **Accumulator pattern:** Tendency to overcomplicate stateful loops with unnecessary conditionals. Reinforce: declare accumulator outside loop, update inside, that's it.
 
 ## Session Log
 
@@ -271,3 +275,4 @@ Append a brief entry after each algorithm session.
 | Date | Language | What Was Practiced | Assessment | Next Focus |
 |------|---------|-------------------|------------|------------|
 | 2026-04-06 | Python | String compression + first non-repeating char | Compression needed progressive hints. Hash map problem solved faster with only minor guidance. Improving within session. | Continue Python Phase 1 — list operations, comprehensions |
+| 2026-04-07 | Python | Running sum + Move zeros (naive) | Running sum: overcomplicated then cleaned up. Move zeros: naive worked, two pointers introduced but too early — bookmarked. Solid forward progress on Phase 1 list ops. | Tomorrow: JS warmup first (Phase 1 start) then a Python warmup |
