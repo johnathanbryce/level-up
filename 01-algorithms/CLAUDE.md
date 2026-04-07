@@ -211,7 +211,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 
 | Date | Problem Description | Pattern | Result | Time | Notes |
 |------|-------------------|---------|--------|------|-------|
-| — | — | — | — | — | — |
+| 2026-04-07 | Reverse a string (two ways: `.reverse()` one-liner + manual loop) | String iteration, JS fundamentals | Solved both ✓ | ~10 min | First attempt had a bogus 1-char guard returning a message string instead of the char (contract violation) — fixed. Solid grasp of spread + reverse + join. Concept check: knew `.reverse()` mutates ✓, misunderstood `.join("")` as "removing spaces" — corrected. Manual loop was clean. Taught two senior-flavor concepts: (1) `[...str]` vs `str.split("")` Unicode difference, (2) string concatenation in a loop is O(n²) due to string immutability — push to array + join at end for O(n). Both worth remembering. |
 
 ---
 
@@ -280,3 +280,4 @@ Append a brief entry after each algorithm session.
 |------|---------|-------------------|------------|------------|
 | 2026-04-06 | Python | String compression + first non-repeating char | Compression needed progressive hints. Hash map problem solved faster with only minor guidance. Improving within session. | Continue Python Phase 1 — list operations, comprehensions |
 | 2026-04-07 | Python | Running sum + Move zeros (naive) | Running sum: overcomplicated then cleaned up. Move zeros: naive worked, two pointers introduced but too early — bookmarked. Solid forward progress on Phase 1 list ops. | Tomorrow: JS warmup first (Phase 1 start) then a Python warmup |
+| 2026-04-07 | JavaScript | Reverse string (one-liner + manual loop) | Solid first JS session. Idiomatic spread/reverse/join one-liner came naturally. Concept gaps: thought `.join("")` removes spaces (corrected). Senior concepts introduced: spread vs split for Unicode, O(n²) string concatenation. | Continue JS Phase 1 — strings or arrays |
