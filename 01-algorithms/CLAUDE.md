@@ -4,6 +4,10 @@
 
 Daily algorithm practice running alongside all other sections. **Language split: ~60% Python, ~40% JavaScript.** Python is the primary skill to rebuild, but JS fluency must stay sharp. Claude manages the rotation — roughly 3 Python sessions for every 2 JS sessions. John can override on any given day. Claude generates challenges calibrated to current level — no strict LeetCode list, but covers the same essential patterns. Claude tracks difficulty and progression per language independently.
 
+## Scope Boundary (IMPORTANT)
+
+Algorithms are **pure logic warmups**. They do NOT morph into framework / API / React challenges. The whole point is language fluency without framework noise — switching them to "build a FastAPI endpoint" defeats the warmup purpose. Framework-style interview challenges live in `10-interview-prep/` and run as the optional Block 3 of a session, not in place of the algo warmup.
+
 ## Where to Begin
 
 **Day 1:** Start with Python Phase 1 (Python Fundamentals). This is the priority language.

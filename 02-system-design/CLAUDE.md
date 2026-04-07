@@ -8,6 +8,21 @@ The foundational section that everything else builds on. Covers core infrastruct
 
 Can whiteboard a system, explain where it breaks first, justify every component choice, and discuss trade-offs without fumbling. Can answer "why not X instead?" for any architectural decision.
 
+## Assignment Convention (CRITICAL — this section's biggest learning risk)
+
+System design is the most concept-heavy, vocabulary-heavy section in the roadmap. The risk: Claude explains a topic for 30 minutes, John says "got it," we move on, and nothing sticks. **The fix: every sub-topic ends with a "now apply it" beat. No exceptions.**
+
+For each sub-topic, the closing assignment must be one of:
+1. **Written explain-back (1 paragraph)** — John writes the concept in his own words as if onboarding a junior. Goes into the section's `notes/` folder.
+2. **Diagramming exercise** — Sketch the system or component, label parts, identify failure modes. Markdown or hand-sketch saved to `notes/`.
+3. **Applied scenario** — Claude poses a concrete situation requiring John to use the concept to make a design decision. Walked through verbally or in writing.
+4. **Mini code exercise** — When the topic has a natural code touchpoint (rate limiter algorithm, consistent hashing, bloom filter), implement it in 30-60 min.
+5. **Block 3 interview challenge** — When applicable, pull a question from `10-interview-prep/system-design-rounds/` or another sub-folder. Optional, not required.
+
+**Pure explanation followed by "got it, next" is the anti-pattern to avoid in this section above all others.**
+
+End-of-section warm-down quiz is mandatory before marking the section complete (5-7 mixed-format questions, log result here).
+
 ---
 
 ## Sub-Topics

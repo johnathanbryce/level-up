@@ -88,15 +88,21 @@ Can build a clean, well-structured REST API in both Python/FastAPI and Node/Expr
 
 ## Projects
 
+**Framing:** "The big project" in this section is **not a separate effort** from the sub-topic learning — it's the *vehicle* for it. Each sub-topic's hands-on assignment becomes "add this capability to the project." Schema design → design the project's schema. Indexing → analyze and optimize the project's slow queries. Redis caching → add caching to the project's hot endpoints. JWT → implement auth on the project. Etc. By the end of the section, the project exists as the accumulated artifact of every sub-topic done in context.
+
+This is the *best* form a learning project can take: a deliberate artifact that compounds across sub-topics, not a real product to ship. Pick something realistic but small in scope when the section starts.
+
+**Block 3 interview mini-challenges:** When a sub-topic has a clean interview-question equivalent, pull from `10-interview-prep/fastapi/` or `10-interview-prep/postgres-sql/` as the optional third block. Not every session — only when there's a natural fit. See `10-interview-prep/CLAUDE.md` for usage.
+
 ### FastAPI Project: [Name TBD]
 
-**Description:** TBD — a realistic API with 3-4 related resources, auth, caching, proper error handling.
+**Description:** TBD — pick at section start. Realistic API with 3-4 related resources, auth, caching, proper error handling. Built incrementally as each sub-topic is learned.
 **Status:** NOT STARTED
 **Notes:**
 
 ### Express Project: [Name TBD]
 
-**Description:** TBD — equivalent patterns to FastAPI project, different stack.
+**Description:** TBD — equivalent patterns to FastAPI project, different stack. Same vehicle-for-learning framing.
 **Status:** NOT STARTED
 **Notes:**
 

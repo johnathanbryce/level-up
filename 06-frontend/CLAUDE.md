@@ -54,6 +54,10 @@ Can explain React's rendering model to an interviewer, identify performance bott
 - [ ] Image optimization and lazy loading
 - [ ] Bundle analysis: identifying what's bloating the bundle
 
+### Block 3 Interview Mini-Challenges
+
+When a sub-topic has a clean interview-question equivalent, pull from `10-interview-prep/react/` as the optional third block of a session. Not every session — only when there's a natural fit. The React interview prep folder is logic-focused (hooks, performance, state, async) — no styling, no Next.js routing. See `10-interview-prep/CLAUDE.md` for usage.
+
 ### Coding Challenges (Build from Scratch, No AI)
 
 - [ ] Debounced search input with API call
