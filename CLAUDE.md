@@ -217,12 +217,12 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-04-06
+**Last Updated:** 2026-04-07
 **Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design Fundamentals)
-**Current Sub-topic:** Algorithms: Python Phase 1 (string manipulation started). System Design: Internet & Networking Fundamentals COMPLETE.
-**Last Session Summary:** First session. Two Python challenges: string compression (~15-20 min, progressive hints needed) and first non-repeating character (~5-10 min, minor hint only — noticeably faster). Covered all Internet & Networking Fundamentals — passed 5/5 quiz cold.
-**Next Session Plan:** Algorithm warmup (Python fundamentals, continue Phase 1 — list operations or comprehensions) + Section 2: Back-of-Envelope Estimation
-**Notes:** John takes notes in per-topic .md files under each section's notes/ folder (e.g. 02-system-design/notes/networking.md). Python writing fluency is the main skill to rebuild — comprehension is ahead of production. HTTP knowledge was strongest (from work experience), DNS/TLS were new. John prefers not to go too deep on low-level networking (TCP/UDP internals) — keep it practical.
+**Current Sub-topic:** Algorithms: Python Phase 1 (list operations). System Design: Back-of-Envelope Estimation COMPLETE (lean version). Next: Request Lifecycle.
+**Last Session Summary:** Two Python algos — Running Sum (solved with hints, ~15 min; overcomplicated initially with bogus conditional, learned accumulator pattern + slice assignment gotcha) and Move Zeros (naive solved; two-pointer pattern introduced but felt too early — bookmarked for Phase 2). System Design: full lean coverage of Back-of-Envelope Estimation (QPS, peak vs avg, read/write split, storage, full interview script). John pushed back on the topic initially (had never heard of QPS); web research validated it as real-but-optional, agreed on lean scope. Strong architectural intuitions surfaced unprompted: cache invalidation, CDN for image workloads, hot/cold storage tiering. Weak spot: arithmetic accuracy — undercounted total QPS by ~10x on the final Twitter exercise (12K vs actual 102K), which led to undersized infra recommendations. Reasoning is ahead of math execution. Graded B.
+**Next Session Plan:** JS warmup FIRST (Phase 1 start — pick a JS fundamentals problem), then a Python warmup, then Section 2: Request Lifecycle (what happens when you type a URL → enter, end-to-end through the stack).
+**Notes:** John takes notes in per-topic .md files under each section's notes/ folder. Python writing fluency is the main skill to rebuild — comprehension is ahead of production. Prefers lean/practical coverage of system design topics; pushes back when something feels theoretical and asks for justification — this is healthy. Honor that pattern: research, give honest answers, adjust scope rather than insisting. Two-pointer pattern is bookmarked for Phase 2 — do not push it before then. Reinforce arithmetic care on any future estimation work (write each step, sanity-check final number against inputs). Strong architectural instincts deserve explicit naming when they appear so the vocabulary sticks.
 
 ---
 

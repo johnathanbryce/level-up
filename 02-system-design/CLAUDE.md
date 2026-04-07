@@ -28,11 +28,12 @@ Foundational knowledge that interviewers expect you to explain cold. "What happe
 
 This comes up in every system design interview. You'll be asked to estimate scale before designing anything. The goal is quick, reasonable napkin math — not precision.
 
-- [ ] Key latency numbers: memory access (~100ns), SSD read (~100μs), network round-trip (~1ms), disk seek (~10ms) — order of magnitude, not exact
-- [ ] Throughput estimation: QPS (queries per second) from daily active users → requests per day → divide by 86,400 → peak = 2-3x average
-- [ ] Storage estimation: number of records × size per record × retention period. Know that 1 million rows × 1KB = ~1GB.
-- [ ] Bandwidth estimation: QPS × average response size
-- [ ] Practice: estimate storage and QPS for each case study (URL shortener, chat system, etc.) before designing
+- [~] Key latency numbers — DEFERRED. Not worth memorizing at mid-level. Skip unless prepping for senior+ rounds.
+- [x] Throughput estimation: QPS from DAU × actions ÷ ~100K seconds, peak = 2-3x average
+- [x] Storage estimation: items/day × size/item, then ×400 for yearly. Always convert up to GB/TB before drawing conclusions.
+- [~] Bandwidth estimation — covered conceptually (QPS × response size). Skipped explicit practice; trivial enough to compute on demand.
+- [x] Reads vs writes split + ratio → architectural justification (caching, replicas)
+- [x] Full interview script practiced end-to-end on a Twitter-like prompt
 
 ### Core Concepts
 
@@ -135,9 +136,12 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 | Date | Topics Covered | Assessment | Next Focus |
 |------|---------------|------------|------------|
 | 2026-04-06 | Internet & Networking Fundamentals (all sub-topics) | Solid grasp. Had working knowledge of HTTP from job experience. DNS chain, TLS handshake, and request lifecycle learned fresh — passed 5/5 quiz cold. | Back-of-Envelope Estimation |
+| 2026-04-07 | Back-of-Envelope Estimation (lean version). QPS, peak vs avg, read/write split, storage, full interview script. | Pushed back hard initially — had never heard of QPS. Web research confirmed it's a real but optional interview topic; agreed on lean coverage. Worked through 5 concepts with progressive examples. Strong intuition on architectural translation (cache invalidation, hot/cold storage tiering, read-heavy → cache + CDN insight unprompted). Weak spot: arithmetic accuracy under pressure — final Twitter exercise undercounted total QPS by ~10x (12K instead of 102K), which led to undersized infra recommendations. Reasoning is ahead of math execution. Graded B. | Request Lifecycle |
 
 ---
 
 ## Notes & Weak Spots
 
-- (none yet)
+- **Arithmetic under pressure:** John's reasoning about scale is genuinely strong, but he dropped a 10x error on the final estimation exercise (computed 12K QPS instead of 102K). The fix is mechanical: write each step, sanity-check the final number against the inputs (if reads are 50x writes and writes are 2K, reads should be 100K). Reinforce on any future estimation question that comes up — he should slow down on the math, not the reasoning.
+- **Strong instincts to reinforce:** Stumbled into cache invalidation pattern unprompted. Suggested CDN for image-heavy workload unprompted. Suggested hot/cold storage tiering unprompted. These are all senior-level intuitions — when they appear, name them explicitly so he learns the vocabulary that goes with the instinct.
+- **Pushback culture:** John pushed back when introduced to estimation (had never heard of QPS), asked for web research to validate the topic, and we negotiated a lean version. This is good — he's not just absorbing whatever's in front of him. Honor this pattern: if he pushes back on a topic, do the research, give an honest answer, and adjust scope rather than insisting.
