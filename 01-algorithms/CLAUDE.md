@@ -66,7 +66,7 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 - [ ] String formatting (f-strings)
 - [ ] List operations (append, extend, insert, pop, slicing)
 - [ ] List comprehensions (basic, conditional, nested)
-- [ ] Dictionary operations (creation, iteration, get, setdefault)
+- [x] Dictionary operations (creation, iteration, get, setdefault) — basic create/iterate/in solid; `.get()` shortcut introduced but needs reinforcement
 - [ ] Dictionary comprehensions
 - [ ] Set operations (union, intersection, difference)
 - [ ] Tuple unpacking and usage patterns
@@ -122,6 +122,7 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 | 2026-04-06 | First non-repeating character | Hash map / dictionary, two-pass pattern | Solved with minor hint | ~5-10 min | Faster than first challenge. Tripped on if/else logic (both branches firing). Knows .items() iteration and break. Hasn't learned Counter yet. |
 | 2026-04-07 | Running sum of 1d array | List iteration, accumulator pattern | Solved with hints | ~15 min | Initial attempt overcomplicated: declared accumulator inside loop, added a meaningless `if nums[0]:` branch. Once reframed as "two-line loop body: update total, append total" it clicked. Wrong return type annotation (`-> int`) and returned `result[-1]` instead of full list. Briefly discussed why list comprehensions don't fit stateful accumulation; saw `itertools.accumulate` as the idiomatic stdlib option. |
 | 2026-04-07 | Move zeros (in-place) | Array mutation, intro to two pointers | Naive solved, two-pointer deferred | ~15 min | Naive: built two buckets and concatenated. Forgot to mutate `nums` — important Python gotcha covered: `nums = result` rebinds local name vs `nums[:] = result` mutates in place. Two-pointer pattern (same-direction writer/reader) introduced and walked through with a trace, but John felt it was too much for current phase. Bookmarked for Phase 2 — do not grind now. |
+| 2026-04-08 | Valid Anagram (3 approaches: sorted, manual dict, Counter) | Hash map / dictionary, frequency counting | Solved all 3 | ~20 min | Sort approach clean (A-) — but used `"".join(sorted(...))` unnecessarily; lists compare structurally with `==` directly. Manual dict: built with `if char in d` pattern, didn't reach for `.get(key, default)` shortcut. Asked the right question unprompted: "is there a way to compare dicts easily in Python?" Answer: yes, `==` does deep structural equality on dicts/lists/tuples. Big cross-language gotcha vs JS surfaced (where `{a:1} === {a:1}` is false). Counter introduced as the stdlib one-liner. Notes written: `notes/python/dict-patterns.md` covering `.get()`, `==` deep equality, Counter, and the Python-vs-JS equality difference. Snake_case correction needed — JS muscle memory leaked into Python locals. |
 
 ---
 
@@ -212,6 +213,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 | Date | Problem Description | Pattern | Result | Time | Notes |
 |------|-------------------|---------|--------|------|-------|
 | 2026-04-07 | Reverse a string (two ways: `.reverse()` one-liner + manual loop) | String iteration, JS fundamentals | Solved both ✓ | ~10 min | First attempt had a bogus 1-char guard returning a message string instead of the char (contract violation) — fixed. Solid grasp of spread + reverse + join. Concept check: knew `.reverse()` mutates ✓, misunderstood `.join("")` as "removing spaces" — corrected. Manual loop was clean. Taught two senior-flavor concepts: (1) `[...str]` vs `str.split("")` Unicode difference, (2) string concatenation in a loop is O(n²) due to string immutability — push to array + join at end for O(n). Both worth remembering. |
+| 2026-04-08 | Valid Palindrome — both reverse-and-compare AND two-pointer | String iteration, intro to opposite-direction two pointers | Solved both ✓ | ~25 min | Reverse-and-compare clean (B+, two real nits: `x ? true : false` antipattern, dead code in length guard). Then asked for two-pointer lesson — admitted he hadn't really understood it. Re-taught from first principles: pointer = index variable, opposite-direction vs same-direction, why `for...of` is the wrong loop construct here. Walked the off-by-one bug (`str.length` vs `str.length - 1`). John wrote the two-pointer version cleanly on first attempt after the lesson — A grade. This is the breakthrough on a pattern he bookmarked from yesterday. **Two-pointer (opposite direction) now unblocked.** Same-direction (Move Zeros style) still bookmarked for Phase 2. Notes written: `notes/two-pointer.md` capturing the mental model + palindrome example. |
 
 ---
 
@@ -269,8 +271,12 @@ Timed problems (25 min solve + 5 min review). Mix of all patterns. Both language
 Track patterns or concepts that consistently cause trouble in either language. Revisit these periodically.
 
 - **Two pointers (same-direction writer/reader):** Introduced 2026-04-07 on Move Zeros. Concept felt overwhelming. Bookmarked — revisit when Phase 2 Tier 1 begins formally. Naive approach is fine for now.
+- **Two pointers (opposite direction):** ✅ UNBLOCKED 2026-04-08 via Valid Palindrome. John wrote it cleanly after a from-first-principles lesson. Pattern is now usable in JS — needs Python demonstration before being marked "complete" in both languages.
 - **In-place vs rebinding in Python:** `nums = result` (rebind, caller untouched) vs `nums[:] = result` (mutate). Watch for this in any in-place problem.
 - **Accumulator pattern:** Tendency to overcomplicate stateful loops with unnecessary conditionals. Reinforce: declare accumulator outside loop, update inside, that's it.
+- **Snake_case in Python:** JS muscle memory leaks into Python locals (`sortedStrOne` instead of `sorted_str_one`). Function names are correct snake_case; locals are the gap. Call out every time until it's reflexive.
+- **`dict.get(key, default)` for counting:** John still reaches for `if char in d / else` instead of the idiomatic `.get()` shortcut. Reinforce on next counting problem.
+- **Boolean return antipattern:** `return x === y ? true : false` instead of `return x === y`. Surfaced 2026-04-08 in palindrome. Burn out of muscle memory — comparison operators already return booleans.
 
 ## Session Log
 
@@ -281,3 +287,5 @@ Append a brief entry after each algorithm session.
 | 2026-04-06 | Python | String compression + first non-repeating char | Compression needed progressive hints. Hash map problem solved faster with only minor guidance. Improving within session. | Continue Python Phase 1 — list operations, comprehensions |
 | 2026-04-07 | Python | Running sum + Move zeros (naive) | Running sum: overcomplicated then cleaned up. Move zeros: naive worked, two pointers introduced but too early — bookmarked. Solid forward progress on Phase 1 list ops. | Tomorrow: JS warmup first (Phase 1 start) then a Python warmup |
 | 2026-04-07 | JavaScript | Reverse string (one-liner + manual loop) | Solid first JS session. Idiomatic spread/reverse/join one-liner came naturally. Concept gaps: thought `.join("")` removes spaces (corrected). Senior concepts introduced: spread vs split for Unicode, O(n²) string concatenation. | Continue JS Phase 1 — strings or arrays |
+| 2026-04-08 | JavaScript | Valid Palindrome (reverse-and-compare + two-pointer breakthrough) | A grade overall. Two-pointer (opposite direction) re-taught from scratch and locked in cleanly. Important breakthrough — pattern was bookmarked yesterday on Move Zeros and was overwhelming then. Today's smaller problem (palindrome) made it click. Two minor antipatterns flagged: ternary boolean returns + dead code length guards. Notes written on two-pointer. | Continue JS Phase 1 — try the easier patterns now that two-pointer is unblocked, OR push into Phase 2 stack work (Valid Parentheses queued for next session) |
+| 2026-04-08 | Python | Valid Anagram (sorted, manual dict, Counter — all 3 approaches) | A-. Built all 3 approaches. Asked the right unprompted question ("can I just compare dicts?"), which surfaced the Python `==` deep-equality vs JS reference-equality gotcha. Manual dict still using verbose if/else instead of `.get()`. Snake_case slip on locals. Notes written: `notes/python/dict-patterns.md`. | Continue Python Phase 1 — dict comprehensions, sets, OR introduce `.get()` reinforcement next counting problem |
