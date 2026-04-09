@@ -62,6 +62,7 @@ File watchers that rerun scripts on save. Output is via `print()` (Python) or `c
 Focus on Python syntax, stdlib, and core language features before diving into algorithm patterns. This is the foundation — don't rush it.
 
 **Data Types & Basic Operations**
+
 - [ ] String manipulation (slicing, reversal, common methods)
 - [ ] String formatting (f-strings)
 - [ ] List operations (append, extend, insert, pop, slicing)
@@ -73,6 +74,7 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 - [ ] range() and its uses (basic iteration, custom ranges, reverse ranges)
 
 **Functions & Scope**
+
 - [ ] Function definitions (def, return, multiple return values)
 - [ ] Default parameters and keyword arguments
 - [ ] `*args` and `**kwargs` — what they are, when to use them
@@ -81,6 +83,7 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 - [ ] Higher-order functions (functions that take/return functions)
 
 **Standard Library Essentials**
+
 - [ ] collections module: Counter
 - [ ] collections module: defaultdict
 - [ ] collections module: deque
@@ -89,12 +92,14 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 - [ ] functools: lru_cache (memoization decorator — critical for dynamic programming later)
 
 **Error Handling & I/O**
+
 - [ ] Error handling (try/except/else/finally patterns)
 - [ ] Common exception types (ValueError, KeyError, TypeError, IndexError)
 - [ ] File I/O basics (open, read, write, context manager `with` statement)
 - [ ] Context managers — what the `with` statement does and why it matters
 
 **OOP Fundamentals (REQUIRED — prerequisite for Phase 2 data structures)**
+
 - [ ] Class definition: `class`, `__init__`, `self`
 - [ ] Instance methods, instance variables
 - [ ] Inheritance: single inheritance, `super()`
@@ -104,6 +109,7 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 - [ ] Build a simple class from scratch (e.g., Stack, Queue, or LinkedList node)
 
 **Intermediate Python Patterns**
+
 - [ ] Decorators — what they are, how to write a basic one, common built-in decorators
 - [ ] Generators and `yield` — lazy iteration, memory efficiency
 - [ ] Generator expressions vs list comprehensions (when to use which)
@@ -116,13 +122,13 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 
 ### Python Problem Log
 
-| Date | Problem Description | Pattern | Result | Time | Notes |
-|------|-------------------|---------|--------|------|-------|
-| 2026-04-06 | String compression (consecutive char counting) | String iteration, state tracking, f-strings | Solved with hints | ~15-20 min | Needed guidance on: tracking state across loop, appending on group change vs every iteration, flushing last group after loop. Got there with progressive hints. |
-| 2026-04-06 | First non-repeating character | Hash map / dictionary, two-pass pattern | Solved with minor hint | ~5-10 min | Faster than first challenge. Tripped on if/else logic (both branches firing). Knows .items() iteration and break. Hasn't learned Counter yet. |
-| 2026-04-07 | Running sum of 1d array | List iteration, accumulator pattern | Solved with hints | ~15 min | Initial attempt overcomplicated: declared accumulator inside loop, added a meaningless `if nums[0]:` branch. Once reframed as "two-line loop body: update total, append total" it clicked. Wrong return type annotation (`-> int`) and returned `result[-1]` instead of full list. Briefly discussed why list comprehensions don't fit stateful accumulation; saw `itertools.accumulate` as the idiomatic stdlib option. |
-| 2026-04-07 | Move zeros (in-place) | Array mutation, intro to two pointers | Naive solved, two-pointer deferred | ~15 min | Naive: built two buckets and concatenated. Forgot to mutate `nums` — important Python gotcha covered: `nums = result` rebinds local name vs `nums[:] = result` mutates in place. Two-pointer pattern (same-direction writer/reader) introduced and walked through with a trace, but John felt it was too much for current phase. Bookmarked for Phase 2 — do not grind now. |
-| 2026-04-08 | Valid Anagram (3 approaches: sorted, manual dict, Counter) | Hash map / dictionary, frequency counting | Solved all 3 | ~20 min | Sort approach clean (A-) — but used `"".join(sorted(...))` unnecessarily; lists compare structurally with `==` directly. Manual dict: built with `if char in d` pattern, didn't reach for `.get(key, default)` shortcut. Asked the right question unprompted: "is there a way to compare dicts easily in Python?" Answer: yes, `==` does deep structural equality on dicts/lists/tuples. Big cross-language gotcha vs JS surfaced (where `{a:1} === {a:1}` is false). Counter introduced as the stdlib one-liner. Notes written: `notes/python/dict-patterns.md` covering `.get()`, `==` deep equality, Counter, and the Python-vs-JS equality difference. Snake_case correction needed — JS muscle memory leaked into Python locals. |
+| Date       | Problem Description                                        | Pattern                                     | Result                             | Time       | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ---------- | ---------------------------------------------------------- | ------------------------------------------- | ---------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-04-06 | String compression (consecutive char counting)             | String iteration, state tracking, f-strings | Solved with hints                  | ~15-20 min | Needed guidance on: tracking state across loop, appending on group change vs every iteration, flushing last group after loop. Got there with progressive hints.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| 2026-04-06 | First non-repeating character                              | Hash map / dictionary, two-pass pattern     | Solved with minor hint             | ~5-10 min  | Faster than first challenge. Tripped on if/else logic (both branches firing). Knows .items() iteration and break. Hasn't learned Counter yet.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 2026-04-07 | Running sum of 1d array                                    | List iteration, accumulator pattern         | Solved with hints                  | ~15 min    | Initial attempt overcomplicated: declared accumulator inside loop, added a meaningless `if nums[0]:` branch. Once reframed as "two-line loop body: update total, append total" it clicked. Wrong return type annotation (`-> int`) and returned `result[-1]` instead of full list. Briefly discussed why list comprehensions don't fit stateful accumulation; saw `itertools.accumulate` as the idiomatic stdlib option.                                                                                                                                                                                                                                                                                                              |
+| 2026-04-07 | Move zeros (in-place)                                      | Array mutation, intro to two pointers       | Naive solved, two-pointer deferred | ~15 min    | Naive: built two buckets and concatenated. Forgot to mutate `nums` — important Python gotcha covered: `nums = result` rebinds local name vs `nums[:] = result` mutates in place. Two-pointer pattern (same-direction writer/reader) introduced and walked through with a trace, but John felt it was too much for current phase. Bookmarked for Phase 2 — do not grind now.                                                                                                                                                                                                                                                                                                                                                           |
+| 2026-04-08 | Valid Anagram (3 approaches: sorted, manual dict, Counter) | Hash map / dictionary, frequency counting   | Solved all 3                       | ~20 min    | Sort approach clean (A-) — but used `"".join(sorted(...))` unnecessarily; lists compare structurally with `==` directly. Manual dict: built with `if char in d` pattern, didn't reach for `.get(key, default)` shortcut. Asked the right question unprompted: "is there a way to compare dicts easily in Python?" Answer: yes, `==` does deep structural equality on dicts/lists/tuples. Big cross-language gotcha vs JS surfaced (where `{a:1} === {a:1}` is false). Counter introduced as the stdlib one-liner. Notes written: `notes/python/dict-patterns.md` covering `.get()`, `==` deep equality, Counter, and the Python-vs-JS equality difference. Snake_case correction needed — JS muscle memory leaked into Python locals. |
 
 ---
 
@@ -135,18 +141,21 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 Revisit core JS to ensure fluency outside of React context. Expect to move faster than Python Phase 1 — but Claude should quiz aggressively and not let John skate past anything he can't actually write cold.
 
 **Variables, Types & Primitives**
+
 - [ ] `let`, `const`, `var` — scoping differences (block vs function scope)
 - [ ] Primitive types vs reference types (why `[] === []` is false)
 - [ ] Type coercion gotchas (`==` vs `===`, truthy/falsy values)
 - [ ] `null` vs `undefined` — when each appears and why
 
 **Strings**
+
 - [ ] String methods: `slice`, `substring`, `split`, `join`, `includes`, `indexOf`, `replace`, `trim`
 - [ ] Template literals and tagged templates
 - [ ] String iteration and character access
 - [ ] Common interview string patterns (reversal, palindrome check, anagram detection)
 
 **Arrays**
+
 - [ ] Core mutating methods: `push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`
 - [ ] Core non-mutating methods: `slice`, `concat`, `flat`, `Array.from`
 - [ ] Iteration methods: `map`, `filter`, `reduce`, `forEach`, `find`, `findIndex`, `some`, `every`
@@ -155,6 +164,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Sorting with custom comparators (`arr.sort((a, b) => a - b)`)
 
 **Objects**
+
 - [ ] Object creation, property access (dot vs bracket notation)
 - [ ] Object destructuring and renaming (`const { name: userName } = obj`)
 - [ ] Spread operator for shallow copies (`{ ...obj, newProp: value }`)
@@ -163,6 +173,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Computed property names (`{ [dynamicKey]: value }`)
 
 **Functions**
+
 - [ ] Arrow functions vs function declarations (hoisting, `this` binding)
 - [ ] Default parameters
 - [ ] Rest parameters (`...args`)
@@ -171,6 +182,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] IIFE pattern (know what it is, even if rarely used now)
 
 **`this` Keyword (common interview topic)**
+
 - [ ] `this` in regular functions vs arrow functions
 - [ ] `this` in object methods
 - [ ] Explicit binding: `call()`, `apply()`, `bind()` — what each does and when to use
@@ -178,6 +190,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Can you predict what `this` refers to in a given code snippet? (interview question format)
 
 **Prototypes & Inheritance (how JS actually works under the hood)**
+
 - [ ] Prototype chain — what happens when you access a property that doesn't exist on an object
 - [ ] `Object.create()` and prototypal inheritance
 - [ ] How `class` syntax maps to prototypes (classes are syntactic sugar)
@@ -185,9 +198,10 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Why this matters: understanding what's actually happening when you write `class Foo extends Bar`
 
 **Modern JS Patterns**
+
 - [ ] Destructuring in function parameters (`function({ name, age })`)
 - [ ] Spread/rest in different contexts (arrays, objects, function args)
-- [ ] `Set` and `Map` objects — creation, common methods, when to use over plain objects/arrays
+- [x] `Set` and `Map` objects — creation, common methods, when to use over plain objects/arrays (Two Sum + Contains Duplicate, 2026-04-08) NEEDS MORE PRACTICE
 - [ ] `for...of` vs `for...in` — which iterates what
 - [ ] Short-circuit evaluation patterns (`&&`, `||`, `??`)
 - [ ] Ternary chaining and when it becomes unreadable
@@ -195,6 +209,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Modules: `import`/`export` vs `require()`/`module.exports` — know the difference
 
 **Async Fundamentals**
+
 - [ ] Promises: creation, `.then`, `.catch`, `.finally`
 - [ ] `Promise.all`, `Promise.race`, `Promise.allSettled`
 - [ ] `async`/`await` — syntactic sugar over Promises
@@ -202,6 +217,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 - [ ] Event loop basics — can you explain why `setTimeout(fn, 0)` doesn't run immediately?
 
 **Error Handling**
+
 - [ ] try/catch/finally patterns
 - [ ] Custom error types (`class AppError extends Error`)
 - [ ] Error handling in async code (try/catch with await vs .catch() on promises)
@@ -210,10 +226,12 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 
 ### JS Problem Log
 
-| Date | Problem Description | Pattern | Result | Time | Notes |
-|------|-------------------|---------|--------|------|-------|
-| 2026-04-07 | Reverse a string (two ways: `.reverse()` one-liner + manual loop) | String iteration, JS fundamentals | Solved both ✓ | ~10 min | First attempt had a bogus 1-char guard returning a message string instead of the char (contract violation) — fixed. Solid grasp of spread + reverse + join. Concept check: knew `.reverse()` mutates ✓, misunderstood `.join("")` as "removing spaces" — corrected. Manual loop was clean. Taught two senior-flavor concepts: (1) `[...str]` vs `str.split("")` Unicode difference, (2) string concatenation in a loop is O(n²) due to string immutability — push to array + join at end for O(n). Both worth remembering. |
-| 2026-04-08 | Valid Palindrome — both reverse-and-compare AND two-pointer | String iteration, intro to opposite-direction two pointers | Solved both ✓ | ~25 min | Reverse-and-compare clean (B+, two real nits: `x ? true : false` antipattern, dead code in length guard). Then asked for two-pointer lesson — admitted he hadn't really understood it. Re-taught from first principles: pointer = index variable, opposite-direction vs same-direction, why `for...of` is the wrong loop construct here. Walked the off-by-one bug (`str.length` vs `str.length - 1`). John wrote the two-pointer version cleanly on first attempt after the lesson — A grade. This is the breakthrough on a pattern he bookmarked from yesterday. **Two-pointer (opposite direction) now unblocked.** Same-direction (Move Zeros style) still bookmarked for Phase 2. Notes written: `notes/two-pointer.md` capturing the mental model + palindrome example. |
+| Date       | Problem Description                                               | Pattern                                                                                | Result                                   | Time    | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-04-07 | Reverse a string (two ways: `.reverse()` one-liner + manual loop) | String iteration, JS fundamentals                                                      | Solved both ✓                            | ~10 min | First attempt had a bogus 1-char guard returning a message string instead of the char (contract violation) — fixed. Solid grasp of spread + reverse + join. Concept check: knew `.reverse()` mutates ✓, misunderstood `.join("")` as "removing spaces" — corrected. Manual loop was clean. Taught two senior-flavor concepts: (1) `[...str]` vs `str.split("")` Unicode difference, (2) string concatenation in a loop is O(n²) due to string immutability — push to array + join at end for O(n). Both worth remembering.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| 2026-04-08 | Valid Palindrome — both reverse-and-compare AND two-pointer       | String iteration, intro to opposite-direction two pointers                             | Solved both ✓                            | ~25 min | Reverse-and-compare clean (B+, two real nits: `x ? true : false` antipattern, dead code in length guard). Then asked for two-pointer lesson — admitted he hadn't really understood it. Re-taught from first principles: pointer = index variable, opposite-direction vs same-direction, why `for...of` is the wrong loop construct here. Walked the off-by-one bug (`str.length` vs `str.length - 1`). John wrote the two-pointer version cleanly on first attempt after the lesson — A grade. This is the breakthrough on a pattern he bookmarked from yesterday. **Two-pointer (opposite direction) now unblocked.** Same-direction (Move Zeros style) still bookmarked for Phase 2. Notes written: `notes/two-pointer.md` capturing the mental model + palindrome example.                                                                                                                                                                                                                                                                                 |
+| 2026-04-08 | Two Sum — both brute force AND hash map                           | Hash map / dictionary lookup, "replace search with lookup" pattern, first JS `Map` use | Solved both (heavy guidance on hash map) | ~40 min | Brute force: walked from "describe in plain English how you'd solve it by hand" → nested loop. First attempt had 3 bugs (`<=` instead of `<` on both bounds, `j = 1` instead of `j = i + 1`, dead code map declaration). Fixed cleanly after walkthrough. Hash map version: got tangled on which key to look up and what to return — wrote `numsMap.get(n)` instead of `numsMap.get(complement)`, returned `[complement, value]` instead of `[seen.get(complement), i]`. Said "I am lost" and "big fail" — neither was true; he had ~90% of the structure right and got stuck on the value-vs-index distinction. Wrote final solution for him with full line-by-line explanation. Mental model locked in: "replace search-for-something with lookup-of-something." Important emotional/pedagogical moment — wrote the solution rather than dragging him through more hints once he hit the wall, was the right call. Style nits: `let` instead of `const` on test inputs (recurring), `numsMap` vs `seen` naming (variable should describe purpose not type). |
+| 2026-04-08 | Contains Duplicate                                                | Hash set, membership tracking, first JS `Set` use                                      | Solved cleanly ✓                         | ~10 min | A grade. Wrote it cold immediately after Two Sum explanation. Idiomatic: used `Set` instead of `Map` (correct judgment — only need "have I seen this?", not value+index), `for...of` instead of indexed for (correct — doesn't need `i`), good naming (`seen`), check-then-add order. Fast, clean reinforcement of the hash pattern from the Two Sum struggle. Recurring nits still present: `let` instead of `const` on test inputs, only tested one input even though four were declared, `emptryArr` typo. Also had a defensive `length <= 1` guard which is technically dead code but defensible (style call, leaving it). Pattern locked in cross-problem: hash Map + hash Set both demonstrated in the same session, picking the right tool for each question.                                                                                                                                                                                                                                                                                          |
 
 ---
 
@@ -228,6 +246,7 @@ Each pattern: learn the concept, solve 3-5 problems per language, demonstrate ma
 ### Tier 1 — Essential (do these first)
 
 **Python Status / JS Status**
+
 - [ ] / [ ] Hash Maps / Dictionaries (frequency counting, lookups, two-sum style)
 - [ ] / [ ] Two Pointers (sorted arrays, palindromes, container problems)
 - [ ] / [ ] Sliding Window (fixed and variable size, substring problems)
@@ -282,10 +301,12 @@ Track patterns or concepts that consistently cause trouble in either language. R
 
 Append a brief entry after each algorithm session.
 
-| Date | Language | What Was Practiced | Assessment | Next Focus |
-|------|---------|-------------------|------------|------------|
-| 2026-04-06 | Python | String compression + first non-repeating char | Compression needed progressive hints. Hash map problem solved faster with only minor guidance. Improving within session. | Continue Python Phase 1 — list operations, comprehensions |
-| 2026-04-07 | Python | Running sum + Move zeros (naive) | Running sum: overcomplicated then cleaned up. Move zeros: naive worked, two pointers introduced but too early — bookmarked. Solid forward progress on Phase 1 list ops. | Tomorrow: JS warmup first (Phase 1 start) then a Python warmup |
-| 2026-04-07 | JavaScript | Reverse string (one-liner + manual loop) | Solid first JS session. Idiomatic spread/reverse/join one-liner came naturally. Concept gaps: thought `.join("")` removes spaces (corrected). Senior concepts introduced: spread vs split for Unicode, O(n²) string concatenation. | Continue JS Phase 1 — strings or arrays |
-| 2026-04-08 | JavaScript | Valid Palindrome (reverse-and-compare + two-pointer breakthrough) | A grade overall. Two-pointer (opposite direction) re-taught from scratch and locked in cleanly. Important breakthrough — pattern was bookmarked yesterday on Move Zeros and was overwhelming then. Today's smaller problem (palindrome) made it click. Two minor antipatterns flagged: ternary boolean returns + dead code length guards. Notes written on two-pointer. | Continue JS Phase 1 — try the easier patterns now that two-pointer is unblocked, OR push into Phase 2 stack work (Valid Parentheses queued for next session) |
-| 2026-04-08 | Python | Valid Anagram (sorted, manual dict, Counter — all 3 approaches) | A-. Built all 3 approaches. Asked the right unprompted question ("can I just compare dicts?"), which surfaced the Python `==` deep-equality vs JS reference-equality gotcha. Manual dict still using verbose if/else instead of `.get()`. Snake_case slip on locals. Notes written: `notes/python/dict-patterns.md`. | Continue Python Phase 1 — dict comprehensions, sets, OR introduce `.get()` reinforcement next counting problem |
+| Date       | Language   | What Was Practiced                                                | Assessment                                                                                                                                                                                                                                                                                                                                                                                                     | Next Focus                                                                                                                                                   |
+| ---------- | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2026-04-06 | Python     | String compression + first non-repeating char                     | Compression needed progressive hints. Hash map problem solved faster with only minor guidance. Improving within session.                                                                                                                                                                                                                                                                                       | Continue Python Phase 1 — list operations, comprehensions                                                                                                    |
+| 2026-04-07 | Python     | Running sum + Move zeros (naive)                                  | Running sum: overcomplicated then cleaned up. Move zeros: naive worked, two pointers introduced but too early — bookmarked. Solid forward progress on Phase 1 list ops.                                                                                                                                                                                                                                        | Tomorrow: JS warmup first (Phase 1 start) then a Python warmup                                                                                               |
+| 2026-04-07 | JavaScript | Reverse string (one-liner + manual loop)                          | Solid first JS session. Idiomatic spread/reverse/join one-liner came naturally. Concept gaps: thought `.join("")` removes spaces (corrected). Senior concepts introduced: spread vs split for Unicode, O(n²) string concatenation.                                                                                                                                                                             | Continue JS Phase 1 — strings or arrays                                                                                                                      |
+| 2026-04-08 | JavaScript | Valid Palindrome (reverse-and-compare + two-pointer breakthrough) | A grade overall. Two-pointer (opposite direction) re-taught from scratch and locked in cleanly. Important breakthrough — pattern was bookmarked yesterday on Move Zeros and was overwhelming then. Today's smaller problem (palindrome) made it click. Two minor antipatterns flagged: ternary boolean returns + dead code length guards. Notes written on two-pointer.                                        | Continue JS Phase 1 — try the easier patterns now that two-pointer is unblocked, OR push into Phase 2 stack work (Valid Parentheses queued for next session) |
+| 2026-04-08 | JavaScript | Two Sum (brute force + hash map) — bonus algos                    | Big learning session. Brute force solved with iterative bug fixes (loop bound off-by-ones, `j = i + 1` pattern). Hash map version: got 90% there, tangled on the value-vs-index return, asked for the full solution. Wrote it for him with full line-by-line explanation rather than over-hinting — right call. Mental model "replace search with lookup" locked in. First JS `Map` use (Phase 1 box checked). | More hash map reps to lock the pattern in — see next-day prompt                                                                                              |
+| 2026-04-08 | JavaScript | Contains Duplicate — bonus algo                                   | A. Cold solo solve, immediate reinforcement of hash pattern. Correctly chose `Set` over `Map` (right tool for "have I seen this?"). First JS `Set` use (Phase 1 box checked).                                                                                                                                                                                                                                  | Continue JS hash map reps next session before normal warmup                                                                                                  |
+| 2026-04-08 | Python     | Valid Anagram (sorted, manual dict, Counter — all 3 approaches)   | A-. Built all 3 approaches. Asked the right unprompted question ("can I just compare dicts?"), which surfaced the Python `==` deep-equality vs JS reference-equality gotcha. Manual dict still using verbose if/else instead of `.get()`. Snake_case slip on locals. Notes written: `notes/python/dict-patterns.md`.                                                                                           | Continue Python Phase 1 — dict comprehensions, sets, OR introduce `.get()` reinforcement next counting problem                                               |
