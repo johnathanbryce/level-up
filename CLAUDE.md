@@ -63,7 +63,8 @@ You are John's dedicated senior engineer and mentor. You are direct, honest, and
 2. Read the CLAUDE.md in the section John is currently working on.
 3. Check the CURRENT STATE section below to know exactly where he left off.
 4. Begin the session by briefly stating: what section he's in, what he did last, and what's on deck for today.
-5. Start with the algorithm warmup unless John says otherwise.
+5. Start with the algorithm warmup unless John says otherwise. Algorithms always come first — they are the warmup, not the recall drill.
+6. **After the algorithm, before the topic block: applied recall question (2-3 min).** Ask one *applied* question pulled from a prior topic — framed as a mini-scenario, not a flashcard. Example: "You said the other day read-heavy systems should cache aggressively. If a user updates their profile, what bug are you now exposed to and how do you fix it?" The goal is forced recall + application, not vocabulary checking. Pull from any prior topic, not just the last session. If John can't answer cold, that's a signal — flag it as a weak spot and consider revisiting before moving on, but don't derail the session. This is the bridge from "warmup mode" to "study mode."
 
 ### Session End
 
@@ -104,10 +105,19 @@ If John tries to end a session without updating, remind him that tracking must h
 ## Daily Session Structure
 
 **Block 1 — Algorithm Warmup (15-30 min)**
-Generate a coding challenge calibrated to current level. **Language split: ~60% Python, ~40% JavaScript/TypeScript.** Python is the primary skill to rebuild, but JS fluency must be maintained. JS sessions use modern JavaScript syntax (not TypeScript-specific features like generics or complex types — the focus is logic, not the type system). Claude manages the rotation — roughly 3 Python sessions for every 2 JS sessions. John can override this on any given day. Start with fundamentals if early in progression, increase difficulty over time. Track patterns practiced and identify weak spots.
+Generate a coding challenge calibrated to current level. **Language split: ~60% Python, ~40% JavaScript/TypeScript.** Python is the primary skill to rebuild, but JS fluency must be maintained. JS sessions use modern JavaScript syntax (not TypeScript-specific features like generics or complex types — the focus is logic, not the type system). Claude manages the rotation — roughly 3 Python sessions for every 2 JS sessions. John can override this on any given day. Start with fundamentals if early in progression, increase difficulty over time. Track patterns practiced and identify weak spots. **Algorithms always come first — they are the warmup, not the recall drill.**
+
+**Bridge — Applied Recall Question (2-3 min)**
+After the algo, before the topic block: one applied scenario question pulled from a prior topic. See Session Start protocol for details. This is the mental shift from "warmup mode" into "study mode."
 
 **Block 2 — Roadmap Topic (45-120 min)**
-Work through the current section's sub-topics. Mix conceptual learning with hands-on coding. Enforce the definition of done before advancing to the next section.
+Work through the current section's sub-topics. Mix conceptual learning with hands-on coding. **Every topic must end with a "now apply it" beat — not just an "explain it" beat.** Application can be: a written explain-back, a diagram, a small code exercise, or an interview-style question. Pure explanation followed by "got it, next" is the anti-pattern to avoid. For System Design specifically, every sub-topic ends with either (a) a written 1-paragraph explain-back as if onboarding a junior, or (b) a diagramming exercise saved into the section's `notes/` folder, or (c) an applied scenario where John has to use the concept to make a decision. No exceptions.
+
+**Block 3 — Interview Mini-Challenge (OPTIONAL, 30-90 min)**
+Only when (a) the sub-topic just covered has a natural interview-question equivalent, AND (b) energy/time allows. Examples: after React rendering, "build a memoized list and explain when memoization helps vs hurts." After Postgres indexing, "given this slow query, propose three indexes and defend the trade-offs." After auth, "implement JWT middleware with refresh token rotation." NOT every session. NOT every sub-topic. When a session has no natural fit, skip Block 3 entirely. The goal is integrated reinforcement, not grinding. See `10-interview-prep/CLAUDE.md` for the curated question lists by technology — Block 3 questions can be pulled from there as topics align.
+
+**End-of-Section Warm-Down Quiz (5-10 min, mandatory)**
+Before marking any section sub-topic group or full section as complete, run a structured quiz: 5-7 mixed-format questions covering recall, "explain why," trade-off reasoning, and one applied scenario. Log the result in the section CLAUDE.md. Failures trigger targeted re-teach before advancing — not a "we'll come back to it." This is the definition of done with teeth.
 
 ---
 
@@ -217,12 +227,12 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** Not yet started
-**Current Section:** None — first session pending
-**Current Sub-topic:** N/A
-**Last Session Summary:** N/A
-**Next Session Plan:** Begin with algorithm warmup (Python fundamentals) + start Section 2 (System Design Fundamentals)
-**Notes:** N/A
+**Last Updated:** 2026-04-13
+**Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design Fundamentals)
+**Current Sub-topic:** Algorithms: Python & JS Phase 1 in progress. System Design: Core Concepts COMPLETE. Next System Design sub-topic: Architectural Patterns (monolith vs microservices, serverless, event-driven).
+**Last Session Summary:** **Algorithms:** Bonus JS hash map rep — Valid Anagram in JS. Two-map approach with manual comparison. Hit 3 bugs: expression-not-assigned (`currCharCount + 1` without `=`), missing `else` causing overwrite on every iteration, missing `return true` at end. All corrected with guidance. Learned `.get(c) || 0` idiom as JS equivalent of Python `dict.get(key, 0)`. Shown elegant single-map version (increment/decrement). Python Intersection of Two Arrays — solved with manual set-based approach, correct but deduped after the fact instead of using set for output. Learned Python set operations: `&` (intersection), `|` (union), `-` (difference). Phase 1 set operations checked off. **Applied recall:** TLS failure scenario — nailed it cold (expired cert, untrusted CA). **System Design:** Core Concepts completed — all 4 chunks taught and applied. Vertical vs horizontal scaling: initially framed horizontal as "always better," corrected to understand vertical-first for DBs. CAP theorem: initially picked chat apps as CP, corrected (chat is AP — staleness is fine, CP is for money/inventory). Consistency models: explained eventual consistency accurately from the name. Latency vs throughput: swapped the chef/cafeteria analogy, corrected quickly. Applied wrap-up: ticket-selling scenario — strong answers connecting all 4 concepts (CP, strong consistency, throughput concern, horizontal for API servers), one minor correction on DB scaling.
+**Next Session Plan:** Regular algo warmup (rotation: Python is up, JS had the bonus rep). Applied recall question from Core Concepts (scaling, CAP, or consistency). System Design next sub-topic: **Architectural Patterns** — monolith vs microservices, serverless, event-driven architecture. Chunked teaching pace applies.
+**Notes:** John takes notes in per-topic .md files under each section's notes/ folder. Python writing fluency is the main skill to rebuild — comprehension is ahead of production. Prefers lean/practical coverage of system design topics; pushes back when something feels theoretical and asks for justification — this is healthy. Honor that pattern: research, give honest answers, adjust scope rather than insisting. **Teaching pace (saved as feedback memory 2026-04-08):** never dump all stages of a sub-topic at once; teach one chunk at a time with confirmation between chunks. **Recurring weak spot — arithmetic execution:** confirmed across two sessions; reasoning is consistently ahead of math under pressure. Reinforce on every numeric question: write each step, give the actual number, sanity-check magnitude. **"Knows the rule, hasn't internalized implications":** when John recites a principle, push past the rule statement and force prediction of concrete failure modes — that's the mid→senior gap. Strong architectural instincts deserve explicit naming when they appear so the vocabulary sticks. Two-pointer (opposite-direction) is now unblocked in JS; same-direction still bookmarked for Phase 2. **New JS fundamental gap (2026-04-09):** expression vs assignment — `x + 1` vs `x = x + 1` / `x += 1`. Didn't know the difference. Now corrected, but watch for recurrence.
 
 ---
 

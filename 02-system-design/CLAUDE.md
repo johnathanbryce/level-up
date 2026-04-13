@@ -8,38 +8,66 @@ The foundational section that everything else builds on. Covers core infrastruct
 
 Can whiteboard a system, explain where it breaks first, justify every component choice, and discuss trade-offs without fumbling. Can answer "why not X instead?" for any architectural decision.
 
+## Assignment Convention (CRITICAL — this section's biggest learning risk)
+
+System design is the most concept-heavy, vocabulary-heavy section in the roadmap. The risk: Claude explains a topic for 30 minutes, John says "got it," we move on, and nothing sticks. **The fix: every sub-topic ends with a "now apply it" beat. No exceptions.**
+
+For each sub-topic, the closing assignment must be one of:
+1. **Written explain-back (1 paragraph)** — John writes the concept in his own words as if onboarding a junior. Goes into the section's `notes/` folder.
+2. **Diagramming exercise** — Sketch the system or component, label parts, identify failure modes. Markdown or hand-sketch saved to `notes/`.
+3. **Applied scenario** — Claude poses a concrete situation requiring John to use the concept to make a design decision. Walked through verbally or in writing.
+4. **Mini code exercise** — When the topic has a natural code touchpoint (rate limiter algorithm, consistent hashing, bloom filter), implement it in 30-60 min.
+5. **Block 3 interview challenge** — When applicable, pull a question from `10-interview-prep/system-design-rounds/` or another sub-folder. Optional, not required.
+
+**Pure explanation followed by "got it, next" is the anti-pattern to avoid in this section above all others.**
+
+End-of-section warm-down quiz is mandatory before marking the section complete (5-7 mixed-format questions, log result here).
+
 ---
 
 ## Sub-Topics
+
+### Request Lifecycle (full end-to-end walkthrough)
+
+The classic "what happens when you type a URL" interview question, walked stage by stage. Notes in `notes/request-lifecycle.md`.
+
+- [x] Stage 1: DNS Resolution (cache hierarchy, TTL semantics, absolute-time TTL clarification)
+- [x] Stage 2: TCP Handshake (three-way handshake, 1 RTT cost, connection reuse, head-of-line blocking)
+- [x] Stage 3: TLS Handshake (encryption + integrity + auth, certs + CAs, ~1 RTT on TLS 1.3)
+- [x] Stage 4: HTTP Request (methods + idempotency, status code classes, headers, Content-Type vs Accept, GET-as-DELETE failure modes, JWT 401 debugging menu)
+- [x] Stage 5: Server-Side Processing (LB → app → cache → DB diagram, walking the stack for bottlenecks, N+1 queries vocabulary)
+- [x] Stage 6: HTTP Response + Browser Render (incremental parsing, render-blocking, async vs defer, "loaded is a timeline")
+- [~] HTTP versions (1.1 vs 2 vs 3) — DEFERRED. Senior+ depth, not needed for mid-level. One-line takeaway only: "versions evolved to reduce round trips; HTTP/2 multiplexes, HTTP/3 uses QUIC over UDP."
 
 ### Internet & Networking Fundamentals
 
 Foundational knowledge that interviewers expect you to explain cold. "What happens when you type a URL in your browser?" is a classic interview question that touches all of these.
 
-- [ ] How the internet works: IP addresses, TCP vs UDP, ports, packets (high-level, not networking-engineer depth)
-- [ ] What is DNS — how domain name resolution works, DNS caching, TTL, recursive vs iterative lookup
-- [ ] What is HTTP — request/response cycle as a protocol, headers, methods, versions (HTTP/1.1 vs HTTP/2 vs HTTP/3 awareness)
-- [ ] What is HTTPS/TLS — what TLS does, how the handshake works (conceptual), certificates, why it matters
-- [ ] Web request lifecycle (DNS → TCP → TLS → HTTP → server → response) and latency at each stage
-- [ ] WebSockets — what they are, how they differ from HTTP, persistent connections, when to use them (real-time chat, live updates)
-- [ ] SSH — what it is, how it works (conceptual), key-based auth vs password
+- [x] How the internet works: IP addresses, TCP vs UDP, ports, packets (high-level, not networking-engineer depth)
+- [x] What is DNS — how domain name resolution works, DNS caching, TTL, recursive vs iterative lookup
+- [x] What is HTTP — request/response cycle as a protocol, headers, methods, versions (HTTP/1.1 vs HTTP/2 vs HTTP/3 awareness)
+- [x] What is HTTPS/TLS — what TLS does, how the handshake works (conceptual), certificates, why it matters
+- [x] Web request lifecycle (DNS → TCP → TLS → HTTP → server → response) and latency at each stage
+- [x] WebSockets — what they are, how they differ from HTTP, persistent connections, when to use them (real-time chat, live updates)
+- [x] SSH — what it is, how it works (conceptual), key-based auth vs password
 
 ### Back-of-Envelope Estimation
 
 This comes up in every system design interview. You'll be asked to estimate scale before designing anything. The goal is quick, reasonable napkin math — not precision.
 
-- [ ] Key latency numbers: memory access (~100ns), SSD read (~100μs), network round-trip (~1ms), disk seek (~10ms) — order of magnitude, not exact
-- [ ] Throughput estimation: QPS (queries per second) from daily active users → requests per day → divide by 86,400 → peak = 2-3x average
-- [ ] Storage estimation: number of records × size per record × retention period. Know that 1 million rows × 1KB = ~1GB.
-- [ ] Bandwidth estimation: QPS × average response size
-- [ ] Practice: estimate storage and QPS for each case study (URL shortener, chat system, etc.) before designing
+- [~] Key latency numbers — DEFERRED. Not worth memorizing at mid-level. Skip unless prepping for senior+ rounds.
+- [x] Throughput estimation: QPS from DAU × actions ÷ ~100K seconds, peak = 2-3x average
+- [x] Storage estimation: items/day × size/item, then ×400 for yearly. Always convert up to GB/TB before drawing conclusions.
+- [~] Bandwidth estimation — covered conceptually (QPS × response size). Skipped explicit practice; trivial enough to compute on demand.
+- [x] Reads vs writes split + ratio → architectural justification (caching, replicas)
+- [x] Full interview script practiced end-to-end on a Twitter-like prompt
 
 ### Core Concepts
 
-- [ ] Vertical vs horizontal scaling — when each applies, cost implications
-- [ ] CAP theorem — what it actually means in practice (not just the acronym)
-- [ ] Consistency models: strong vs eventual — real-world examples of each
-- [ ] Latency vs throughput — how to think about performance
+- [x] Vertical vs horizontal scaling — when each applies, cost implications
+- [x] CAP theorem — what it actually means in practice (not just the acronym)
+- [x] Consistency models: strong vs eventual — real-world examples of each
+- [x] Latency vs throughput — how to think about performance
 
 ### Architectural Patterns
 
@@ -134,10 +162,18 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 
 | Date | Topics Covered | Assessment | Next Focus |
 |------|---------------|------------|------------|
-| — | — | — | — |
+| 2026-04-06 | Internet & Networking Fundamentals (all sub-topics) | Solid grasp. Had working knowledge of HTTP from job experience. DNS chain, TLS handshake, and request lifecycle learned fresh — passed 5/5 quiz cold. | Back-of-Envelope Estimation |
+| 2026-04-07 | Back-of-Envelope Estimation (lean version). QPS, peak vs avg, read/write split, storage, full interview script. | Pushed back hard initially — had never heard of QPS. Web research confirmed it's a real but optional interview topic; agreed on lean coverage. Worked through 5 concepts with progressive examples. Strong intuition on architectural translation (cache invalidation, hot/cold storage tiering, read-heavy → cache + CDN insight unprompted). Weak spot: arithmetic accuracy under pressure — final Twitter exercise undercounted total QPS by ~10x (12K instead of 102K), which led to undersized infra recommendations. Reasoning is ahead of math execution. Graded B. | Request Lifecycle |
+| 2026-04-08 | Request Lifecycle — full 6-stage walkthrough end-to-end. DNS, TCP, TLS, HTTP request, server processing, HTTP response + browser render. HTTP/3 versions deferred (out of scope for mid-level). | Strong session, A-/B+ across the board. Stage 1 (DNS): missed the recursive resolver hierarchy on first try, picked it up cleanly + asked a senior-flavor question on whether cache hits reset TTL (they don't — absolute time-from-fetch). Stage 2 (TCP): blanked on TCP recall from networking sub-topic, conflated it with TLS (encryption guess). Re-taught cleanly, locked in head-of-line blocking vocabulary on the multiplayer game UDP question. Pushed back appropriately on SYN/ACK depth — correctly calibrated for mid-level scope. Stage 3 (TLS): nailed the layering one-liner; B+ on the cert error scenario (correctly identified cert validation failure but conflated "no TLS" with "broken TLS"). Stage 4 (HTTP): C+ on the GET-as-DELETE failure modes question — knew the rule but didn't push through to predict consequences (browser prefetch, CDN caching, history). Important gap to track: "knows the rule, hasn't internalized implications." Stage 5: A- walking the diagram for latency bottlenecks; introduced N+1 queries vocab. Stage 6: B+ on async/defer fix — right instinct, didn't commit to one answer. Latency math under-counted (parallel to yesterday's QPS arithmetic miss) — pattern is "reasoning ahead of arithmetic execution." Sub-topic locked. Session also included extensive notes hygiene work — converted bold-as-section to proper `##` header hierarchy across all 3 system-design notes for VSCode outline + GitHub TOC compatibility. | Core Concepts (vertical/horizontal scaling, CAP, consistency models, latency vs throughput) |
+| 2026-04-09 | Core Concepts — all 4 chunks: vertical vs horizontal scaling, CAP theorem, consistency models (strong vs eventual), latency vs throughput. | B+ overall. Scaling: immediately reached for horizontal but initially framed it as "always better" — corrected to understand vertical-first for DBs, horizontal for stateless web servers, most systems do both. CAP: initially picked chat apps (Discord) as CP — corrected; chat is AP since brief staleness is fine, CP is for money/inventory. After correction, nailed the flash-sale ticket scenario with correct reasoning across all 4 concepts (CP, strong consistency, throughput as primary concern, horizontal for API servers). Consistency models: clean explanation of eventual consistency from the name alone. Latency vs throughput: swapped the chef/cafeteria analogy initially, corrected quickly, then correctly identified the 10K-user API degradation as a throughput problem. Applied wrap-up on ticket-selling system was strong — one minor correction on "DB scales horizontal too" when the pattern is DB stays vertical as long as possible. | Architectural Patterns (monolith vs microservices, serverless, event-driven) |
 
 ---
 
 ## Notes & Weak Spots
 
-- (none yet)
+- **Arithmetic under pressure:** John's reasoning about scale is genuinely strong, but he dropped a 10x error on the final estimation exercise (computed 12K QPS instead of 102K). The fix is mechanical: write each step, sanity-check the final number against the inputs (if reads are 50x writes and writes are 2K, reads should be 100K). Reinforce on any future estimation question that comes up — he should slow down on the math, not the reasoning.
+- **Strong instincts to reinforce:** Stumbled into cache invalidation pattern unprompted. Suggested CDN for image-heavy workload unprompted. Suggested hot/cold storage tiering unprompted. These are all senior-level intuitions — when they appear, name them explicitly so he learns the vocabulary that goes with the instinct.
+- **Pushback culture:** John pushed back when introduced to estimation (had never heard of QPS), asked for web research to validate the topic, and we negotiated a lean version. This is good — he's not just absorbing whatever's in front of him. Honor this pattern: if he pushes back on a topic, do the research, give an honest answer, and adjust scope rather than insisting.
+- **"Knows the rule, hasn't internalized implications":** Surfaced 2026-04-08 on the GET-as-DELETE failure modes question. John knew the principle ("GET should never modify state") cold but couldn't predict the *concrete consequences* (browser prefetch, CDN caching, history replay, log leakage). This is the mid→senior gap. When asking applied questions on principles he claims to know, push past the rule-statement and force prediction of failure modes. The rule is the easy part; the consequences are where understanding lives.
+- **Arithmetic execution lags reasoning (recurring):** Confirmed pattern across two sessions now. 2026-04-07: undercounted Twitter QPS by ~10x. 2026-04-08: undersized "20 fresh TCP connections at 200ms RTT" answer ("saves a round trip" — singular) when the actual answer was 4 seconds. Reasoning is consistently ahead of math execution under pressure. Reinforce on every numeric question: write each step, give the actual number, sanity-check magnitude.
+- **Notes formatting standard (locked in 2026-04-08):** All section notes now follow `#` for file title, `##` for major sections, `###` for sub-sections, **bold** reserved for vocabulary/emphasis only — never for section markers. Code blocks always fenced with language tag. Apply same standard going forward when creating or editing notes in any section.
