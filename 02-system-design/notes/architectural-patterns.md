@@ -93,9 +93,15 @@ The user waits for ALL of that. In an event-driven approach:
   - analytics service hears "board_created" -> logs it
   - notification service hears "board_created" -> pings team members
 
-**What you get:** - **Decoupling** -- board service doesn't know or care that emails exist - **Responsiveness** -- the user gets an immediate response, heavy work happens in the background - **Resilience** -- if email service is down, the board still gets created
+**What you get:** 
+  - **Decoupling** -- board service doesn't know or care that emails exist 
+  - **Responsiveness** -- the user gets an immediate response, heavy work happens in the background 
+  - **Resilience** -- if email service is down, the board still gets created
 
-**What it costs you:** - **Debugging complexity** - **Message ordering** -- events can arrive out of order. If "board_deleted" arrives before "board_created" in a consumer, you have a problem - **Infrastructure overhead** -- you need a message broker (Kafka, SQS, etc.), that's another system to run, monitor, and understand
+**What it costs you:** 
+  - **Debugging complexity** 
+  - **Message ordering** -- events can arrive out of order. If "board_deleted" arrives before "board_created" in a consumer, you have a problem 
+  - **Infrastructure overhead** -- you need a message broker (Kafka, SQS, etc.), that's another system to run, monitor, and understand
 
 **When it makes sense:** - Multiple systems need to react to the same event - You need to decouple heavy background work from user-facing responses - Resilience matters - you'd rather queue work than drop it when a service is down
 
