@@ -18,9 +18,10 @@
 ## Load Balancing Algorithms
 
 - The LB gets a request, how does it pick one? There are 4 main strategies:
-  1. **Round-Robin** -- simplest possible: go in order. Request 1 -> Server A, Request 2 -> Server B, Request 3 -> Serer C and cycle through
-  2. **Weighted Round-Robin** -- same rotation, but some servers get more turns
-  3. **Least Connections** -- send the request to whichever server currently has the fewest active connections
+  1. **Round-Robin** -- simplest possible: go in order. Request 1 -> Server A, Request 2 -> Server B, Request 3 -> Server C and cycle through. Con: assumes all requests are equal cost and all servers equal capacity — doesn't adapt to real load.
+  2. **Weighted Round-Robin** -- same rotation, but some servers get more turns. Con: weights are static — pre-configured, not reactive to real-time load. Doesn't adapt if a high-weight server gets slammed.
+  3. **Least Connections** -- send the request to whichever server currently has the fewest active connections. Adapts to reality — if one server is slow or handling expensive requests, it accumulates connections and the LB routes away from it.
+  4. **Consistent Hashing** -- hash something about the request (e.g. user ID) and map it to a server. Same user always hits the same server. Pro: great for stateful workloads or local caching — if Server A always handles User 123, it can cache that user's data locally. Con: when a server goes down, its users must be redistributed. Naive hashing redistributes everyone; consistent hashing (ring approach) only redistributes the dead server's users. You'll see this again in database sharding.
 
 ## Session Stickiness
 
