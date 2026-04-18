@@ -71,48 +71,48 @@ This comes up in every system design interview. You'll be asked to estimate scal
 
 ### Architectural Patterns
 
-- [ ] Monolithic architecture — what it is, why it's usually the right choice for startups and small teams
-- [ ] Microservices — what problems they solve, what problems they create (network complexity, data consistency, operational overhead), when to actually use them
-- [ ] Monolith vs microservices trade-offs — the honest decision framework (not "microservices are always better")
-- [ ] Serverless — what it means (FaaS, BaaS), trade-offs (cold starts, vendor lock-in, cost model, debugging difficulty)
-- [ ] Event-driven architecture — pub/sub pattern, event sourcing (conceptual), when it makes sense
+- [x] Monolithic architecture — what it is, why it's usually the right choice for startups and small teams
+- [x] Microservices — what problems they solve, what problems they create (network complexity, data consistency, operational overhead), when to actually use them
+- [x] Monolith vs microservices trade-offs — the honest decision framework (not "microservices are always better")
+- [x] Serverless — what it means (FaaS, BaaS), trade-offs (cold starts, vendor lock-in, cost model, debugging difficulty)
+- [x] Event-driven architecture — pub/sub pattern, event sourcing (conceptual), when it makes sense
 
 ### Caching
 
-- [ ] Why caching matters — latency numbers every engineer should know
-- [ ] Cache-aside pattern (check cache → miss → query DB → populate cache)
-- [ ] Write-through vs write-behind caching
-- [ ] Cache eviction policies: LRU, LFU, TTL-based
-- [ ] Redis: what it is, common use cases (cache, session store, rate limiting, leaderboards)
-- [ ] CDN caching — what it caches, cache hierarchy, hit rates
-- [ ] Cache stampede / thundering herd — what it is and how to prevent it
-- [ ] When NOT to cache (dynamic/personalized content, low-read data)
+- [x] Why caching matters — latency numbers every engineer should know
+- [x] Cache-aside pattern (check cache → miss → query DB → populate cache)
+- [x] Write-through vs write-behind caching
+- [x] Cache eviction policies: LRU, LFU, TTL-based
+- [x] Redis: what it is, common use cases (cache, session store, rate limiting, leaderboards)
+- [x] CDN caching — what it caches, cache hierarchy, hit rates
+- [x] Cache stampede / thundering herd — what it is and how to prevent it
+- [x] When NOT to cache (dynamic/personalized content, low-read data)
 
 ### Load Balancing & Networking
 
-- [ ] What a load balancer does and where it sits
-- [ ] Algorithms: round-robin, least connections, weighted, consistent hashing
-- [ ] Session stickiness — when and why
-- [ ] Reverse proxy vs load balancer — overlap and differences
-- [ ] API Gateway pattern — authentication, rate limiting, routing
+- [x] What a load balancer does and where it sits
+- [x] Algorithms: round-robin, least connections, weighted, consistent hashing
+- [x] Session stickiness — when and why
+- [x] Reverse proxy vs load balancer — overlap and differences
+- [x] API Gateway pattern — authentication, rate limiting, routing
 
 ### Message Queues & Async Processing
 
-- [ ] Why async processing matters (decoupling, reliability, scale)
-- [ ] Producer-consumer pattern
-- [ ] Message queue concepts: at-least-once, at-most-once, exactly-once delivery
-- [ ] Common tools: Redis Streams, RabbitMQ, SQS (conceptual, not deep-dive)
-- [ ] When to use queues vs synchronous processing
+- [x] Why async processing matters (decoupling, reliability, scale)
+- [x] Producer-consumer pattern
+- [x] Message queue concepts: at-least-once delivery + idempotency (at-most-once/exactly-once scoped out as overkill for mid-level)
+- [x] Common tools: Redis Streams, RabbitMQ, SQS, Kafka, Celery (conceptual, not deep-dive)
+- [x] When to use queues vs synchronous processing
 
 ### Database Architecture
 
-- [ ] SQL vs NoSQL decision framework (when to use each, with examples)
-- [ ] Database indexing — B-tree indexes, when they help, when they hurt
-- [ ] Database replication — primary/replica, read replicas
-- [ ] Database sharding — horizontal partitioning, shard keys, trade-offs
-- [ ] Connection pooling — why it matters, how it works
-- [ ] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
-- [ ] Polyglot persistence — using the right DB for each job
+- [x] SQL vs NoSQL decision framework (when to use each, with examples)
+- [x] Database indexing — B-tree indexes, when they help, when they hurt
+- [x] Database replication — primary/replica, read replicas
+- [x] Database sharding — horizontal partitioning, shard keys, trade-offs
+- [x] Connection pooling — why it matters, how it works
+- [x] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
+- [x] Polyglot persistence — using the right DB for each job
 
 ### Search Engines & Full-Text Search
 
@@ -166,6 +166,11 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 | 2026-04-07 | Back-of-Envelope Estimation (lean version). QPS, peak vs avg, read/write split, storage, full interview script. | Pushed back hard initially — had never heard of QPS. Web research confirmed it's a real but optional interview topic; agreed on lean coverage. Worked through 5 concepts with progressive examples. Strong intuition on architectural translation (cache invalidation, hot/cold storage tiering, read-heavy → cache + CDN insight unprompted). Weak spot: arithmetic accuracy under pressure — final Twitter exercise undercounted total QPS by ~10x (12K instead of 102K), which led to undersized infra recommendations. Reasoning is ahead of math execution. Graded B. | Request Lifecycle |
 | 2026-04-08 | Request Lifecycle — full 6-stage walkthrough end-to-end. DNS, TCP, TLS, HTTP request, server processing, HTTP response + browser render. HTTP/3 versions deferred (out of scope for mid-level). | Strong session, A-/B+ across the board. Stage 1 (DNS): missed the recursive resolver hierarchy on first try, picked it up cleanly + asked a senior-flavor question on whether cache hits reset TTL (they don't — absolute time-from-fetch). Stage 2 (TCP): blanked on TCP recall from networking sub-topic, conflated it with TLS (encryption guess). Re-taught cleanly, locked in head-of-line blocking vocabulary on the multiplayer game UDP question. Pushed back appropriately on SYN/ACK depth — correctly calibrated for mid-level scope. Stage 3 (TLS): nailed the layering one-liner; B+ on the cert error scenario (correctly identified cert validation failure but conflated "no TLS" with "broken TLS"). Stage 4 (HTTP): C+ on the GET-as-DELETE failure modes question — knew the rule but didn't push through to predict consequences (browser prefetch, CDN caching, history). Important gap to track: "knows the rule, hasn't internalized implications." Stage 5: A- walking the diagram for latency bottlenecks; introduced N+1 queries vocab. Stage 6: B+ on async/defer fix — right instinct, didn't commit to one answer. Latency math under-counted (parallel to yesterday's QPS arithmetic miss) — pattern is "reasoning ahead of arithmetic execution." Sub-topic locked. Session also included extensive notes hygiene work — converted bold-as-section to proper `##` header hierarchy across all 3 system-design notes for VSCode outline + GitHub TOC compatibility. | Core Concepts (vertical/horizontal scaling, CAP, consistency models, latency vs throughput) |
 | 2026-04-09 | Core Concepts — all 4 chunks: vertical vs horizontal scaling, CAP theorem, consistency models (strong vs eventual), latency vs throughput. | B+ overall. Scaling: immediately reached for horizontal but initially framed it as "always better" — corrected to understand vertical-first for DBs, horizontal for stateless web servers, most systems do both. CAP: initially picked chat apps (Discord) as CP — corrected; chat is AP since brief staleness is fine, CP is for money/inventory. After correction, nailed the flash-sale ticket scenario with correct reasoning across all 4 concepts (CP, strong consistency, throughput as primary concern, horizontal for API servers). Consistency models: clean explanation of eventual consistency from the name alone. Latency vs throughput: swapped the chef/cafeteria analogy initially, corrected quickly, then correctly identified the 10K-user API degradation as a throughput problem. Applied wrap-up on ticket-selling system was strong — one minor correction on "DB scales horizontal too" when the pattern is DB stays vertical as long as possible. | Architectural Patterns (monolith vs microservices, serverless, event-driven) |
+| 2026-04-13/14 | Architectural Patterns — all 5 chunks: monolith, microservices, monolith vs micro decision framework, serverless, event-driven architecture. Applied scenario: healthtech patient portal. | B+ overall. Strong instincts throughout: correctly chose monolith for 3-engineer MVP, identified SMS reminders and file uploads as event-driven, knew appointment booking must be synchronous. Recall question nailed the "don't over-engineer early" argument but initially stopped at "don't do it" without countering the advisor's specific argument — pushed to articulate *why* the operational tax kills a small team. Serverless scenario: correctly rejected Lambda for steady 50K req/hr but attributed it to cold starts (wrong — functions stay warm at that volume) instead of cost (right answer). Applied assignment: went on an on-prem/vector DB tangent (rabbit hole in an interview context), missed file upload processing as the key async candidate, missed audit logging as a compliance-critical synchronous requirement, wrote "50,000K" (units error). Good security instinct for healthtech but needs to learn HIPAA-compliant cloud is standard. Corrected monorepo vs monolith vocabulary confusion. | Caching |
+| 2026-04-14 | Caching — all 7 chunks: why caching matters, cache-aside, write-through vs write-behind, eviction policies (LRU/LFU/TTL), Redis, CDN caching, cache stampede. Applied assignment: e-commerce product catalog caching design. | B overall. Conceptual understanding solid throughout — correctly explained why cache-aside degrades gracefully, picked write-behind for leaderboard scenario, good instinct on CDN for product images. Applied assignment exposed key gaps: (1) called invalidate-on-write "write-through" twice — knows the right behavior but used the wrong name, critical to fix for interviews; (2) applied staggered TTLs to the single-hot-key stampede problem when lock-based recomputation is the correct tool (had been told this 10 min prior); (3) proposed background polling for CDN image updates instead of simpler cache busting. Pushed back appropriately on needing all 3 stampede mitigations — agreed to drop background refresh, keep staggered TTLs + lock-based. Recall question (microservices): strong answer on engineer capacity bottleneck and 500 req/sec not needing microservices; correctly identified CI/CD pipeline proliferation and inter-service communication as specific operational costs. | Load Balancing & Networking |
+| 2026-04-16 | Load Balancing & Networking — all 5 chunks: what LB does + placement, algorithms (round-robin, weighted, least connections, consistent hashing), session stickiness, reverse proxy vs LB, API gateway pattern. Applied assignment: food delivery app. Quiz: B-. | B- on quiz. Strong conceptual understanding. Key gaps: (1) initially placed LB after gateway instead of before — corrected to Public LB → Gateway cluster → per-service LBs → instances; (2) missed consistent hashing in Q1 — added to notes; (3) reverse proxy mental model inverted (said it sits between LB and servers, correct is between clients and servers); (4) rate limiting counter in Redis — nailed the bug (4 instances × 5 = 20 orders) and fix. Consistent hashing: knows session/state use case but missed cache key locality angle (same key always routes to same server = cache stays warm). Gateway architecture clarification: one gateway codebase, N identical instances — never one-per-service. Justified gateway with cross-cutting concerns (auth, rate limiting), not just service count. | Message Queues & Async Processing |
+| 2026-04-17 | Message Queues & Async Processing — all 5 chunks (scoped lean): why async matters, producer-consumer, at-least-once + idempotency, common tools, when to use queues. | B+. Strong conceptual grasp — correctly explained why 200 consumer-crash messages aren't lost, nailed the async photo upload scenario with correct reasoning (202 Accepted introduced as new vocab). Idempotency definition was slightly off first attempt ("only fires once" vs "same result regardless of how many runs") — corrected but didn't re-articulate. Good scope instinct: pushed back on memorizing 3 delivery modes, we trimmed to just at-least-once. Celery flagged correctly as a real tool — noted as Python worker framework for Section 4. | Database Architecture |
+| 2026-04-18 | Database Architecture — all 7 chunks: SQL vs NoSQL, ACID, indexing, replication, sharding, connection pooling, storage types + polyglot persistence. | B+ overall. Strong conceptual grasp throughout. Key gaps: called Elasticsearch a vector DB (it's a search engine — corrected); missed composite index hint on (user_id, created_at); initially conflated ACID durability with consistency. Good instincts: correctly chose document store for variable-schema catalog, flagged inventory as transactional, nailed read-your-own-writes, pivoted to conversation_id as shard key for messaging. Healthy pushback on connection pooling depth — scoped it lean, which was correct. Interview tangent on AI pipelines when asked about PDF storage — redirected to core answer (S3 + reference in DB). | Search Engines & Full-Text Search |
 
 ---
 
