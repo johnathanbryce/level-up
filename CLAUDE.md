@@ -157,6 +157,18 @@ See `03-ai-foundations/CLAUDE.md` for detailed tracking.
 
 ---
 
+### Section 3.5: OOP Fundamentals
+
+Vanilla Python and JavaScript — no frameworks. The four pillars (encapsulation, inheritance, polymorphism, abstraction), composition vs. inheritance, OOP vs. functional design judgment, key dunder methods, `@dataclass`. Python-first with JS anchor points woven in where the contrast accelerates understanding. Prerequisite for Section 4 — FastAPI, SQLAlchemy, and LangChain patterns will read naturally once these are solid.
+
+**Definition of Done:** Can explain the four pillars from scratch, implement each in Python, articulate when OOP is the right tool vs. functional, and read class-based framework code without confusion.
+
+**Status:** NOT STARTED
+
+See `03.5-oop-fundamentals/CLAUDE.md` for detailed tracking.
+
+---
+
 ### Section 4: Backend Deep-Dive
 
 Python/FastAPI track (~60%): Build a real API with Postgres, Redis caching, auth, proper REST design. Node/Express track (~40%): Build equivalent patterns in Express.js. Postgres: Schema design, complex queries, indexing, EXPLAIN ANALYZE. Redis: Cache-aside pattern, TTL strategies, session storage.
