@@ -158,6 +158,25 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 
 ---
 
+## End-of-Section Capstone
+
+Run in its own dedicated session after all sub-topics and warm-down quizzes are complete. Three parts, all required.
+
+### Part 1 — Written Quiz (20-30 min)
+15 questions, mixed format: recall, "explain why," trade-off reasoning, and 2-3 applied scenarios spanning the full section. Scored. Any topic scoring below 70% triggers a targeted re-teach before the section closes — not "we'll revisit it later."
+
+### Part 2 — System Design Challenge (45-60 min)
+Fresh prompt John hasn't seen — not one of the practiced case studies. Design the full system cold: components, data flow, trade-offs, failure modes, scaling decisions. Claude pokes holes with "why not X?" and "what breaks first?" follow-ups. John must defend decisions or revise and explain why.
+
+### Part 3 — Rapid-Fire Defense (10-15 min)
+5-7 follow-up questions on the Part 2 design, interview-style. No notes. Tests whether understanding is real or pattern-matched to the prompt.
+
+**Pass criteria:** Part 1 ≥ 70% with no catastrophic misses on core topics (CAP, caching, DB scaling), Part 2 design has no major conceptual errors and trade-offs are articulated, Part 3 ≥ 4/7 answered confidently. Section only closes when all three pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Next Focus |

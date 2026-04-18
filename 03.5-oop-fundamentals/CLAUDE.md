@@ -85,6 +85,22 @@ Vanilla Python and JavaScript. No frameworks. The goal is to understand OOP as a
 
 ---
 
+## End-of-Section Capstone
+
+OOP is concept + code — the capstone tests both. Two parts, both required.
+
+### Part 1 — Coding Challenge (45 min)
+Claude provides a fresh prompt that requires all four pillars in one design. Example: "Build a notification system in Python: an abstract base `Notifier` class, two concrete implementations (`EmailNotifier`, `SMSNotifier`), encapsulated channel config, a polymorphic `send()` method, and a `NotificationService` that composes (not inherits) one or more notifiers." John implements from scratch with no notes. Graded on: correctness, appropriate use of OOP (not forcing it where functions would be cleaner), and idiomatic Python style.
+
+### Part 2 — Design Judgment (10-15 min verbal)
+Claude presents two short scenarios. John must argue whether OOP or functional is the right tool for each, and why. One scenario where OOP is clearly right, one where it's clearly wrong. Reasoning matters more than the answer.
+
+**Pass criteria:** Part 1 implements all four pillars correctly with clean Python, Part 2 judgment calls are correct with specific reasoning. Section closes when both pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Notes |

@@ -119,6 +119,9 @@ Only when (a) the sub-topic just covered has a natural interview-question equiva
 **End-of-Section Warm-Down Quiz (5-10 min, mandatory)**
 Before marking any section sub-topic group or full section as complete, run a structured quiz: 5-7 mixed-format questions covering recall, "explain why," trade-off reasoning, and one applied scenario. Log the result in the section CLAUDE.md. Failures trigger targeted re-teach before advancing — not a "we'll come back to it." This is the definition of done with teeth.
 
+**End-of-Section Capstone (mandatory — runs after all sub-topics and quizzes are done)**
+Each section ends with a dedicated capstone session. Format varies by section type — study-heavy sections get a formal multi-part assessment; project-based sections get an architecture defense or from-scratch rebuild. Algorithms is the exception: Phase 3 (timed interview simulation) is the ongoing capstone and there is no separate end-of-section event. For all other sections, the capstone is the final gate before the section is marked complete. See each section's CLAUDE.md for the specific format, pass criteria, and log. A section does not close without a passed capstone — no exceptions.
+
 ---
 
 ## The Roadmap

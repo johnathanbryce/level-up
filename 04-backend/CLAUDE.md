@@ -108,6 +108,25 @@ This is the *best* form a learning project can take: a deliberate artifact that 
 
 ---
 
+## End-of-Section Capstone
+
+The projects are the primary proof — if both are built and working, most of the section's skill is demonstrated. The capstone verifies the decisions behind the code hold up under pressure, and that SQL depth is real.
+
+### Part 1 — Architecture Defense (20-30 min)
+Claude plays a senior engineer reviewing the FastAPI project. Questions target every decision: schema design choices, indexing strategy, caching approach, auth flow, error handling, testing coverage. John must defend decisions with reasoning, or acknowledge and articulate what he'd do differently. No looking at the code — the goal is knowing why it was built the way it was, not reading it back.
+
+### Part 2 — SQL Challenge (20-30 min)
+Claude provides a fresh schema (not the project's own). John writes 3 queries of increasing complexity with no references:
+1. A JOIN with a filter and GROUP BY aggregation
+2. A CTE that solves a multi-step problem (e.g., "find users who ordered more than the average order count")
+3. A slow-query scenario — Claude shows an EXPLAIN ANALYZE output, John identifies the bottleneck and proposes the correct index with reasoning
+
+**Pass criteria:** Architecture defense reveals no major blind spots (schema, caching, auth decisions all explained), all 3 SQL queries correct and readable, index decision for query 3 is correct and justified. Section closes when both parts pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Track (Py/Node) | Assessment | Next Focus |

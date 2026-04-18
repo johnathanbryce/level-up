@@ -120,6 +120,27 @@ Light coverage — ties into Observability in System Design (Section 2). Focus i
 
 ---
 
+## End-of-Section Capstone
+
+DevOps is hands-on. The real test is: can you do it from scratch with no references?
+
+### Part 1 — From-Scratch Build (60-90 min)
+Claude provides a simple, fresh Python app (not one of the section projects). John must write three files from scratch with no looking at previous work:
+1. **Dockerfile** — correct base image, layering order for cache efficiency, non-root user, .dockerignore
+2. **docker-compose.yml** — the app + Postgres + Redis, correct networking, volumes, env vars, healthcheck
+3. **GitHub Actions workflow** — install → test → build Docker image → push to registry (simulated)
+
+All three must be functional. Claude reviews for correctness and best practices (security, layer caching, secret handling).
+
+### Part 2 — Deployment Strategy Defense (10-15 min verbal)
+Claude presents a scenario: "You're deploying a breaking API change to a service with 50K daily active users. You can't take downtime. Walk me through which deployment strategy you'd choose, why, and exactly how you'd roll back if the new version starts throwing 500s." John answers cold — no notes.
+
+**Pass criteria:** All three files are functional and follow best practices (no root, no `latest` in production, no secrets in the image), deployment strategy answer covers the correct trade-offs and rollback mechanism. Section closes when both pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Next Focus |
