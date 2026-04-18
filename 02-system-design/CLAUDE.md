@@ -106,13 +106,13 @@ This comes up in every system design interview. You'll be asked to estimate scal
 
 ### Database Architecture
 
-- [ ] SQL vs NoSQL decision framework (when to use each, with examples)
-- [ ] Database indexing — B-tree indexes, when they help, when they hurt
-- [ ] Database replication — primary/replica, read replicas
-- [ ] Database sharding — horizontal partitioning, shard keys, trade-offs
-- [ ] Connection pooling — why it matters, how it works
-- [ ] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
-- [ ] Polyglot persistence — using the right DB for each job
+- [x] SQL vs NoSQL decision framework (when to use each, with examples)
+- [x] Database indexing — B-tree indexes, when they help, when they hurt
+- [x] Database replication — primary/replica, read replicas
+- [x] Database sharding — horizontal partitioning, shard keys, trade-offs
+- [x] Connection pooling — why it matters, how it works
+- [x] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
+- [x] Polyglot persistence — using the right DB for each job
 
 ### Search Engines & Full-Text Search
 
@@ -170,6 +170,7 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 | 2026-04-14 | Caching — all 7 chunks: why caching matters, cache-aside, write-through vs write-behind, eviction policies (LRU/LFU/TTL), Redis, CDN caching, cache stampede. Applied assignment: e-commerce product catalog caching design. | B overall. Conceptual understanding solid throughout — correctly explained why cache-aside degrades gracefully, picked write-behind for leaderboard scenario, good instinct on CDN for product images. Applied assignment exposed key gaps: (1) called invalidate-on-write "write-through" twice — knows the right behavior but used the wrong name, critical to fix for interviews; (2) applied staggered TTLs to the single-hot-key stampede problem when lock-based recomputation is the correct tool (had been told this 10 min prior); (3) proposed background polling for CDN image updates instead of simpler cache busting. Pushed back appropriately on needing all 3 stampede mitigations — agreed to drop background refresh, keep staggered TTLs + lock-based. Recall question (microservices): strong answer on engineer capacity bottleneck and 500 req/sec not needing microservices; correctly identified CI/CD pipeline proliferation and inter-service communication as specific operational costs. | Load Balancing & Networking |
 | 2026-04-16 | Load Balancing & Networking — all 5 chunks: what LB does + placement, algorithms (round-robin, weighted, least connections, consistent hashing), session stickiness, reverse proxy vs LB, API gateway pattern. Applied assignment: food delivery app. Quiz: B-. | B- on quiz. Strong conceptual understanding. Key gaps: (1) initially placed LB after gateway instead of before — corrected to Public LB → Gateway cluster → per-service LBs → instances; (2) missed consistent hashing in Q1 — added to notes; (3) reverse proxy mental model inverted (said it sits between LB and servers, correct is between clients and servers); (4) rate limiting counter in Redis — nailed the bug (4 instances × 5 = 20 orders) and fix. Consistent hashing: knows session/state use case but missed cache key locality angle (same key always routes to same server = cache stays warm). Gateway architecture clarification: one gateway codebase, N identical instances — never one-per-service. Justified gateway with cross-cutting concerns (auth, rate limiting), not just service count. | Message Queues & Async Processing |
 | 2026-04-17 | Message Queues & Async Processing — all 5 chunks (scoped lean): why async matters, producer-consumer, at-least-once + idempotency, common tools, when to use queues. | B+. Strong conceptual grasp — correctly explained why 200 consumer-crash messages aren't lost, nailed the async photo upload scenario with correct reasoning (202 Accepted introduced as new vocab). Idempotency definition was slightly off first attempt ("only fires once" vs "same result regardless of how many runs") — corrected but didn't re-articulate. Good scope instinct: pushed back on memorizing 3 delivery modes, we trimmed to just at-least-once. Celery flagged correctly as a real tool — noted as Python worker framework for Section 4. | Database Architecture |
+| 2026-04-18 | Database Architecture — all 7 chunks: SQL vs NoSQL, ACID, indexing, replication, sharding, connection pooling, storage types + polyglot persistence. | B+ overall. Strong conceptual grasp throughout. Key gaps: called Elasticsearch a vector DB (it's a search engine — corrected); missed composite index hint on (user_id, created_at); initially conflated ACID durability with consistency. Good instincts: correctly chose document store for variable-schema catalog, flagged inventory as transactional, nailed read-your-own-writes, pivoted to conversation_id as shard key for messaging. Healthy pushback on connection pooling depth — scoped it lean, which was correct. Interview tangent on AI pipelines when asked about PDF storage — redirected to core answer (S3 + reference in DB). | Search Engines & Full-Text Search |
 
 ---
 

@@ -71,7 +71,7 @@ App → reads  → Replica 1, Replica 2, Replica 3
 
 - **The catch** -- replicates are *slightly* behind the primary
     - This means reads from replicas might return stale data
-    - This is **evental consistency** in practice (CAP theorem)
+    - This is **eventual consistency** in practice (CAP theorem)
 
 - **Read-your-own-writes consistency:** -- a pattern whereby a if a user makes a write, route their subsequent reads to the primary database for a short window (or just that request) to ensure the database is 100% accurate (remember, replicas can sometimes lag behind, especially during spikes)
 
@@ -85,4 +85,41 @@ Shard 1: users with ID 1 - 10M
 Shard 2: users with ID 10M - 20M
 Shard 3: users with ID 20M - 30M
 
-- 
+- Now writes are distributed; each shard handles its own slice
+
+- The **shard key** is the column you split on, choosing it is the most important decision:
+    - **Good shard key** -- high cardinality, evenly distributed, matches your access patterns (usually *user_id*)
+    - **Bad shard key** -- low cardinality or uneven - you end up with one fat shard and two empty ones
+
+- **Rule of thumb:** sharding is a last resort. Exhaust vertical scaling, indexing, caching, and read replicas first
+
+## Connection Pooling
+- Every time your app queries the DB, it needs a connection 
+- Opening a connection is expensive -- TCP handshake, auth, setup
+- Under load, if every request opens and closes its own connection, you'll exhaust the DB's connection limit and crater performance
+- A **connection pool** maintains a set of open connections that get reused
+    - Request comes in -> grab a connection from the pool -> run the query, return the connection
+    - No open/close overhead
+- The key config: **pool size**
+    - Too small = requests queue up waiting 
+    - Too large = db gets overwhelemd
+    - Typtical starting point is 10 - 20 connections per app instance
+
+## Polyglot Persistence
+- Using multiple database technologies in one system, each chosen for what it's best at
+- Ex: Postgres for users/oders, MongoDB for product catalog, Redis for sessions/cache, Elasticsearch for search
+- One system, 4 databases, each doing what it's designed for
+
+## Storage Types
+- 3 types that come up constantly, especially in AI work:
+    - **Object/Blob storage** e.g. S3, GCS
+        - files, images, documents, model artifacts
+        - cheap, infinitely scalable, not for structured data
+    - **Block storage** e.g. EBS (AWS)
+        - Attached disk for a server
+        - Like a hard drive - your DB writes here
+        - Low latency, tied to one machine
+    - **File storage** e.g. EFS (AWS)
+        - Shared filesystem multiple servers can mount simultaneously
+        - Useful for shared assets across instances
+
