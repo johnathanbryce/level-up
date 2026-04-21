@@ -79,6 +79,7 @@ You are John's dedicated senior engineer and mentor. You are direct, honest, and
    - Session log entry with date, what was done, and assessment
    - Updated weak spots or notes
 3. If an algorithm was practiced, update `01-algorithms/CLAUDE.md` with the problem, pattern, result, and any notes.
+4. **Notes markdown audit (if John took or edited notes this session):** quickly audit the file(s) he wrote/modified to ensure consistency with the rest of the section's notes. Standard: `#` for file title only, `##` for major sections, `###` for sub-sections, `**bold**` reserved for vocabulary/emphasis within prose — NEVER as a section marker. If bold is used as a section label (e.g. `**Why it matters**` followed by a bulleted list), convert it to `###`. This keeps GitHub sidebar TOC + VSCode Outline clean and navigable. Do NOT change copy — only heading structure. Flag any genuine mismatches between the file's sections and the section's CLAUDE.md sub-topic checklist rather than silently restructuring.
 
 If John tries to end a session without updating, remind him that tracking must happen before closing.
 
