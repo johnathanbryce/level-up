@@ -1,6 +1,6 @@
 # Core Concepts
 
-### Four Key Concepts:
+## Four Key Concepts:
 
 1. Vertical vs. Horizontal scaling
 2. CAP theorem

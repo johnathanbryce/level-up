@@ -29,7 +29,7 @@ End-of-section warm-down quiz is mandatory before marking the section complete (
 
 ### Request Lifecycle (full end-to-end walkthrough)
 
-The classic "what happens when you type a URL" interview question, walked stage by stage. Notes in `notes/request-lifecycle.md`.
+The classic "what happens when you type a URL" interview question, walked stage by stage. Notes in `notes/01-request-lifecycle.md`.
 
 - [x] Stage 1: DNS Resolution (cache hierarchy, TTL semantics, absolute-time TTL clarification)
 - [x] Stage 2: TCP Handshake (three-way handshake, 1 RTT cost, connection reuse, head-of-line blocking)

@@ -37,10 +37,8 @@
 
 - **Rule of thumb:** Retry only **idempotent** operations. Retrying a non-indempotent POST can create duplicates
 
-## Chunk 2: Idempotency
-
-### Definition
-Operation is idempotent if running it multiple times = same result as running it once.
+## Idempotency
+- Operation is idempotent if running it multiple times = same result as running it once.
 
 ### Why it matters for resilience
 - Retries + network uncertainty = duplicates are inevitable.
