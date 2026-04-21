@@ -5,7 +5,7 @@
 - [Scenario] - Your app is getting enough traffic that one server can't handle it. You've scaled horizontally - you now have 4 identical app servers
 - [Problem] - Users send requests to a single address (your domain). Something needs to sit in front of those 4 servers and decide which one handles each request
   - This is the job of a load balancer. It is the traffic cop
-- An LB makes pre-request decisions in real time with full visiblity into backend health and load (unlike DNS which just routes traffic blindly)
+- An LB makes pre-request decisions in real time with full visibility into backend health and load (unlike DNS which just routes traffic blindly)
 - **Client -> Load Balancer -> one of N backend servers**
 
 - Where it typically sits:
