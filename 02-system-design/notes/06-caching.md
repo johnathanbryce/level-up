@@ -3,12 +3,12 @@
 ## Why Caching Matters
 - Reading from a database is slow compared to reading from memory. Every time your app can answer a request from memory instead of hitting a database, it's faster for the user and cheaper on your infra
 
-**When does caching make sense?**
+### When does caching make sense?
 - Data is **read more often than written** (high read-to-write ratio)
 - The same data is **requested repeatedly** 
 - Slight staleness is **acceptable** (you can tolerate the data being a few seconds old)
 
-**When does caching NOT make sense?**
+### When does caching NOT make sense?
 - Data changes constantly and must be fresh
 - Every request is unique
 - Data is highly personalized with no overlap between users
@@ -34,18 +34,20 @@ Request → [Check Cache]
 - Cache-aside is a **read** strategy
 - These two patterns address what happens on **writes**
 
-**Write-Through:**
-    1. App writes to the cache
-    2. Cache **immediately** writes to the database (synchronously)
-    3. Response returns only after both writes success
+### Write-Through
+
+1. App writes to the cache
+2. Cache **immediately** writes to the database (synchronously)
+3. Response returns only after both writes success
 
 - Pros: cache and DB are always in sync - no staleness
 - Cons: every write is slower - you're doing two writes before responding
 
-**Write-Behind (Write-Back):**
-    1. App writes to the cache
-    2. Cache acknowledges immediately - user gets a fast response
-    3. Cache writes to the databse **later** (async, batched)
+### Write-Behind (Write-Back)
+
+1. App writes to the cache
+2. Cache acknowledges immediately - user gets a fast response
+3. Cache writes to the databse **later** (async, batched)
 
 - Pros: writes are fast - user doesn't wait for DB
 - Cons: if the cache crashes before syncing to DB, you **lose data**. Cache had the only copy
@@ -71,17 +73,19 @@ Core Concept: **Evicition policies (LRU/LFU) manage space. Invalidation strategi
 
 ## Redis
 - An in-memory data store. It holds data in RAM, which is why it's fast. It sits alongside your db as a caching layer
-- **Key characteristics:**
-    - **In-memory** -- all data lives on RAM. Fast reads/writes but limited memory
-    - **Data structures** -- not just key-value. Redis supports strings, lists, sets, hashes, and more
-    - **Singled-threaded** -- one operation at a time, no race conditions
-    - **Optional persistence** -- can snapshot to disk or log every write for durability
+### Key characteristics
 
-- **Common use cases:**
-    - **Cache layer** -- the cache-aside pattern
-    - **Session storage** -- user sessions in Redis instead of your app server's memory (this is what makes horizontal scaling work - any server can look up any users session)
-    - **Rate limiting** -- track request counts per user with TTL keys 
-    - **Leaderboards** 
+- **In-memory** -- all data lives on RAM. Fast reads/writes but limited memory
+- **Data structures** -- not just key-value. Redis supports strings, lists, sets, hashes, and more
+- **Singled-threaded** -- one operation at a time, no race conditions
+- **Optional persistence** -- can snapshot to disk or log every write for durability
+
+### Common use cases
+
+- **Cache layer** -- the cache-aside pattern
+- **Session storage** -- user sessions in Redis instead of your app server's memory (this is what makes horizontal scaling work - any server can look up any users session)
+- **Rate limiting** -- track request counts per user with TTL keys 
+- **Leaderboards** 
 
 ## CDN Caching
 - **CDN:** a network of servers distributed geographically that cache content close to users
@@ -90,11 +94,12 @@ Core Concept: **Evicition policies (LRU/LFU) manage space. Invalidation strategi
     - API responses
     - Entire HTML pages (for static or semi-static sites)
 
-- **How it works:**
-    1. User in Tokyo requests yourapp.com/logo.png
-    2. Request hits the nearest CDN edge node (Tokyo)
-    3. **Cache hit:** edge node has it -> returns immediately and origin server never touched
-    4. **Cache miss:** edge node forwards to origin -> origin responds -> edge node caches it + returns to user. Next Tokyo user gets a cache hit
+### How it works
+
+1. User in Tokyo requests yourapp.com/logo.png
+2. Request hits the nearest CDN edge node (Tokyo)
+3. **Cache hit:** edge node has it -> returns immediately and origin server never touched
+4. **Cache miss:** edge node forwards to origin -> origin responds -> edge node caches it + returns to user. Next Tokyo user gets a cache hit
 
 - **Cache control:** your origin server tells the CDN what to cache and for how long via HTTP headers:
     - *Cache-Control: max-age=86400* -- cache this for 24 hrs
@@ -117,8 +122,9 @@ Core Concept: **Evicition policies (LRU/LFU) manage space. Invalidation strategi
 
 - The above ex is a **cache stampede** 
 
-- **3 Common Mitigations:**
-    1. **Staggered TTLs** -- add a random jitter to expiration times. Instead of every entry expiring at exactly 300 seconds, use 270 - 330 seconds. Prevents mass simultaneous expiry
-    2. **Lock-based recomputation** -- when a cache miss happens, the first request acquires a lock and rebuilds the cache. All other concurrent requests either wait for the lock to release or get served slightly stale version
-    3. **Background refresh** -- before the TTL expires, a background job proactively refreshes the cache entry. The entry never actually goes empty, it gets replaced while still valid
+### 3 Common Mitigations
+
+1. **Staggered TTLs** -- add a random jitter to expiration times. Instead of every entry expiring at exactly 300 seconds, use 270 - 330 seconds. Prevents mass simultaneous expiry
+2. **Lock-based recomputation** -- when a cache miss happens, the first request acquires a lock and rebuilds the cache. All other concurrent requests either wait for the lock to release or get served slightly stale version
+3. **Background refresh** -- before the TTL expires, a background job proactively refreshes the cache entry. The entry never actually goes empty, it gets replaced while still valid
 

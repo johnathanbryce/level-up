@@ -29,9 +29,10 @@
 - Why? If a server stores session state locally (e.g. shopping cart in memory or a websocket), sending the next request to a different server means the server has no idea who the user is
 - **How it works:**
   - The LB tracks which server a user was assigned to (usually via a cookie or IP) and keeps routing that user to the same server
-- **The trade-off:**
-  - **Pro:** Simple way to handle server-local state
-  - **Con:** Defeats the purpose of load balancing. Server A accumulates all the "sticky" power users, it gets overloaded while B/C/D sit idle. If server A dies, users lose all their state
+### The trade-off
+
+- **Pro:** Simple way to handle server-local state
+- **Con:** Defeats the purpose of load balancing. Server A accumulates all the "sticky" power users, it gets overloaded while B/C/D sit idle. If server A dies, users lose all their state
 
 - **The better answer:** Instead of sticky sessions, **externalize your state**
   - Put sessions in Redis, carts in a db
@@ -64,26 +65,30 @@
 
 - An API gateway is a reverse proxy with app-level smarts bolted on. It's the single entry point for all client requests, but instead of just forwarding traffic, it handles cross-cutting concerns so your services don't have to
 
-- **What an API Gateway does:**
-  - **Authentication/authorization** -- validates JWTs or API keys before the request ever reaches your service
-  - **Rate limiting** -- "this user gets 100 requests/min" enforced in one place
-  - **Request routing** -- /users -> User Service, /orders -> Order Service, /search -> Search Service
-  - **Protocol translation** -- client speaks REST, backend service speaks gRPC
-  - **Logging/metrics** -- one place to observe all traffic
+### What an API Gateway does
 
-- **Where it sits:**
-  - **Client -> Public LB -> API Gateway cluster -> Backend Services**
-  - The gateway itself is a horizontally scaled service. It runs on N identical instances for availability and throughput. A public-facing LB distributes traffic across those instances — for self-hosted gateways (Kong, Traefik, Envoy) you provision this LB yourself. For managed gateways (AWS API Gateway) Amazon provisions it for you — the LB is still there, just abstracted away.
+- **Authentication/authorization** -- validates JWTs or API keys before the request ever reaches your service
+- **Rate limiting** -- "this user gets 100 requests/min" enforced in one place
+- **Request routing** -- /users -> User Service, /orders -> Order Service, /search -> Search Service
+- **Protocol translation** -- client speaks REST, backend service speaks gRPC
+- **Logging/metrics** -- one place to observe all traffic
 
-- **When you need one:**
-  - Microservices architecture -- without a gateway, every client needs to know the address of every service. The gateway gives them one door
-  - Public APIs -- rate limiting, auth, and key management in one place
-  - Mobile/web BFF (backend for frontend)
-  - When you need cross-cutting concerns (auth, rate limiting) in one place rather than duplicated in every service
+### Where it sits
 
-- **When you don't:**
-  - Monolith with one backend -- a reverse proxy covers you
-  - Small number of services where an ALB with path-based routing to target groups is simpler and sufficient. The gateway earns its complexity when you need things like rate limiting and centralized auth, not just because you have multiple services.
+- **Client -> Public LB -> API Gateway cluster -> Backend Services**
+- The gateway itself is a horizontally scaled service. It runs on N identical instances for availability and throughput. A public-facing LB distributes traffic across those instances — for self-hosted gateways (Kong, Traefik, Envoy) you provision this LB yourself. For managed gateways (AWS API Gateway) Amazon provisions it for you — the LB is still there, just abstracted away.
+
+### When you need one
+
+- Microservices architecture -- without a gateway, every client needs to know the address of every service. The gateway gives them one door
+- Public APIs -- rate limiting, auth, and key management in one place
+- Mobile/web BFF (backend for frontend)
+- When you need cross-cutting concerns (auth, rate limiting) in one place rather than duplicated in every service
+
+### When you don't
+
+- Monolith with one backend -- a reverse proxy covers you
+- Small number of services where an ALB with path-based routing to target groups is simpler and sufficient. The gateway earns its complexity when you need things like rate limiting and centralized auth, not just because you have multiple services.
 
 - Real world tools: AWS API Gateway, Kong, Traefik
 

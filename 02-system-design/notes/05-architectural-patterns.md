@@ -21,29 +21,35 @@
 
 Ex: Trello clone: auth service, board service, notification service, billing service - each running separately communicating over HTTP or message queues
 
-- **What problems they solve:**
-  - **Fault isolation**
-  - **Independent scaling** - your boards service gets 100x more traffic than billing? Scale just the boards service
-  - **Independent deployment** -- team A ships boards without waiting for team B to finish billing changes
-  - **Team autonomy** -- each team owns a service end-to-end
-- **What problems they create:**
-  - **Network complexity** -- function calls become HTTP requests (they can fail, time out, arrive out of order). You now need retries, timeouts, etc. for things that used to be a function call
-  - **Data consistency** -- each service has its own database. Super hard to keep data in sync across services
-  - **Operational overhead** -- instead of one deploy pipeline, you have 5,10,20. Each needs monitoring, logging, alerting.
-  - **Debugging difficulty** -- a bug that spans two services means reading logs from two places
+### What problems they solve
+
+- **Fault isolation**
+- **Independent scaling** - your boards service gets 100x more traffic than billing? Scale just the boards service
+- **Independent deployment** -- team A ships boards without waiting for team B to finish billing changes
+- **Team autonomy** -- each team owns a service end-to-end
+
+### What problems they create
+
+- **Network complexity** -- function calls become HTTP requests (they can fail, time out, arrive out of order). You now need retries, timeouts, etc. for things that used to be a function call
+- **Data consistency** -- each service has its own database. Super hard to keep data in sync across services
+- **Operational overhead** -- instead of one deploy pipeline, you have 5,10,20. Each needs monitoring, logging, alerting.
+- **Debugging difficulty** -- a bug that spans two services means reading logs from two places
 
 ## Monolith vs. Microservices - The Decision Framework
 
 - It's not a "which is better" debate, its a "when does each make sense" question
-- **Start with a monolith when:**
-  - small team (>10-15 engineers)
-  - early-stage product where requirements are still shifting
-  - don't yet know where the service boundaries should be
-- **Move to microservices when:**
-  - team size makes coordination in one codebase painful
-  - you have a specific service that needs independent scaling (e.g. your image processing burns 10x more CPU than everything else)
-  - you have clear, stable domain boundaries
-  - you can afford the operational overhead (dedicated DevOps, monitors, CI/CD per service)
+### Start with a monolith when
+
+- small team (>10-15 engineers)
+- early-stage product where requirements are still shifting
+- don't yet know where the service boundaries should be
+
+### Move to microservices when
+
+- team size makes coordination in one codebase painful
+- you have a specific service that needs independent scaling (e.g. your image processing burns 10x more CPU than everything else)
+- you have clear, stable domain boundaries
+- you can afford the operational overhead (dedicated DevOps, monitors, CI/CD per service)
 
 - The real-world path is **monolith -> modular monolith -> extract services one at a time when needed**
 - So, build a well-structured monolith, and extract services when you have evidence you need them
@@ -54,16 +60,19 @@ Ex: Trello clone: auth service, board service, notification service, billing ser
 - The most common form is **Faas (Functions as a Service)** - AWS Lambda, Google Cloud Functions, Vercel serverless functions
   - You write a function, deploy it, and the provider runs it when triggered (HTTP request, file upload, cron schedule, queue message)
 
-- **What you get:**
-  - **Zero server management**
-  - **Auto-scaling to zero** -- if nobody calls your function, you pay nothing. if 10,000 people call it at once, it scales automatically
-  - **Pay-per-execution** -- great for bursty or unpredictable traffic
-- **What it costs you:**
-  - Vendor lock-in
-  - Cold starts
-  - Debugging difficulty
-  - Execution limits
-  - Costs at scale
+### What you get
+
+- **Zero server management**
+- **Auto-scaling to zero** -- if nobody calls your function, you pay nothing. if 10,000 people call it at once, it scales automatically
+- **Pay-per-execution** -- great for bursty or unpredictable traffic
+
+### What it costs you
+
+- Vendor lock-in
+- Cold starts
+- Debugging difficulty
+- Execution limits
+- Costs at scale
 
 ## Event-Driven Architecture
 
@@ -93,17 +102,23 @@ The user waits for ALL of that. In an event-driven approach:
   - analytics service hears "board_created" -> logs it
   - notification service hears "board_created" -> pings team members
 
-**What you get:** 
-  - **Decoupling** -- board service doesn't know or care that emails exist 
-  - **Responsiveness** -- the user gets an immediate response, heavy work happens in the background 
-  - **Resilience** -- if email service is down, the board still gets created
+### What you get
 
-**What it costs you:** 
-  - **Debugging complexity** 
-  - **Message ordering** -- events can arrive out of order. If "board_deleted" arrives before "board_created" in a consumer, you have a problem 
-  - **Infrastructure overhead** -- you need a message broker (Kafka, SQS, etc.), that's another system to run, monitor, and understand
+- **Decoupling** -- board service doesn't know or care that emails exist 
+- **Responsiveness** -- the user gets an immediate response, heavy work happens in the background 
+- **Resilience** -- if email service is down, the board still gets created
 
-**When it makes sense:** - Multiple systems need to react to the same event - You need to decouple heavy background work from user-facing responses - Resilience matters - you'd rather queue work than drop it when a service is down
+### What it costs you
+
+- **Debugging complexity** 
+- **Message ordering** -- events can arrive out of order. If "board_deleted" arrives before "board_created" in a consumer, you have a problem 
+- **Infrastructure overhead** -- you need a message broker (Kafka, SQS, etc.), that's another system to run, monitor, and understand
+
+### When it makes sense
+
+- Multiple systems need to react to the same event
+- You need to decouple heavy background work from user-facing responses
+- Resilience matters - you'd rather queue work than drop it when a service is down
 
 - **When it doesn't:**
   - Simple request/response flows where the user needs the result immediately

@@ -47,7 +47,8 @@
 - **Hybrid search** = combining both
     - ES/BM25 for keyword matches + vector DB for semantic matches, results merged
 
-- **Revised Mental Model:**
-    - Keyword query with relevance ranking -> Elasticsearch (BM25)
-    - Semantic / conceptual query -> pgvector / vector DB (embeddings)
-    - Both at once -> hybrid search 
+### Revised Mental Model
+
+- Keyword query with relevance ranking -> Elasticsearch (BM25)
+- Semantic / conceptual query -> pgvector / vector DB (embeddings)
+- Both at once -> hybrid search 

@@ -16,24 +16,26 @@
   1. **Thundering herd / retry storm:** 10K retries fail at once -> all retry at the same moment -> DDoS your own recovering service
   2. **Hammering a dying service:** immediate retries add load to a service that's already overloaded. Makes recovery slower, not faster
 
-- **The fix: exponential backoff + jitter**
-  - **Exponential backoff** -- wait longer each attempt, doubling:
+### The fix: exponential backoff + jitter
 
-    Attempt 1 fails → wait 1s
-    Attempt 2 fails → wait 2s
-    Attempt 3 fails → wait 4s
-    Attempt 4 fails → give up
+- **Exponential backoff** -- wait longer each attempt, doubling:
 
-        - Purpose: space retries out so recovering services aren't slammed
+  Attempt 1 fails → wait 1s
+  Attempt 2 fails → wait 2s
+  Attempt 3 fails → wait 4s
+  Attempt 4 fails → give up
 
-  - **Jitter** -- add randomness to the wait. Instead of "wait 2s exactly", wait "1.5 - 2.5s random"
-    - Without jitter, all clients that failed at the same moment wait the same 2s -> thunder herd just delayed by 2s
-    - Jitter de-synchronizes clients so retries spread across the window
-    - **Formula:** -- wait = min(base \* 2^attempt, max_delay) + random_jitter
+      - Purpose: space retries out so recovering services aren't slammed
 
-- **Bounds (always set these)**
-  - **Max retries** -- e.g. 3 - 5 attempts (stops infinite loops)
-  - **Max delay** -- e.g. 30s cap (stops waits from growing unboundedly)
+- **Jitter** -- add randomness to the wait. Instead of "wait 2s exactly", wait "1.5 - 2.5s random"
+  - Without jitter, all clients that failed at the same moment wait the same 2s -> thunder herd just delayed by 2s
+  - Jitter de-synchronizes clients so retries spread across the window
+  - **Formula:** -- wait = min(base \* 2^attempt, max_delay) + random_jitter
+
+### Bounds (always set these)
+
+- **Max retries** -- e.g. 3 - 5 attempts (stops infinite loops)
+- **Max delay** -- e.g. 30s cap (stops waits from growing unboundedly)
 
 - **Rule of thumb:** Retry only **idempotent** operations. Retrying a non-indempotent POST can create duplicates
 

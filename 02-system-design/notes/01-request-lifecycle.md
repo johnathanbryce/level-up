@@ -4,7 +4,7 @@ The full path has roughly 6 major stages: DNS → TCP → TLS → HTTP request �
 
 > *"What happens when you type https://twitter.com and hit Enter?"*
 
-**6 Lifecycle Stages:**
+## 6 Lifecycle Stages
 
 1. DNS Resolution
 2. TCP Handshake
@@ -231,7 +231,7 @@ When you hear "the page is slow" the right first question is *"slow at which mil
 | `<script async>` | Download in parallel with parsing. Execute as soon as it's downloaded — interrupts parsing whenever that happens. Order **not** guaranteed if multiple async scripts. |
 | `<script defer>` | Download in parallel with parsing. Execute after the DOM is fully parsed, just before `DOMContentLoaded`. Order **guaranteed** — defer scripts run in document order. |
 
-**When to use which:**
+#### When to use which
 
 - **`async`** -- for fully independent scripts that don't depend on the DOM or other scripts. Canonical use case: analytics, ad pixels (fire-and-forget).
 - **`defer`** -- for scripts that need the DOM ready and/or need to run in a specific order. Canonical use case: jQuery and anything that depends on it.

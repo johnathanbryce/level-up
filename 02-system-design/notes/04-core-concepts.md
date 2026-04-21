@@ -14,12 +14,12 @@
     1. **Vertical scaling** - make your existing machine bigger: more CPU, RAM, fast disk
     2. **Horizontal scaling** - add more machines. instead of one powerful server, run 10 smaller ones behind a load balancer
 
-**Vertical is the right move first because:**
+### Vertical is the right move first because
 - Zero architecture change. Upgrade the instance size, done in minutes
 - No distributed systems complexity. One database, one source of truth
 - Cheaper
 
-**Horizontal becomes necessary when:**
+### Horizontal becomes necessary when
 - Single point of failure becomes an issue
 - Maxed our vertical or you need fault tolerance (no downtime) or your work is stateless and parallelizes naturally 
 
@@ -60,7 +60,7 @@ ___
   - Strong consistency = correctness guaranteed, pay with latency
   - Eventual consistency = speed guaranteed, tolerate brief staleness
 
-**Real-world mapping:**
+### Real-world mapping
 - Bank balance -> strong consistency
 - Instagram like count -> eventual consistency
 - Shopping cart inventory -> strong consistency

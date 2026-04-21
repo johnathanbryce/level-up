@@ -41,7 +41,7 @@ That's a message queue. A middleman buffer that decouples "I need this done" fro
 - **Redis Streams**
 - **Kafka**
 
-**When Queues vs. Synchronous**
+## When Queues vs. Synchronous
 - Use a queue when:
     - The work doesn't need to finish before the user gets a response (email, notifications, analytics)
     - The downstream service is slow or unreliable
