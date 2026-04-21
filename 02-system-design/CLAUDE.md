@@ -114,15 +114,14 @@ This comes up in every system design interview. You'll be asked to estimate scal
 - [x] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
 - [x] Polyglot persistence — using the right DB for each job
 
-### Search Engines & Full-Text Search
+### Search Infrastructure as a System Component
 
-Relevant to current job (Elasticsearch) and ties into hybrid search in Section 5 (AI Production). Conceptual understanding + awareness of when to reach for a search engine vs other tools.
+Trimmed from full-text search deep dive — research confirmed inverted indexes, LIKE/ILIKE, and BM25 internals are niche/Tier 3 for mid-level interviews. Lean coverage only: what Elasticsearch is, when to reach for it, how it fits into a system design answer. BM25 deferred to Section 5 (AI Production / hybrid search).
 
-- [ ] What full-text search is — inverted indexes (conceptual: word → list of documents containing it), tokenization, analyzers
-- [ ] When to use a search engine vs database LIKE/ILIKE queries vs vector search — decision framework
-- [ ] Elasticsearch/OpenSearch awareness: what it is, common use cases (search, log aggregation, analytics), basic concepts (index, document, mapping, query DSL at a high level)
-- [ ] How search fits into a system: search as a read-optimized view, syncing data from primary DB to search index, eventual consistency trade-off
-- [ ] Relevance scoring basics: TF-IDF / BM25 (conceptual — know what they optimize for, not the math)
+- [ ] What Elasticsearch is and is not (search engine, not a vector DB, not a primary DB)
+- [ ] When to add a search layer vs. querying the primary DB directly
+- [ ] How search fits into a system: read-optimized view, sync from primary DB, eventual consistency trade-off
+- [ ] Interview usage: how to drop a search layer into a system design answer confidently
 
 ### Resilience & Reliability
 
