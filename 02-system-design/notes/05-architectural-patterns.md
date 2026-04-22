@@ -1,5 +1,15 @@
 # Architectural Patterns
 
+## 5 Architectural Patterns
+
+1. Monolith
+2. Microservices
+3. Monolith vs. Microservices Decision Framework
+4. Serverless
+5. Event-Driven Architecture
+
+---
+
 ## Monolith
 
 - A **monolith** is a single deployable unit. All your features (auth, project management, notifications, billing, etc) live in one codebase and as one process

@@ -1,5 +1,15 @@
 # Message Queues & Async Processing
 
+## 5 Queue Topics
+
+1. Why Async Processing Matters
+2. Producer-Consumer Pattern
+3. Delivery Guarantees
+4. Common Tools
+5. When Queues vs. Synchronous
+
+---
+
 ## Why Async Processing Matters
 [SCENARIO] Imagine your food delivery app. User places an order. Your API needs to:
 

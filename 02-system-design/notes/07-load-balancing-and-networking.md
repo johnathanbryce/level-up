@@ -1,5 +1,15 @@
 # Load Balancing & Networking
 
+## 5 Load Balancing Topics
+
+1. What a Load Balancer Does and Where It Sits
+2. Load Balancing Algorithms
+3. Session Stickiness
+4. Reverse Proxy vs. Load Balancer
+5. API Gateways
+
+---
+
 ## What a Load Balancer Does and Where It Sits
 
 - [Scenario] - Your app is getting enough traffic that one server can't handle it. You've scaled horizontally - you now have 4 identical app servers

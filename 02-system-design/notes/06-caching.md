@@ -1,5 +1,17 @@
 # Caching
 
+## 7 Caching Topics
+
+1. Why Caching Matters
+2. Cache-Aside Pattern
+3. Write-Through vs. Write-Behind
+4. Cache Eviction Policies
+5. Redis
+6. CDN Caching
+7. Cache Stampede
+
+---
+
 ## Why Caching Matters
 - Reading from a database is slow compared to reading from memory. Every time your app can answer a request from memory instead of hitting a database, it's faster for the user and cheaper on your infra
 

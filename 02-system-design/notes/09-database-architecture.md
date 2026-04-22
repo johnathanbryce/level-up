@@ -1,5 +1,19 @@
 # Database Architecture
 
+## 9 Database Topics
+
+1. SQL
+2. ACID
+3. NoSQL
+4. Database Indexing
+5. Database Replication
+6. Database Sharding
+7. Connection Pooling
+8. Polyglot Persistence
+9. Storage Types
+
+---
+
 ## SQL
 - Relational databases (Postgres, MySQL) give you:   
     - **Schema enforcement** -- every row conforms to a defined structure 

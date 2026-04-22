@@ -1,5 +1,14 @@
 # Search Infrastructure as a System Component
 
+## 4 Search Topics
+
+1. What Elasticsearch is (and what it isn't)
+2. When to reach for a search layer
+3. How search fits into a system
+4. Keyword vs. Semantic Search (BM25 vs. Embeddings)
+
+---
+
 ## What Elasticsearch is (and what it isn't)
 - ES is a **search engine** -- purpose-built for text search, log aggregation, and analytics
 - When a user types a freeform query like "wireless headphones under 100" into a product search box, that's the kind of problem ES solves

@@ -1,5 +1,15 @@
 # Resilience & Reliability
 
+## 5 Resilience Patterns
+
+1. Retries with Exponential Backoff
+2. Idempotency
+3. Circuit Breaker
+4. Rate Limiting
+5. Graceful Degradation
+
+---
+
 ## Retries with Exponential Backoff
 
 - Why retry at all?
