@@ -140,6 +140,53 @@ Single deliverable: memorized 50-second interview paragraph covering the whole t
 - [x] Key buzzwords: correlation IDs, Four Golden Signals, percentiles (p50/p95/p99), OpenTelemetry, PagerDuty
 - [x] Memorized interview paragraph
 
+---
+
+## Pre-Case-Study Review Phase
+
+Light active-recall review across the 12 teaching sub-topics before Case Studies begin. Purpose: refresh retention on material that's been stale for 1-3 weeks, surface gaps to drill later in Capstone Prep. **Lighter than Capstone Prep** — confidence check, not a gate.
+
+### Format per section
+
+1. John solo-studies the section's notes + this CLAUDE.md (~15-30 min). Handwritten notes encouraged.
+2. John announces: **"Review mode — I've read [section]. Quiz me."**
+3. Claude runs **5-7 mixed-format questions** (recall + explain-why + trade-offs + one applied scenario). ~10-15 min.
+4. Honest scoring. Catastrophic misses (can't explain a core concept at all) → targeted re-read BEFORE next section. Small gaps → logged to Surfaced Gaps below, carried into Capstone Prep.
+
+### Cadence
+
+- 12 sections, ~2-4 per session → expect 3-4 total sessions
+- Not a gate for Case Studies. Forward motion continues unless a catastrophic miss surfaces.
+
+### Per-Section Review Log
+
+| Section | Date Reviewed | Quiz Score | Notes / Gaps Surfaced |
+|---|---|---|---|
+| Request Lifecycle | | | |
+| Internet & Networking Fundamentals | | | |
+| Back-of-Envelope Estimation | | | |
+| Core Concepts (scaling / CAP / consistency / latency) | | | |
+| Architectural Patterns | | | |
+| Caching | | | |
+| Load Balancing & Networking | | | |
+| Message Queues & Async Processing | | | |
+| Database Architecture | | | |
+| Search Infrastructure | | | |
+| Resilience & Reliability | | | |
+| Observability | | | |
+
+### Known Starting Gaps (drill in their parent section's review quiz)
+
+- **Consistent hashing / session stickiness conflation** → Load Balancing review quiz (2nd occurrence as of 2026-04-23)
+- **Percentile gotcha (p50/p95/p99 vs averages)** → Observability review quiz (5th "knows-rule-not-implications" occurrence as of 2026-04-23)
+- **Circuit breaker three-state machine (CLOSED/OPEN/HALF-OPEN, HALF-OPEN probe mechanism)** → Resilience review quiz (Q5 follow-up from 2026-04-22 still outstanding)
+
+### Surfaced Gaps (aggregated across review sessions — feeds Capstone Prep)
+
+*(populated during review sessions)*
+
+---
+
 ### Case Studies (Practice Exercises)
 
 Design each system. Sketch architecture. Claude pokes holes. Revise. Practice explaining out loud.
@@ -156,6 +203,42 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 
 - [ ] Analyze 2-3 real post-mortems (Cloudflare, GitLab, GitHub, etc.)
 - [ ] Document lessons learned
+
+---
+
+## Capstone Prep Phase
+
+Deep, targeted drilling on gaps surfaced during Pre-Case-Study Review AND Case Studies + Failure Analysis. Runs between Failure Analysis completion and the End-of-Section Capstone session. Purpose: walk into Capstone with the top 3-5 weakest topics reinforced — NOT to re-teach the full section.
+
+### Format
+
+1. **Gap aggregation** — Claude compiles the full list of weak spots from:
+    - Pre-Case-Study Review's Surfaced Gaps + Known Starting Gaps still unresolved
+    - Assessments from each Case Study session (fumbled components, missed trade-offs, vocabulary gaps)
+    - Failure Analysis gaps (patterns John didn't recognize in post-mortems)
+2. **Triage** — rank gaps by Capstone risk. Anything touching CAP, caching strategy, DB scaling, or load balancing is **Tier 1 (must drill)**. Peripheral vocabulary is **Tier 3 (skip if time is tight)**.
+3. **Targeted drills** — per Tier 1 gap: re-explain if needed (~5 min), then 2-3 applied drill questions (~10-15 min per topic).
+4. **Dry-run quiz** — mini 5-question timed quiz on the 5 shakiest topics, simulating Capstone Part 1 conditions. Score. Any under 70% → one more targeted drill before Capstone.
+
+### Scope
+
+- Targeted, not exhaustive — only drill topics with documented gaps
+- ~1 session (1.5-3 hrs depending on gap count)
+- Goal: no topic enters the Capstone with an unresolved catastrophic gap
+
+### Pre-Capstone Gap List
+
+*(compiled during this phase)*
+
+### Dry-Run Results
+
+*(populated during this phase)*
+
+### Gate to Capstone
+
+- All Tier 1 gaps drilled at least once
+- Dry-run score ≥ 70% overall
+- If gate fails: one more targeted drill session before attempting the Capstone. Don't rush the gate — a failed Capstone Part 1 burns more time than an extra prep drill.
 
 ---
 
@@ -193,6 +276,7 @@ Fresh prompt John hasn't seen — not one of the practiced case studies. Design 
 | 2026-04-18 | Database Architecture — all 7 chunks: SQL vs NoSQL, ACID, indexing, replication, sharding, connection pooling, storage types + polyglot persistence. | B+ overall. Strong conceptual grasp throughout. Key gaps: called Elasticsearch a vector DB (it's a search engine — corrected); missed composite index hint on (user_id, created_at); initially conflated ACID durability with consistency. Good instincts: correctly chose document store for variable-schema catalog, flagged inventory as transactional, nailed read-your-own-writes, pivoted to conversation_id as shard key for messaging. Healthy pushback on connection pooling depth — scoped it lean, which was correct. Interview tangent on AI pipelines when asked about PDF storage — redirected to core answer (S3 + reference in DB). | Search Engines & Full-Text Search |
 | 2026-04-21 | Search Infrastructure as a System Component — trimmed sub-topic. What ES is, when to add a search layer, sync/eventual consistency pattern, BM25 vs embeddings distinction. Stack Overflow applied scenario. | B/B+ overall. John pushed back on scope — correctly identified the original version as niche/extraneous. Web research confirmed search engines / BM25 / full-text search are Tier 3 for mid-level interviews. Trimmed to a 20-min survey. John was also right to push back on my "ES is not a vector database" oversimplification — ES CAN function as a vector database (his company Caseway uses it that way). Correct framing: ES is primarily a search engine that ADDED vector capabilities. Big correction mid-session: John conflated BM25 and embeddings in his summary — clarified that BM25 = keyword relevance scoring, embeddings = semantic/vector similarity, hybrid = both. This distinction is load-bearing for Section 5. Applied scenario (Stack Overflow): B/B+ — overbuilt by adding pgvector without justification (SO is classic keyword search, ES alone is the typical answer); minor imprecision on sync terminology ("ES read-only from DB") but eventual consistency reasoning was solid. Also covered real-world tangent on John's Caseway RAG stack (Postgres + pgvector + optional ES for legal research chat) — bookmarked for Section 5. | Resilience & Reliability |
 | 2026-04-22 | Resilience & Reliability — all 5 chunks: retries + exponential backoff + jitter, idempotency + idempotency keys, circuit breaker + three-state machine, rate limiting (token bucket vs sliding window + layered limits + 429/Retry-After), graceful degradation (critical path + per-component fallback). Warm-down quiz 6 questions. Also large side-quest: markdown audit on all 11 notes files (34 bold-as-section-marker conversions to `###` across 9 files). | **B / B+ overall.** Chunks 1-5 covered cleanly with one-chunk-at-a-time pacing. Idempotency applied check (ride-share): initial answer C+ — missed that server RETURNS cached response (not just "discards" duplicate); corrected and mechanism now locked. Circuit breaker applied check (payment outage): C+ — didn't walk thread pool exhaustion → cascading failure mechanism for Q1; skipped HALF-OPEN recovery for Q2; both generic rather than scenario-specific. Rate limiting applied check: right algorithms both scenarios, overbudgeted refill rate on dashboard (10 tokens/sec = 600/min sustained for page-load-every-few-minutes traffic — same miss as the later quiz Q4a). Graceful degradation assignment (news aggregator): Grade C — didn't engage with the specific failing services in the scenario (trending-analytics + image CDN timeouts); thumbnails got zero treatment despite being 50% of failure; karma/notifications incorrectly placed in critical path. Wrote Claude's Review in the assignment file with better answer. **Quiz results:** Q1 recall A-, Q2 jitter A-, Q3 idempotency mechanism B+, Q4a token bucket B+ (overbudgeted numbers), Q4b sliding window A (layered 2/min + 5/day strong judgment), **Q5 circuit breaker state machine FAILED** (John removed three-state section from notes earlier deeming it "too in the weeds" — re-taught, re-added to notes, follow-up rep pending), Q6 arithmetic A ($600/hr calc unprompted — first positive data point on the recurring arithmetic gap). **Recurring pattern surfaced 4th+ time: "knows the rule, hasn't internalized implications"** — mid→senior gap. Drill locked: force naming of each scenario component and walking its specific failure path. Notes markdown audit added to Session End protocol auto-run going forward. | **Resilience & Reliability CLOSE-PENDING (Q5 follow-up first)**, then **Observability** |
+| 2026-04-23 | Observability (all 4 sub-topics — compressed to Tier 3 lean scope per John's mid-session pushback). Coverage: Three Pillars table, Four Golden Signals table, percentile vocab (p50/p95/p99), correlation IDs (the #1 distributed-logging buzzword), distributed tracing + alerting + aggregation platforms as one-liners, plus THE Interview Paragraph as the single deliverable. Sub-topic checklist in this file collapsed from 4 granular items to 3 high-level items with "Tier 3 scoped lean" callout. | Initially taught 4 separate chunks (Logs → Metrics → Tracing → Alerting) but John correctly pushed back mid-way: Observability is Tier 3 for mid-level interviews, doesn't warrant deep teaching. **Honest calibration: John was right, I was over-teaching.** Compressed to a 50-second canned interview paragraph + ~40-line notes file. Applied checks surfaced TWO repeat gaps: **(1) Consistent hashing / session stickiness conflation — 2nd occurrence** (first 2026-04-16). Bridge question: "6 Redis caches behind round-robin LB, what fixes cache duplication?" John correctly diagnosed the bug but named session stickiness as the fix. Stickiness routes by USER identity; consistent hashing routes by KEY identity. For cache locality, consistent hashing. Same miss as 6 days ago — stubborn gap. **(2) Percentile gotcha missed right after teaching — 5th occurrence of "knows-rule-not-implications"** (mid→senior gap). Taught p50/p95/p99 as THE interview gotcha. Tested 5 min later: "average latency is 120ms, looks great?" — John answered "compared to what?" (valid but weak baseline-comparison framing) instead of "what's p99?" (load-bearing interview answer). Has the vocab, doesn't reach for it under pressure. **Session also locked in the REVIEW PHASE plan:** per-section solo study → quiz-per-section (5-7 mixed questions) → targeted re-read on gaps → next section; after all 11 sections done, MASTER pre-case-study quiz as the final gate before Case Studies. John initially wanted solo re-read all sections end-to-end; pushed back — passive re-reading creates illusion of fluency, active recall is 3-5x more effective. John agreed to per-section quiz cadence. | **REVIEW PHASE** — section-by-section, John's pick of starting section (suggest Request Lifecycle or Core Concepts as foundation openers). Weave the two repeat gaps into their parent section quizzes: consistent hashing into Load Balancing review, percentiles into Observability review. Also outstanding: circuit breaker three-state machine Q5 follow-up from 2026-04-22 — weave into Resilience review quiz. |
 
 ---
 
