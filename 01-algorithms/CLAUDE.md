@@ -23,17 +23,47 @@ Algorithms are **pure logic warmups**. They do NOT morph into framework / API / 
 4. Develop ability to solve medium-difficulty problems independently within 25 minutes
 5. Build comfort with timed problem-solving under interview conditions
 
-## Challenge Delivery Rules
+## Challenge Delivery Rules (UPDATED 2026-04-22 — pattern-lesson framework)
 
-When presenting an algorithm challenge, Claude should:
+Pattern recognition is a separate skill from language fluency. The old rule ("2-3 sentences then the problem") under-taught the pattern and left John to discover it from cold under struggle — the slowest possible path. New framework: teach the pattern first, then drill, then recall-test.
 
-1. **If the challenge involves a concept John hasn't seen yet in this system** (check the Phase checklists and Problem Logs), give a brief contextual intro — 2-3 sentences explaining what the concept is, why it matters, and a quick example of how it works. Then present the challenge. This is NOT a lecture — just enough context to attempt the problem without Googling.
+### Rule 1 — Pattern Lesson precedes first encounter (NEW-PATTERN sessions)
 
-2. **If the challenge involves a concept John has already covered and demonstrated understanding of**, skip the intro. Just present the problem. He should recognize the pattern.
+When a pattern is genuinely new to John (check **Pattern Tracking** below — status `NOT STARTED`), teach the pattern BEFORE the problem. Lesson format (~10 min, never more):
 
-3. **If John fumbles a concept he's supposedly already learned**, that's a signal. Flag it as a weak spot, note it in the Weak Spots section, and schedule a revisit in a future session.
+- **Name.** "Hash map with complement." "Sliding window (fixed size)." "Two pointers (opposite direction)." Call it by its name so John learns the vocabulary that maps to interview language.
+- **Signals.** What in a problem description triggers this pattern. ("Find pairs summing to target" → complement lookup. "Contiguous subarray with property" → sliding window. "Check letters / characters / items available" → frequency counting.)
+- **Mental model.** How the pattern works, in one or two sentences. Plus a trace of a tiny toy example (4-6 elements, walked out).
+- **Generic skeleton.** Pseudocode or a minimal toy example in the target language. John reads this — he does NOT type it. The toy problem is NOT the challenge that follows.
+- **Failure modes / when NOT to use.** One or two counter-examples to prevent pattern over-application.
 
-This creates a natural reinforcement loop: first encounter = explanation + practice, subsequent encounters = just practice, failure on a known concept = flagged for review.
+Then present a fresh problem that uses the pattern WITHOUT naming the pattern. John writes the algo with the tool in hand from minute 0.
+
+### Rule 2 — Recycle cadence (RECALL sessions, every ~3rd session)
+
+Every third session-ish, instead of a new pattern, present a fresh problem that uses an OLDER pattern. Do NOT name the pattern. Do NOT give framing scaffolding. Observe whether John reaches for the right tool unprompted. Log the result:
+
+- **Recognized unprompted** → pattern is **LOCKED**.
+- **Recognized with one hint** → **MOSTLY LOCKED**, schedule 1-2 more recall reps on variants.
+- **Did not recognize** → **NOT LOCKED**. Flag in Weak Spots and schedule a mini-refresh (abbreviated Pattern Lesson — 3 min) next session.
+
+### Rule 3 — Naming discipline
+
+Problem titles in this system do NOT telegraph the pattern. No "Two Sum Variant" / "Pair with Difference K" / "Hash Map Frequency Counter" style names. Use real-world framings (the ransom note, the delivery driver, the stock trader, the airport scheduler, the concert ticket queue) that obscure the structural pattern and force John to recognize it. This mimics actual interview conditions — problems are not labeled with their algorithmic tool.
+
+When logging problems in the Problem Log, the formal pattern name still goes in the Pattern column so we can track which patterns have been exercised.
+
+### Session-structure variants
+
+- **New-pattern session:** Pattern Lesson (~10 min) → Problem (~15-20 min). Total ~25-30 min.
+- **Drill session** (same pattern recently taught, different variant): Straight to problem (~15-25 min). Claude may re-state the pattern name and skeleton in 30 seconds if needed, but no full lesson.
+- **Recall session** (old pattern, not named, no scaffolding): Fresh problem (~15-25 min). Log whether John reached for the right tool.
+
+### Fumble handling
+
+- **Fumble on a pattern marked LOCKED:** downgrade to MOSTLY LOCKED in Pattern Tracking, flag in Weak Spots, run an abbreviated Pattern Lesson (3 min) next session before a new drill.
+- **Fumble on a pattern marked MOSTLY LOCKED:** flag in Weak Spots only; the recall cadence will surface it again naturally.
+- **New sub-pattern (variant of known pattern):** name the parent pattern, point out what's different, skip the full lesson.
 
 ## Runner Setup
 
@@ -293,6 +323,63 @@ Timed problems (25 min solve + 5 min review). Mix of all patterns. Both language
 ---
 
 # TRACKING
+
+## Pattern Tracking (NEW 2026-04-22)
+
+Canonical list of patterns, their teach-status, and the date of first formal Pattern Lesson. A pattern is **LOCKED** only when John solves a fresh problem using it WITHOUT framing scaffolding AND WITHOUT the pattern being named in the problem title.
+
+**Status values:**
+- `NOT STARTED` — John has never seen a formal Pattern Lesson for this. Next encounter triggers the full lesson (Rule 1).
+- `INTRODUCED` — Pattern Lesson has been given OR the pattern has been encountered via problems but not formally taught; needs a clean drill to confirm.
+- `MOSTLY LOCKED` — John has solved a problem using this pattern solo, but only after framing help OR on the named/archetype version. Needs 1-2 recall reps on variants without scaffolding.
+- `LOCKED` — John reached for the pattern unprompted on a recall session, no naming, no hints.
+- `FUMBLED` — Previously LOCKED but missed on a recall. Triggers 3-min refresh lesson + another drill.
+
+| Pattern | First Encounter | Formal Lesson Given | Status | Notes |
+|---|---|---|---|---|
+| Hash map / set with complement lookup | 2026-04-08 (JS Two Sum) | NOT YET — informal coverage only across 5 sessions | **MOSTLY LOCKED** (Python archetype solo solve 2026-04-22 late, after 4 prior fails needing solution written for him) | Needs 1-2 clean variant reps (product, difference, complement-in-range) without framing scaffolding. Also: give the formal Pattern Lesson retroactively — it hasn't been done in the new framework. |
+| Frequency counting + decrement walk | 2026-04-22 (JS Ransom Note) | NOT YET — partial coverage via problem | **INTRODUCED** | Idiom locked: `(map.get(k) \|\| 0) + 1` for count; `!count` check for exhaustion during decrement walk. Formal lesson needed to tie the pattern together. |
+| Frequency counting (count-then-inspect) | 2026-04-08 (Valid Anagram, both langs) | NOT YET | **MOSTLY LOCKED** | Solid in both langs; variants via Counter (Py) and `\|\| 0` (JS) covered. |
+| Accumulator pattern | 2026-04-07 (Running Sum), 2026-04-21 (Running Max) | NOT YET | **INTRODUCED** | Pattern is starting to stick but not instantly recognized on new framings. |
+| Two pointers (opposite direction) | 2026-04-08 (JS Palindrome) | 2026-04-08 (informal re-teach from first principles, captured in `notes/two-pointer.md`) | **INTRODUCED** in JS only | Needs Python rep + formal lesson in new framework. |
+| Two pointers (same direction / writer-reader) | 2026-04-07 (Move Zeros, bookmarked) | NOT YET | `NOT STARTED` | Phase 2. Introduce with formal Pattern Lesson when the time comes. |
+| Set operations (union / intersection / diff) | 2026-04-09 (Python Intersection) | NOT YET | **MOSTLY LOCKED** (Python only) | Trivial enough that a formal lesson may not be needed — but a skeleton/notes entry in `patterns/` would help for reference. |
+| List comprehension (basic + conditional) | 2026-04-14 | NOT YET | **LOCKED** (basic + conditional) | Nested LC still ahead. |
+| Tuple unpacking in for clause | 2026-04-14 | NOT YET | **LOCKED** for the for-clause form | Standalone unpacking + `*rest` still ahead. |
+| Sort + slice (top-K style) | 2026-04-18 (JS Top K) | NOT YET | **INTRODUCED** | |
+
+Going forward, every new pattern encountered should be added to this table the session it's first taught. Formal Pattern Lesson dates are the truth — informal coverage doesn't count.
+
+## Pattern Library (`patterns/` folders)
+
+Each language has a `patterns/` subfolder (`python/patterns/`, `typescript/patterns/`). **This is where Pattern Lesson reference material lives** — one file per pattern, written AFTER the lesson is delivered. File format:
+
+```markdown
+# Pattern: <name>
+
+## Signals
+When should I reach for this? What in a problem description tells me it's the right tool?
+
+## Mental Model
+How does it work, conceptually? One or two sentences + a tiny trace.
+
+## Skeleton
+```<lang>
+// minimal generic example — reading-only, not a problem to solve
+```
+
+## Failure Modes
+When NOT to use this / when it misleads.
+
+## Variants
+Sub-patterns and their differences (e.g. hash set vs hash map; complement via subtraction vs division vs addition).
+
+## Problems Practiced
+| Date | Problem | Language | Result |
+|---|---|---|---|
+```
+
+Purpose: **long-term reference John can re-read before interviews** + central place to track which problems have exercised which pattern. The `patterns/` folders are currently empty (2026-04-22) — populate as patterns get their formal lessons going forward. Backfill for already-covered patterns (hash-map-complement, frequency counting, two pointers, accumulator) is a nice-to-have but not urgent.
 
 ## Weak Spots
 

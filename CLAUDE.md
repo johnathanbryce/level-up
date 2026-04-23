@@ -105,8 +105,15 @@ If John tries to end a session without updating, remind him that tracking must h
 
 ## Daily Session Structure
 
-**Block 1 — Algorithm Warmup (15-30 min)**
-Generate a coding challenge calibrated to current level. **Language split: ~60% Python, ~40% JavaScript/TypeScript.** Python is the primary skill to rebuild, but JS fluency must be maintained. JS sessions use modern JavaScript syntax (not TypeScript-specific features like generics or complex types — the focus is logic, not the type system). Claude manages the rotation — roughly 3 Python sessions for every 2 JS sessions. John can override this on any given day. Start with fundamentals if early in progression, increase difficulty over time. Track patterns practiced and identify weak spots. **Algorithms always come first — they are the warmup, not the recall drill.**
+**Block 1 — Algorithm Warmup (15-30 min, or 25-35 min on new-pattern days)**
+Generate a coding challenge calibrated to current level. **Language split: ~60% Python, ~40% JavaScript/TypeScript.** Python is the primary skill to rebuild, but JS fluency must be maintained. JS sessions use modern JavaScript syntax (not TypeScript-specific features like generics or complex types — the focus is logic, not the type system). Claude manages the rotation — roughly 3 Python sessions for every 2 JS sessions. John can override this on any given day. Start with fundamentals if early in progression, increase difficulty over time. **Algorithms always come first — they are the warmup, not the recall drill.**
+
+**Pattern-lesson framework (added 2026-04-22, see `01-algorithms/CLAUDE.md` for full rules).** Algorithm sessions fall into three types:
+1. **New-pattern session:** ~10 min formal Pattern Lesson (name, signals, mental model, skeleton, failure modes) BEFORE the problem. Problem uses the pattern but its title does NOT name the pattern.
+2. **Drill session:** problem uses a recently-taught pattern, straight to the problem.
+3. **Recall session (every ~3rd):** fresh problem using an OLDER pattern, no naming, no framing scaffolding. Tests whether the pattern is genuinely locked.
+
+Pattern status tracked in the Pattern Tracking table in `01-algorithms/CLAUDE.md`. Every new pattern gets its own reference file in `01-algorithms/{python,typescript}/patterns/`.
 
 **Bridge — Applied Recall Question (2-3 min)**
 After the algo, before the topic block: one applied scenario question pulled from a prior topic. See Session Start protocol for details. This is the mental shift from "warmup mode" into "study mode."
