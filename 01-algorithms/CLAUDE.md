@@ -23,17 +23,47 @@ Algorithms are **pure logic warmups**. They do NOT morph into framework / API / 
 4. Develop ability to solve medium-difficulty problems independently within 25 minutes
 5. Build comfort with timed problem-solving under interview conditions
 
-## Challenge Delivery Rules
+## Challenge Delivery Rules (UPDATED 2026-04-22 — pattern-lesson framework)
 
-When presenting an algorithm challenge, Claude should:
+Pattern recognition is a separate skill from language fluency. The old rule ("2-3 sentences then the problem") under-taught the pattern and left John to discover it from cold under struggle — the slowest possible path. New framework: teach the pattern first, then drill, then recall-test.
 
-1. **If the challenge involves a concept John hasn't seen yet in this system** (check the Phase checklists and Problem Logs), give a brief contextual intro — 2-3 sentences explaining what the concept is, why it matters, and a quick example of how it works. Then present the challenge. This is NOT a lecture — just enough context to attempt the problem without Googling.
+### Rule 1 — Pattern Lesson precedes first encounter (NEW-PATTERN sessions)
 
-2. **If the challenge involves a concept John has already covered and demonstrated understanding of**, skip the intro. Just present the problem. He should recognize the pattern.
+When a pattern is genuinely new to John (check **Pattern Tracking** below — status `NOT STARTED`), teach the pattern BEFORE the problem. Lesson format (~10 min, never more):
 
-3. **If John fumbles a concept he's supposedly already learned**, that's a signal. Flag it as a weak spot, note it in the Weak Spots section, and schedule a revisit in a future session.
+- **Name.** "Hash map with complement." "Sliding window (fixed size)." "Two pointers (opposite direction)." Call it by its name so John learns the vocabulary that maps to interview language.
+- **Signals.** What in a problem description triggers this pattern. ("Find pairs summing to target" → complement lookup. "Contiguous subarray with property" → sliding window. "Check letters / characters / items available" → frequency counting.)
+- **Mental model.** How the pattern works, in one or two sentences. Plus a trace of a tiny toy example (4-6 elements, walked out).
+- **Generic skeleton.** Pseudocode or a minimal toy example in the target language. John reads this — he does NOT type it. The toy problem is NOT the challenge that follows.
+- **Failure modes / when NOT to use.** One or two counter-examples to prevent pattern over-application.
 
-This creates a natural reinforcement loop: first encounter = explanation + practice, subsequent encounters = just practice, failure on a known concept = flagged for review.
+Then present a fresh problem that uses the pattern WITHOUT naming the pattern. John writes the algo with the tool in hand from minute 0.
+
+### Rule 2 — Recycle cadence (RECALL sessions, every ~3rd session)
+
+Every third session-ish, instead of a new pattern, present a fresh problem that uses an OLDER pattern. Do NOT name the pattern. Do NOT give framing scaffolding. Observe whether John reaches for the right tool unprompted. Log the result:
+
+- **Recognized unprompted** → pattern is **LOCKED**.
+- **Recognized with one hint** → **MOSTLY LOCKED**, schedule 1-2 more recall reps on variants.
+- **Did not recognize** → **NOT LOCKED**. Flag in Weak Spots and schedule a mini-refresh (abbreviated Pattern Lesson — 3 min) next session.
+
+### Rule 3 — Naming discipline
+
+Problem titles in this system do NOT telegraph the pattern. No "Two Sum Variant" / "Pair with Difference K" / "Hash Map Frequency Counter" style names. Use real-world framings (the ransom note, the delivery driver, the stock trader, the airport scheduler, the concert ticket queue) that obscure the structural pattern and force John to recognize it. This mimics actual interview conditions — problems are not labeled with their algorithmic tool.
+
+When logging problems in the Problem Log, the formal pattern name still goes in the Pattern column so we can track which patterns have been exercised.
+
+### Session-structure variants
+
+- **New-pattern session:** Pattern Lesson (~10 min) → Problem (~15-20 min). Total ~25-30 min.
+- **Drill session** (same pattern recently taught, different variant): Straight to problem (~15-25 min). Claude may re-state the pattern name and skeleton in 30 seconds if needed, but no full lesson.
+- **Recall session** (old pattern, not named, no scaffolding): Fresh problem (~15-25 min). Log whether John reached for the right tool.
+
+### Fumble handling
+
+- **Fumble on a pattern marked LOCKED:** downgrade to MOSTLY LOCKED in Pattern Tracking, flag in Weak Spots, run an abbreviated Pattern Lesson (3 min) next session before a new drill.
+- **Fumble on a pattern marked MOSTLY LOCKED:** flag in Weak Spots only; the recall cadence will surface it again naturally.
+- **New sub-pattern (variant of known pattern):** name the parent pattern, point out what's different, skip the full lesson.
 
 ## Runner Setup
 
@@ -132,6 +162,10 @@ Focus on Python syntax, stdlib, and core language features before diving into al
 | 2026-04-09 | Intersection of Two Arrays | Set operations, membership lookup | Solved ✓ | ~10 min | Wrote correct manual approach: build set from nums1, iterate nums2 checking membership, dedup output via set conversion. Nit: deduped after the fact (`list(set(similar_nums))`) instead of using a set for output from the start. Didn't know Python set intersection (`&` operator / `.intersection()`) — learned it after solving. Also learned `.union()` (`|`) and `.difference()` (`-`). Phase 1 set operations box checked. |
 | 2026-04-14 | Filter and Transform (even numbers squared) | List comprehension (basic + conditional) | Solved ✓ | ~5 min | A grade on the comprehension — correct syntax, correct order (expression → for → if). Loop version also correct. Nit: unnecessary intermediate variable `squared_num` in the loop version (could inline). Only tested one input initially (recurring pattern). |
 | 2026-04-14 | Pair Sum Indices (names above threshold from tuples) | List comprehension + tuple unpacking | Solved ✓ | ~5 min | A grade. Clean tuple unpacking in the `for` clause, correct filter, all three test cases printed. No issues. |
+| 2026-04-21 | Pair Products (hash set, Two Sum variant with multiplication) | Hash set, complement lookup with integer division | Solved with heavy guidance | ~25 min | C+/B-. Pattern recognition was rough — did not see this as a Two Sum variant even though it's structurally identical (swap `-` for `/`). Needed extensive scaffolding on (1) the math itself ("if I give you 2 and target 24, what do you need?"), (2) that a hash set iterates-and-checks-complement, (3) that `target // n` is the complement formula. Learned `//` (integer division) for the first time. Expressed significant frustration ("I suck at math") — reframed: the math was trivial (`24 / 2 = 12`), the gap was pattern recognition. Style nits: left `pass` as dead code, stray `s` as syntax error on save, debug print left in, commented out other test cases. Pattern NOT locked — needs another rep on a similar hash-set-with-complement problem before moving on. |
+| 2026-04-21 | Running Max (accumulator pattern) | Iteration with accumulator variable | Solved with one hint | ~10 min | B+. Correct structure: empty result list, `curr_max = nums[0]` as starting value (good instinct — avoids the "all negatives" bug). Got stuck on where to place the append (inside vs outside the if). One hint unblocked it. Had a dead line `num = curr_max` (reassigning loop var does nothing) — cleaned up. Same accumulator pattern as running sum (2026-04-07) — pattern is starting to stick, but not instantly recognized. |
+| 2026-04-22 | Pair with Difference K (hash set, Two Sum variant with absolute difference) | Hash set, complement lookup with BOTH `n-k` AND `n+k` | Solved with heavy guidance, solution written for him | ~30 min | C. Fourth consecutive failure on hash-set-with-complement pattern. John again defaulted to "iterate and compare" framing — proposed "check if current number minus any number inside the set == k," which is a nested loop disguised as a set. Needed multiple rounds of prompting to get to the complement formulation ("what ONE specific number do you look for from 5 and k=2?"). Once at it, he nailed `n-k=3` but missed `n+k=7` until prompted. Then the code had 3 bugs: (1) classic `if smaller_candidate or larger_candidate in seen_nums` Python gotcha (parses as `if smaller OR (larger in set)` — always truthy for non-zero smaller), (2) `seen_nums.add(num)` BEFORE check causing same-index collision on `[4,4,4], k=0`, (3) `return False` inside the loop (exits on first iteration). John said "I am lost lol, please implement the solution" — same breakpoint as Two Sum on 2026-04-08. Wrote solution + walked it line by line. Trace of `[1,2,3], k=5` afterwards was clean. **Pattern NOT locked across 4 sessions.** John asked explicitly for more reps on this. Style nits: commented-out test cases at save (same recurring hygiene issue). |
+| 2026-04-22 (late) | Two Sum (Python — canonical archetype) | Hash map, complement lookup, {value: index} dict | **SOLVED — first solo application of the pattern after 4 prior failures** | ~30 min | **B+. BREAKTHROUGH rep.** First attempt was brute-force in disguise: `if target_num in nums` is O(n) scan (not O(1) hash lookup); returning values not indexes; same-element collision bug (for `[3,2,4] target=6`, `num=3, target_num=3` finds itself in nums and wrongly pairs). Progressive Socratic framing got to 3 locks: **(1)** complement = `target - num` — ONE SPECIFIC NUMBER, not "any of the seen numbers" (this was the mental unlock — John kept saying "any of proceeding numbers + OR -" which is nested-loop disguised as hash); **(2)** dict shape `{value: index}` — key is the number (for lookup), value is its index (for return); **(3)** check-before-add ordering (fixes `[3,3] target=6` same-element bug — traced both orderings out loud). Once framing landed, John wrote the solution himself. Minor code-level bugs he fixed via Socratic prompts: initially stored `seen_nums[complement] = i` (wrong key), initially only captured `seen_nums[complement]` in return not `i`. All 4 test cases passed ([2,7,11,15]/9→[1,0], [3,2,4]/6→[2,1], [3,3]/6→[1,0], [-1..-5]/-8→[4,2]). Debug prints and dead code cleaned up on the pass. **Pattern is CLOSER TO LOCKED but not declared yet** — need 1-2 clean reps on variants (product, difference, complement-in-range) WITHOUT solution being written and WITHOUT framing scaffolding before marking definitively locked. The win today was Python-specific archetype; cross-pattern transfer to variants is the remaining test. |
 
 ---
 
@@ -236,6 +270,7 @@ Revisit core JS to ensure fluency outside of React context. Expect to move faste
 | 2026-04-08 | Two Sum — both brute force AND hash map                           | Hash map / dictionary lookup, "replace search with lookup" pattern, first JS `Map` use | Solved both (heavy guidance on hash map) | ~40 min | Brute force: walked from "describe in plain English how you'd solve it by hand" → nested loop. First attempt had 3 bugs (`<=` instead of `<` on both bounds, `j = 1` instead of `j = i + 1`, dead code map declaration). Fixed cleanly after walkthrough. Hash map version: got tangled on which key to look up and what to return — wrote `numsMap.get(n)` instead of `numsMap.get(complement)`, returned `[complement, value]` instead of `[seen.get(complement), i]`. Said "I am lost" and "big fail" — neither was true; he had ~90% of the structure right and got stuck on the value-vs-index distinction. Wrote final solution for him with full line-by-line explanation. Mental model locked in: "replace search-for-something with lookup-of-something." Important emotional/pedagogical moment — wrote the solution rather than dragging him through more hints once he hit the wall, was the right call. Style nits: `let` instead of `const` on test inputs (recurring), `numsMap` vs `seen` naming (variable should describe purpose not type). |
 | 2026-04-08 | Contains Duplicate                                                | Hash set, membership tracking, first JS `Set` use                                      | Solved cleanly ✓                         | ~10 min | A grade. Wrote it cold immediately after Two Sum explanation. Idiomatic: used `Set` instead of `Map` (correct judgment — only need "have I seen this?", not value+index), `for...of` instead of indexed for (correct — doesn't need `i`), good naming (`seen`), check-then-add order. Fast, clean reinforcement of the hash pattern from the Two Sum struggle. Recurring nits still present: `let` instead of `const` on test inputs, only tested one input even though four were declared, `emptryArr` typo. Also had a defensive `length <= 1` guard which is technically dead code but defensible (style call, leaving it). Pattern locked in cross-problem: hash Map + hash Set both demonstrated in the same session, picking the right tool for each question.                                                                                                                                                                                                                                                                                          |
 | 2026-04-09 | Valid Anagram (JS — bonus hash map rep)                           | Hash map, frequency counting, JS `Map` mechanics                                       | Solved with guidance ✓                   | ~20 min | Two-map approach. Bugs encountered: (1) `currCharCount + 1` expression not assigned (didn't know expression vs assignment difference — important JS fundamental, now corrected), (2) missing `else` on the set-to-1 branch causing overwrite on every iteration, (3) missing `return true` at end of function (fell off without explicit return → `undefined`). Needed nudge on JS Map comparison — no built-in deep equality like Python `==`, had to write manual size + iteration check. Learned the `.get(c) || 0` idiom as JS equivalent of Python's `dict.get(key, 0)`. Shown single-map elegant version (increment first string, decrement second). Non-trivial `!` usage on `currCharCount` for TS null assertion — working but not ideal; the `|| 0` pattern avoids the need entirely. |
+| 2026-04-22 | Ransom Note (hash map frequency count + decrement walk)           | Hash map, frequency counting with decrement, early-exit pattern                        | Solved with heavy guidance, burnout before final fix | ~40 min | C+/B-. Counting phase: initial version had a fatal overwrite bug (unconditional `set(char, 1)` after the if/else wiped the increment) — fixed after trace. Verbose if/else counting returned AGAIN despite `|| 0` idiom having been covered on 2026-04-09 AND explicitly handed to him mid-session in this very session — this is now the 3rd flagged recurrence. Direction flip was interesting: initially counted ransomNote planning to walk magazine (Option A — works but needs post-loop map scan), but correctly identified the gap when prompted ("as you walk magazine, HOW do you detect a missing ransomNote letter?"). Flipped to count magazine, walk ransomNote (Option B — cleaner with early exit). Decrement walk had 3 bugs: **(1)** expression-vs-assignment RECURRENCE — `magazineMap.get(char) - 1;` computed and discarded. Same exact bug as 2026-04-09 Valid Anagram. John fixed this himself mid-session by introducing a `decrementChar` intermediate var. **(2)** `return true` inside the loop (exits on first char). John fixed this himself. **(3)** `!map.has(char)` doesn't catch count=0 exhaustion — need `!count` check on the VALUE. Burnout hit at this point ("Please finish this for me, I am burnt out") — wrote the final fix and walked through why. Session context: came right after the Two Sum Python breakthrough (big cognitive load), so burnout is understandable. Key wins: fixed expression-vs-assignment without being told (correction is sticking); fixed return-inside-loop without being told (another correction sticking). Key gaps: verbose if/else counting recurring despite repeated coverage; `has()` vs count-check not yet internalized. |
 
 ---
 
@@ -289,6 +324,63 @@ Timed problems (25 min solve + 5 min review). Mix of all patterns. Both language
 
 # TRACKING
 
+## Pattern Tracking (NEW 2026-04-22)
+
+Canonical list of patterns, their teach-status, and the date of first formal Pattern Lesson. A pattern is **LOCKED** only when John solves a fresh problem using it WITHOUT framing scaffolding AND WITHOUT the pattern being named in the problem title.
+
+**Status values:**
+- `NOT STARTED` — John has never seen a formal Pattern Lesson for this. Next encounter triggers the full lesson (Rule 1).
+- `INTRODUCED` — Pattern Lesson has been given OR the pattern has been encountered via problems but not formally taught; needs a clean drill to confirm.
+- `MOSTLY LOCKED` — John has solved a problem using this pattern solo, but only after framing help OR on the named/archetype version. Needs 1-2 recall reps on variants without scaffolding.
+- `LOCKED` — John reached for the pattern unprompted on a recall session, no naming, no hints.
+- `FUMBLED` — Previously LOCKED but missed on a recall. Triggers 3-min refresh lesson + another drill.
+
+| Pattern | First Encounter | Formal Lesson Given | Status | Notes |
+|---|---|---|---|---|
+| Hash map / set with complement lookup | 2026-04-08 (JS Two Sum) | NOT YET — informal coverage only across 5 sessions | **MOSTLY LOCKED** (Python archetype solo solve 2026-04-22 late, after 4 prior fails needing solution written for him) | Needs 1-2 clean variant reps (product, difference, complement-in-range) without framing scaffolding. Also: give the formal Pattern Lesson retroactively — it hasn't been done in the new framework. |
+| Frequency counting + decrement walk | 2026-04-22 (JS Ransom Note) | NOT YET — partial coverage via problem | **INTRODUCED** | Idiom locked: `(map.get(k) \|\| 0) + 1` for count; `!count` check for exhaustion during decrement walk. Formal lesson needed to tie the pattern together. |
+| Frequency counting (count-then-inspect) | 2026-04-08 (Valid Anagram, both langs) | NOT YET | **MOSTLY LOCKED** | Solid in both langs; variants via Counter (Py) and `\|\| 0` (JS) covered. |
+| Accumulator pattern | 2026-04-07 (Running Sum), 2026-04-21 (Running Max) | NOT YET | **INTRODUCED** | Pattern is starting to stick but not instantly recognized on new framings. |
+| Two pointers (opposite direction) | 2026-04-08 (JS Palindrome) | 2026-04-08 (informal re-teach from first principles, captured in `notes/two-pointer.md`) | **INTRODUCED** in JS only | Needs Python rep + formal lesson in new framework. |
+| Two pointers (same direction / writer-reader) | 2026-04-07 (Move Zeros, bookmarked) | NOT YET | `NOT STARTED` | Phase 2. Introduce with formal Pattern Lesson when the time comes. |
+| Set operations (union / intersection / diff) | 2026-04-09 (Python Intersection) | NOT YET | **MOSTLY LOCKED** (Python only) | Trivial enough that a formal lesson may not be needed — but a skeleton/notes entry in `patterns/` would help for reference. |
+| List comprehension (basic + conditional) | 2026-04-14 | NOT YET | **LOCKED** (basic + conditional) | Nested LC still ahead. |
+| Tuple unpacking in for clause | 2026-04-14 | NOT YET | **LOCKED** for the for-clause form | Standalone unpacking + `*rest` still ahead. |
+| Sort + slice (top-K style) | 2026-04-18 (JS Top K) | NOT YET | **INTRODUCED** | |
+
+Going forward, every new pattern encountered should be added to this table the session it's first taught. Formal Pattern Lesson dates are the truth — informal coverage doesn't count.
+
+## Pattern Library (`patterns/` folders)
+
+Each language has a `patterns/` subfolder (`python/patterns/`, `typescript/patterns/`). **This is where Pattern Lesson reference material lives** — one file per pattern, written AFTER the lesson is delivered. File format:
+
+```markdown
+# Pattern: <name>
+
+## Signals
+When should I reach for this? What in a problem description tells me it's the right tool?
+
+## Mental Model
+How does it work, conceptually? One or two sentences + a tiny trace.
+
+## Skeleton
+```<lang>
+// minimal generic example — reading-only, not a problem to solve
+```
+
+## Failure Modes
+When NOT to use this / when it misleads.
+
+## Variants
+Sub-patterns and their differences (e.g. hash set vs hash map; complement via subtraction vs division vs addition).
+
+## Problems Practiced
+| Date | Problem | Language | Result |
+|---|---|---|---|
+```
+
+Purpose: **long-term reference John can re-read before interviews** + central place to track which problems have exercised which pattern. The `patterns/` folders are currently empty (2026-04-22) — populate as patterns get their formal lessons going forward. Backfill for already-covered patterns (hash-map-complement, frequency counting, two pointers, accumulator) is a nice-to-have but not urgent.
+
 ## Weak Spots
 
 Track patterns or concepts that consistently cause trouble in either language. Revisit these periodically.
@@ -299,8 +391,13 @@ Track patterns or concepts that consistently cause trouble in either language. R
 - **Accumulator pattern:** Tendency to overcomplicate stateful loops with unnecessary conditionals. Reinforce: declare accumulator outside loop, update inside, that's it.
 - **Snake_case in Python:** JS muscle memory leaks into Python locals (`sortedStrOne` instead of `sorted_str_one`). Function names are correct snake_case; locals are the gap. Call out every time until it's reflexive.
 - **Index vs value confusion (range + nested loops):** `range(len(nums))` gives indexes (0, 1, 2...), not values. Must go through `nums[i]` to get the value. Tripped twice on this in pair_sums LC (wrote `i + j == target` instead of `nums[i] + nums[j] == target`). Confirmed weak spot — more nested iteration reps needed before Phase 2.
+- **Hash-set-with-complement pattern (2026-04-21, REINFORCED 2026-04-22 — 4 FAILED REPS, then Python ARCHETYPE SOLVED 2026-04-22 late):** Four consecutive failures across Two Sum (JS, 2026-04-08), Pair Products (Python, 2026-04-21), Pair with Difference K (Python, 2026-04-22). Then on 2026-04-22 (late session), **Two Sum Python solved — first solo application of the pattern.** Mental unlock was forcing him to name ONE SPECIFIC number to look up (`complement = target - num`), not "any of the seen numbers." Framing questions (complement formula + dict as `{value: index}` + check-before-add) had to be walked through, but John wrote the code himself with only minor fixups. **Pattern is CLOSER TO LOCKED but not declared yet** — need 1-2 clean reps on VARIANTS (product, difference, complement-in-range) WITHOUT framing scaffolding and WITHOUT solution being written before marking definitively locked. Cross-problem transfer is the remaining test. Continue drilling this pattern every 2-3 Python sessions with variation until locked.
+- **Python `if x or y in set` gotcha (2026-04-22):** Hit on Pair with Difference K. Parses as `if x or (y in set)` — the `in` only binds to `y`. For non-zero `x`, the expression is always truthy. Must repeat the `in set` check on both sides: `if x in set or y in set`. Worth a quiz in a future session to confirm it's locked.
+- **Dead code / save hygiene (recurring):** Dead `pass` statements, debug prints, stray characters from typos, commented-out test cases consistently left in files at save time. Every problem needs a cleanup pass before being declared "done." Enforce the full test-all-inputs + remove-debug-code + no-dead-code rule on every save.
 - **`dict.get(key, default)` for counting:** John still reaches for `if char in d / else` instead of the idiomatic `.get()` shortcut. Reinforce on next counting problem.
 - **Boolean return antipattern:** `return x === y ? true : false` instead of `return x === y`. Surfaced 2026-04-08 in palindrome. Burn out of muscle memory — comparison operators already return booleans.
+- **Verbose if/else counting in JS — 3rd recurrence (2026-04-22):** Recurring across 2026-04-09 (Valid Anagram), 2026-04-18 (Top K Frequent), 2026-04-22 (Ransom Note — despite idiom being handed to him mid-session). John reaches for `if (!map.has(key)) map.set(key, 1); else { const c = map.get(key); map.set(key, c+1); }` instead of `map.set(key, (map.get(key) || 0) + 1)`. The idiom replaces BOTH branches in one line via JS falsy coercion (`undefined || 0` → 0). Drill: every future frequency-counting problem in JS, force him to use the one-line idiom first try. Do NOT accept the verbose version without a callout.
+- **`has()` vs count-value check for dict exhaustion (2026-04-22):** New weak spot. `!map.has(char)` only catches missing keys, not count=0 (exhausted after decrement). When walking and decrementing, the correct idiom is `const count = map.get(char); if (!count) return false; map.set(char, count - 1)` — `!count` covers both `undefined` and `0` via falsy coercion. Will come up on any problem that walks-and-decrements a frequency map (ransom note, anagram one-map version, etc.). Quiz on this in a future session.
 
 ## Session Log
 
@@ -321,3 +418,6 @@ Append a brief entry after each algorithm session.
 | 2026-04-14 | Python     | Filter and Transform + Pair Sum Indices (list comprehension x2) | A. Both solved cold, no hints. Basic + conditional list comprehension syntax is solid. Tuple unpacking in for clause demonstrated cleanly. Light Monday warmup — two quick problems. | Continue Python Phase 1 — nested list comprehensions, more tuple unpacking reps, range() |
 | 2026-04-16 | Python     | Pair Sums — nested loop + nested list comprehension              | B. Loop version correct with minor help on the i/j mental model (nested range, j starts at i+1). LC version: got structure right, tripped twice on index vs value — wrote `if i + j == target` (indexes) instead of `if nums[i] + nums[j] == target` (values). Core confusion: `range(len(nums))` produces indexes, not values. John flagged this as a fundamentals gap — needs more reps on nested iteration and index/value distinction before moving to harder patterns. | More nested LC reps + range() usage. Do NOT move to Phase 2 until index/value confusion is gone. |
 | 2026-04-18 | JavaScript | Top K Frequent Elements — hash map frequency count + sort + slice | B+. Correct approach built independently: Map for counting, spread to array of pairs, sort descending by value (b[1] - a[1]), slice(0, k), map to keys. Needed clarification on what `k` means before starting (number of results, not a threshold). Clean chain on lines 15-18. Nits: `let` instead of `const` on Map and count variable; verbose if/else counting instead of `(map.get(n) \|\| 0) + 1` idiom (recurring); no console.log on test inputs (recurring). | Continue Python rotation next — nested iteration reps to fix index/value weak spot. |
+| 2026-04-21 | Python | Pair Products (hash set + complement) + Running Max (accumulator) | Mixed session. Pair Products was rough — C+/B- with heavy guidance. Did not recognize it as a Two Sum variant despite identical structure. Struggled with pattern recognition and conflated "I don't know the math" with "I don't know the algorithm" (math was trivial, `24/2=12`, gap was the algorithmic pattern). Learned `//` integer division for the first time. Running Max was faster — B+ with one hint on accumulator placement (same pattern as running sum from 2026-04-07). Good instinct using `nums[0]` as starting max. Style: dead code and stray chars still appearing in files at save — needs a final cleanup pass before claiming "done". | Another hash-set-with-complement rep before the pattern is safe to mark complete. Continue Python rotation. |
+| 2026-04-22 | Python | Pair with Difference K (hash set + complement with `n-k` AND `n+k`) | C. **Fourth consecutive failure on hash-set-with-complement pattern.** Same weaknesses as prior sessions: defaults to nested-loop framing ("minus any number in the set"), doesn't naturally compute a single complement to look up. Once past the framing, hit the classic `if x or y in set` Python gotcha, check-before-add timing error (same-index collision), and `return False` inside loop. Needed solution written for him (same breakpoint as Two Sum JS on 2026-04-08). Trace afterwards was clean. John asked explicitly for more reps on this pattern. Only 1 algo today (not the planned 2) due to large markdown-audit side quest in the system design session. | **TWO algos next session** (1 Py + 1 JS). Python: YET ANOTHER hash-set-with-complement rep. Consider: (a) Happy Number (another complement-lookup flavor), (b) Contains Duplicate II (hash map + index tracking), or (c) Two Sum in Python (since only JS version has been done — direct rep of the archetype). JS: light hash-map pattern to warm up rotation. |
+| 2026-04-22 (late) | Python + JavaScript | Two Sum (Py archetype — hash map complement) + Ransom Note (JS — frequency count + decrement walk) | **MIXED. Big Python win, rough JS.** **Python Two Sum: B+, BREAKTHROUGH.** First solo application of hash-map-with-complement pattern after 4 prior failures. Mental unlock was forcing "ONE SPECIFIC number" (complement = target - num) instead of "any of the seen numbers." All 3 framing locks landed: complement formula, dict shape `{value: index}`, check-before-add. John wrote the code himself with only minor Socratic fixes. All 4 test cases passed. **JS Ransom Note: C+/B-, BURNOUT.** Counting phase had overwrite bug (fixed). Direction flip correctly identified when prompted (count magazine, walk ransomNote). Decrement walk had 3 bugs — John fixed 2 of 3 independently (expression-vs-assignment RECURRENCE from 2026-04-09, return-true-inside-loop) — asked to finish the third (`!has()` vs `!count`). Burnout is real signal after the cognitive load of Two Sum — respected it. Session ended with a META-DISCUSSION from John: proposed adding a pre-algorithm PATTERN LESSON block before new-pattern problems, plus mixing in older/recycled problems to test recall instead of always introducing new patterns. This is a valid and important pedagogical critique — needs to be formalized into the section's structure. | **NO algos or 1 light rep** next session — rest the rotation after today's cognitive load. Focus next session on: (1) **Observability** (next System Design sub-topic, deferred from today), (2) **FORMALIZING algo section restructure** based on John's meta-proposal — needs a concrete pattern-lesson format, a recycled-problem cadence, and an update to the "Challenge Delivery Rules" in this file. |

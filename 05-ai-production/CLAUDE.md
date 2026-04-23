@@ -79,6 +79,22 @@ Can design a cost-aware, production-ready RAG system from scratch with caching, 
 
 ---
 
+## End-of-Section Capstone
+
+The production RAG rebuild is the core artifact. The capstone tests production judgment — can John diagnose failures and make cost/quality trade-off decisions under pressure, not just build a working system in a guided context?
+
+### Part 1 — Production Failure Scenario (20-30 min)
+Claude presents a failure scenario: "Your RAG pipeline has been live for 2 weeks. Users are reporting low-quality answers on exact-match queries, and your embedding API bill tripled. Walk me through how you'd diagnose each problem and what you'd change." John must reason through retrieval quality, chunking, caching gaps, and cost issues systematically — no notes. The goal is structured diagnostic thinking, not reciting a list.
+
+### Part 2 — Architecture Review (15-20 min)
+John explains the production RAG system as if presenting to a technical stakeholder: what it does, where it could fail first, how you'd scale it, and what you'd change if the document corpus grew 100x. Claude asks 3-4 follow-up questions targeting the weakest reasoning ("you said you'd add caching — cache what, keyed how, with what TTL?").
+
+**Pass criteria:** Failure scenario addressed with systematic reasoning across all three dimensions (quality, cost, exact-match gap), architecture review is confident and covers failure modes without prompting. Section closes when both parts pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Next Focus |

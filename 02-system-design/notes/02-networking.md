@@ -1,5 +1,18 @@
 # Internet & Networking Fundamentals
 
+## 8 Networking Topics
+
+1. IP Address
+2. Port
+3. DNS
+4. HTTP
+5. HTTPS / TLS
+6. Web Request Lifecycle
+7. WebSockets
+8. SSH
+
+---
+
 ## IP Address
 
 A unique numerical address assigned to every device on a network.

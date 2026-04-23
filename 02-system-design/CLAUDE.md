@@ -29,7 +29,7 @@ End-of-section warm-down quiz is mandatory before marking the section complete (
 
 ### Request Lifecycle (full end-to-end walkthrough)
 
-The classic "what happens when you type a URL" interview question, walked stage by stage. Notes in `notes/request-lifecycle.md`.
+The classic "what happens when you type a URL" interview question, walked stage by stage. Notes in `notes/01-request-lifecycle.md`.
 
 - [x] Stage 1: DNS Resolution (cache hierarchy, TTL semantics, absolute-time TTL clarification)
 - [x] Stage 2: TCP Handshake (three-way handshake, 1 RTT cost, connection reuse, head-of-line blocking)
@@ -114,30 +114,31 @@ This comes up in every system design interview. You'll be asked to estimate scal
 - [x] Storage types: blob/object storage (S3) vs block storage (EBS) vs file storage (EFS) — when to use each, especially for AI workloads (embeddings, documents, model artifacts)
 - [x] Polyglot persistence — using the right DB for each job
 
-### Search Engines & Full-Text Search
+### Search Infrastructure as a System Component
 
-Relevant to current job (Elasticsearch) and ties into hybrid search in Section 5 (AI Production). Conceptual understanding + awareness of when to reach for a search engine vs other tools.
+Trimmed from full-text search deep dive — research confirmed inverted indexes, LIKE/ILIKE, and BM25 internals are niche/Tier 3 for mid-level interviews. Lean coverage only: what Elasticsearch is, when to reach for it, how it fits into a system design answer. BM25 deferred to Section 5 (AI Production / hybrid search).
 
-- [ ] What full-text search is — inverted indexes (conceptual: word → list of documents containing it), tokenization, analyzers
-- [ ] When to use a search engine vs database LIKE/ILIKE queries vs vector search — decision framework
-- [ ] Elasticsearch/OpenSearch awareness: what it is, common use cases (search, log aggregation, analytics), basic concepts (index, document, mapping, query DSL at a high level)
-- [ ] How search fits into a system: search as a read-optimized view, syncing data from primary DB to search index, eventual consistency trade-off
-- [ ] Relevance scoring basics: TF-IDF / BM25 (conceptual — know what they optimize for, not the math)
+- [x] What Elasticsearch is and is not (search engine primarily; CAN function as a vector DB but that's not its primary identity)
+- [x] When to add a search layer vs. querying the primary DB directly
+- [x] How search fits into a system: read-optimized view, sync from primary DB, eventual consistency trade-off
+- [x] Interview usage: how to drop a search layer into a system design answer confidently
+- [x] BM25 vs embeddings distinction (CRITICAL — BM25 = keyword relevance scoring via term frequency + rarity; embeddings = vector/semantic similarity; hybrid search = combining both). Conflated in John's summary, corrected mid-session.
 
 ### Resilience & Reliability
 
-- [ ] Retries with exponential backoff
-- [ ] Circuit breaker pattern
-- [ ] Idempotency — what it is and why it matters for distributed systems
-- [ ] Rate limiting — token bucket, sliding window algorithms
-- [ ] Graceful degradation — serving partial results vs failing entirely
+- [x] Retries with exponential backoff (+ jitter, bounds, retry-eligible errors 5xx/network)
+- [x] Circuit breaker pattern (three-state machine: CLOSED/OPEN/HALF-OPEN; HALF-OPEN probe is the self-heal mechanism — covered 2026-04-22; Q5 follow-up rep skipped per John's call 2026-04-22 late session, vocabulary stands as-documented in notes)
+- [x] Idempotency — what it is and why it matters for distributed systems (mechanism locked: Idempotency-Key → server caches (key → result) → duplicate returns cached response)
+- [x] Rate limiting — token bucket, sliding window algorithms (layered per-user + per-endpoint + Retry-After response pattern)
+- [x] Graceful degradation — serving partial results vs failing entirely (critical path framing, per-component fallback strategies)
 
-### Observability
+### Observability (Tier 3 — scoped lean)
 
-- [ ] Structured logging (JSON logs, correlation IDs)
-- [ ] Metrics: what to measure (latency, error rate, throughput, saturation)
-- [ ] Distributed tracing — what it is and when you need it
-- [ ] Alerting: thresholds, on-call, escalation (conceptual)
+Single deliverable: memorized 50-second interview paragraph covering the whole topic. No deep dive — buzzwords only. See `notes/12-observability.md`.
+
+- [x] Three pillars vocabulary (logs / metrics / traces)
+- [x] Key buzzwords: correlation IDs, Four Golden Signals, percentiles (p50/p95/p99), OpenTelemetry, PagerDuty
+- [x] Memorized interview paragraph
 
 ### Case Studies (Practice Exercises)
 
@@ -158,6 +159,25 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 
 ---
 
+## End-of-Section Capstone
+
+Run in its own dedicated session after all sub-topics and warm-down quizzes are complete. Three parts, all required.
+
+### Part 1 — Written Quiz (20-30 min)
+15 questions, mixed format: recall, "explain why," trade-off reasoning, and 2-3 applied scenarios spanning the full section. Scored. Any topic scoring below 70% triggers a targeted re-teach before the section closes — not "we'll revisit it later."
+
+### Part 2 — System Design Challenge (45-60 min)
+Fresh prompt John hasn't seen — not one of the practiced case studies. Design the full system cold: components, data flow, trade-offs, failure modes, scaling decisions. Claude pokes holes with "why not X?" and "what breaks first?" follow-ups. John must defend decisions or revise and explain why.
+
+### Part 3 — Rapid-Fire Defense (10-15 min)
+5-7 follow-up questions on the Part 2 design, interview-style. No notes. Tests whether understanding is real or pattern-matched to the prompt.
+
+**Pass criteria:** Part 1 ≥ 70% with no catastrophic misses on core topics (CAP, caching, DB scaling), Part 2 design has no major conceptual errors and trade-offs are articulated, Part 3 ≥ 4/7 answered confidently. Section only closes when all three pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Next Focus |
@@ -171,6 +191,8 @@ Read and analyze real post-mortems. Identify what failed, why, and how to preven
 | 2026-04-16 | Load Balancing & Networking — all 5 chunks: what LB does + placement, algorithms (round-robin, weighted, least connections, consistent hashing), session stickiness, reverse proxy vs LB, API gateway pattern. Applied assignment: food delivery app. Quiz: B-. | B- on quiz. Strong conceptual understanding. Key gaps: (1) initially placed LB after gateway instead of before — corrected to Public LB → Gateway cluster → per-service LBs → instances; (2) missed consistent hashing in Q1 — added to notes; (3) reverse proxy mental model inverted (said it sits between LB and servers, correct is between clients and servers); (4) rate limiting counter in Redis — nailed the bug (4 instances × 5 = 20 orders) and fix. Consistent hashing: knows session/state use case but missed cache key locality angle (same key always routes to same server = cache stays warm). Gateway architecture clarification: one gateway codebase, N identical instances — never one-per-service. Justified gateway with cross-cutting concerns (auth, rate limiting), not just service count. | Message Queues & Async Processing |
 | 2026-04-17 | Message Queues & Async Processing — all 5 chunks (scoped lean): why async matters, producer-consumer, at-least-once + idempotency, common tools, when to use queues. | B+. Strong conceptual grasp — correctly explained why 200 consumer-crash messages aren't lost, nailed the async photo upload scenario with correct reasoning (202 Accepted introduced as new vocab). Idempotency definition was slightly off first attempt ("only fires once" vs "same result regardless of how many runs") — corrected but didn't re-articulate. Good scope instinct: pushed back on memorizing 3 delivery modes, we trimmed to just at-least-once. Celery flagged correctly as a real tool — noted as Python worker framework for Section 4. | Database Architecture |
 | 2026-04-18 | Database Architecture — all 7 chunks: SQL vs NoSQL, ACID, indexing, replication, sharding, connection pooling, storage types + polyglot persistence. | B+ overall. Strong conceptual grasp throughout. Key gaps: called Elasticsearch a vector DB (it's a search engine — corrected); missed composite index hint on (user_id, created_at); initially conflated ACID durability with consistency. Good instincts: correctly chose document store for variable-schema catalog, flagged inventory as transactional, nailed read-your-own-writes, pivoted to conversation_id as shard key for messaging. Healthy pushback on connection pooling depth — scoped it lean, which was correct. Interview tangent on AI pipelines when asked about PDF storage — redirected to core answer (S3 + reference in DB). | Search Engines & Full-Text Search |
+| 2026-04-21 | Search Infrastructure as a System Component — trimmed sub-topic. What ES is, when to add a search layer, sync/eventual consistency pattern, BM25 vs embeddings distinction. Stack Overflow applied scenario. | B/B+ overall. John pushed back on scope — correctly identified the original version as niche/extraneous. Web research confirmed search engines / BM25 / full-text search are Tier 3 for mid-level interviews. Trimmed to a 20-min survey. John was also right to push back on my "ES is not a vector database" oversimplification — ES CAN function as a vector database (his company Caseway uses it that way). Correct framing: ES is primarily a search engine that ADDED vector capabilities. Big correction mid-session: John conflated BM25 and embeddings in his summary — clarified that BM25 = keyword relevance scoring, embeddings = semantic/vector similarity, hybrid = both. This distinction is load-bearing for Section 5. Applied scenario (Stack Overflow): B/B+ — overbuilt by adding pgvector without justification (SO is classic keyword search, ES alone is the typical answer); minor imprecision on sync terminology ("ES read-only from DB") but eventual consistency reasoning was solid. Also covered real-world tangent on John's Caseway RAG stack (Postgres + pgvector + optional ES for legal research chat) — bookmarked for Section 5. | Resilience & Reliability |
+| 2026-04-22 | Resilience & Reliability — all 5 chunks: retries + exponential backoff + jitter, idempotency + idempotency keys, circuit breaker + three-state machine, rate limiting (token bucket vs sliding window + layered limits + 429/Retry-After), graceful degradation (critical path + per-component fallback). Warm-down quiz 6 questions. Also large side-quest: markdown audit on all 11 notes files (34 bold-as-section-marker conversions to `###` across 9 files). | **B / B+ overall.** Chunks 1-5 covered cleanly with one-chunk-at-a-time pacing. Idempotency applied check (ride-share): initial answer C+ — missed that server RETURNS cached response (not just "discards" duplicate); corrected and mechanism now locked. Circuit breaker applied check (payment outage): C+ — didn't walk thread pool exhaustion → cascading failure mechanism for Q1; skipped HALF-OPEN recovery for Q2; both generic rather than scenario-specific. Rate limiting applied check: right algorithms both scenarios, overbudgeted refill rate on dashboard (10 tokens/sec = 600/min sustained for page-load-every-few-minutes traffic — same miss as the later quiz Q4a). Graceful degradation assignment (news aggregator): Grade C — didn't engage with the specific failing services in the scenario (trending-analytics + image CDN timeouts); thumbnails got zero treatment despite being 50% of failure; karma/notifications incorrectly placed in critical path. Wrote Claude's Review in the assignment file with better answer. **Quiz results:** Q1 recall A-, Q2 jitter A-, Q3 idempotency mechanism B+, Q4a token bucket B+ (overbudgeted numbers), Q4b sliding window A (layered 2/min + 5/day strong judgment), **Q5 circuit breaker state machine FAILED** (John removed three-state section from notes earlier deeming it "too in the weeds" — re-taught, re-added to notes, follow-up rep pending), Q6 arithmetic A ($600/hr calc unprompted — first positive data point on the recurring arithmetic gap). **Recurring pattern surfaced 4th+ time: "knows the rule, hasn't internalized implications"** — mid→senior gap. Drill locked: force naming of each scenario component and walking its specific failure path. Notes markdown audit added to Session End protocol auto-run going forward. | **Resilience & Reliability CLOSE-PENDING (Q5 follow-up first)**, then **Observability** |
 
 ---
 

@@ -1,5 +1,19 @@
 # Database Architecture
 
+## 9 Database Topics
+
+1. SQL
+2. ACID
+3. NoSQL
+4. Database Indexing
+5. Database Replication
+6. Database Sharding
+7. Connection Pooling
+8. Polyglot Persistence
+9. Storage Types
+
+---
+
 ## SQL
 - Relational databases (Postgres, MySQL) give you:   
     - **Schema enforcement** -- every row conforms to a defined structure 
@@ -45,15 +59,18 @@
 - An index makes lookups fast. Without one, the DB Reads every row to find a match (full table scan)
 - With one, it jumps straight to the data - like a phone book jumping to the right letter
 - **Trade-off:** faster reads, slower writes. Every insert/update/delete must also update the index
-- **Index when:**
-    - you filter on this column frequently
-    - you sort on it
-    - it's used in joins
-    - high cardinality (lots of unique values)
-- **Don't index when:**
-    - Write-heavy table -- too many indexes tanks write performance
-    - Low cardinality -- a status column with 3 possible values isn't worth it
-    - Speculative columns -- don't index everything just in case
+### Index when
+
+- you filter on this column frequently
+- you sort on it
+- it's used in joins
+- high cardinality (lots of unique values)
+
+### Don't index when
+
+- Write-heavy table -- too many indexes tanks write performance
+- Low cardinality -- a status column with 3 possible values isn't worth it
+- Speculative columns -- don't index everything just in case
 
 ## Database replication
 - Replication solves: a single database is a point of failure. If it goes down, everything goes down. Can also be a bottleneck when read traffic gets heavy
@@ -64,10 +81,11 @@
 App → writes → Primary DB
 App → reads  → Replica 1, Replica 2, Replica 3
 
-- **What you get:**
-    - **Read scalability** -- spread read traffic across replicas instead of hammering one DB
-    - **Fault tolerance** -- if the primary dies, promote a replica to primary (failover)
-    - **Geographical distribution** -- put a replica closer to users in another region for lower latency
+### What you get
+
+- **Read scalability** -- spread read traffic across replicas instead of hammering one DB
+- **Fault tolerance** -- if the primary dies, promote a replica to primary (failover)
+- **Geographical distribution** -- put a replica closer to users in another region for lower latency
 
 - **The catch** -- replicates are *slightly* behind the primary
     - This means reads from replicas might return stale data

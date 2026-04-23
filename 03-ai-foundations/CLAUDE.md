@@ -50,6 +50,24 @@ Can explain RAG architecture end-to-end, describe chunking trade-offs with speci
 
 ---
 
+## End-of-Section Capstone
+
+This section is lighter than System Design — the RAG POC is the primary proof of understanding. The capstone adds one verbal layer to confirm the concepts are internalized, not just implemented by following a tutorial.
+
+### POC Demo + Verbal Walkthrough (20-30 min)
+John runs the working RAG POC and explains the full pipeline end-to-end (ingest → chunk → embed → store → retrieve → generate) as if onboarding a junior engineer — no notes. Claude then asks 4-5 targeted follow-up questions, for example:
+- "Why this chunk size? What would break if you doubled it?"
+- "Your vector search returned a bad answer for an exact-match query. Walk me through how you'd debug it."
+- "When would this POC fail at scale? What's the first thing you'd change?"
+- "What's the difference between your vector search and what Elasticsearch does?"
+- "How would you evaluate whether this RAG system is actually giving good answers?"
+
+**Pass criteria:** POC works end-to-end, pipeline explained clearly without notes, 3/5 follow-up questions answered with specific reasoning (not vague gestures). Section closes when this passes. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Next Focus |

@@ -69,6 +69,25 @@ When a sub-topic has a clean interview-question equivalent, pull from `10-interv
 
 ---
 
+## End-of-Section Capstone
+
+Frontend performance knowledge is only real if you can find problems in unfamiliar code — not just describe patterns you already know. Two parts.
+
+### Part 1 — Performance Audit (30-40 min)
+Claude provides a deliberately broken, unoptimized React component tree with 4-6 embedded issues: unnecessary re-renders, incorrect `useEffect` dependency arrays, missing memoization where it matters, wrong state placement, referential equality traps breaking `React.memo`, etc. John must:
+1. Identify every issue and explain specifically why it's a performance problem
+2. Fix each one with the correct tool (memo, useCallback, useMemo, colocation, etc.)
+3. For the two most impactful fixes, describe what he'd look for in React DevTools Profiler to confirm the improvement
+
+### Part 2 — Rendering Model Verbal (10 min)
+Without notes: explain React's rendering model as if teaching it to an experienced developer who hasn't learned the internals — when it re-renders, what reconciliation actually does, how Fiber enables concurrent features, and what the practical implication is for how you write components. Claude asks 2-3 follow-ups targeting the weakest point in the explanation.
+
+**Pass criteria:** All Part 1 issues correctly identified and fixed with accurate reasoning, Part 2 explanation is coherent and accurate with no major gaps. Section closes when both pass. Log result in Session Log below.
+
+**Capstone result:** NOT YET RUN
+
+---
+
 ## Session Log
 
 | Date | Topics Covered | Assessment | Next Focus |

@@ -2,6 +2,13 @@
 
 High-level napkin math for sizing systems before designing them.
 
+## 4 Estimation Techniques
+
+1. QPS (Queries Per Second)
+2. Peak vs Average Traffic
+3. Reads vs Writes
+4. Storage Estimation
+
 ---
 
 ## QPS (Queries Per Second)
