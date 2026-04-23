@@ -132,12 +132,13 @@ Trimmed from full-text search deep dive — research confirmed inverted indexes,
 - [x] Rate limiting — token bucket, sliding window algorithms (layered per-user + per-endpoint + Retry-After response pattern)
 - [x] Graceful degradation — serving partial results vs failing entirely (critical path framing, per-component fallback strategies)
 
-### Observability
+### Observability (Tier 3 — scoped lean)
 
-- [ ] Structured logging (JSON logs, correlation IDs)
-- [ ] Metrics: what to measure (latency, error rate, throughput, saturation)
-- [ ] Distributed tracing — what it is and when you need it
-- [ ] Alerting: thresholds, on-call, escalation (conceptual)
+Single deliverable: memorized 50-second interview paragraph covering the whole topic. No deep dive — buzzwords only. See `notes/12-observability.md`.
+
+- [x] Three pillars vocabulary (logs / metrics / traces)
+- [x] Key buzzwords: correlation IDs, Four Golden Signals, percentiles (p50/p95/p99), OpenTelemetry, PagerDuty
+- [x] Memorized interview paragraph
 
 ### Case Studies (Practice Exercises)
 

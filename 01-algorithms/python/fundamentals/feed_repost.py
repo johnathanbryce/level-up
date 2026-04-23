@@ -24,33 +24,16 @@
 
 
 def has_recent_repost(posts: list[int], k: int) -> bool:
-
-    # hash map, store every number as key and index as value
     seen_posts = {}
     for i, post in enumerate(posts):
-
-        # add the post if we haven't seen it yet
         if post not in seen_posts:
             seen_posts[post] = i
         else:
             delta = i - seen_posts[post]
-            # if delta is within k, return True
             if delta <= k:
                 return True
-            seen_posts[post] = i  # update to latest index
-
-    print(seen_posts)  # Shows entire dictionary
-
-    # otherwise return false
+            seen_posts[post] = i
     return False
-
-
-# Test cases
-# print(has_recent_repost([1, 2, 3, 1], 3))  # True
-print(has_recent_repost([1, 0, 1, 1], 1))  # True
-# print(has_recent_repost([1, 2, 3, 1, 2, 3], 2))  # False
-# print(has_recent_repost([9, 9], 1))  # True
-# print(has_recent_repost([5, 5], 0))  # False
 
 
 def has_recent_repost_v2(posts: list[int], k: int) -> bool:
@@ -60,3 +43,18 @@ def has_recent_repost_v2(posts: list[int], k: int) -> bool:
             return True
         seen_posts[post] = i
     return False
+
+
+# v1 tests
+print(has_recent_repost([1, 2, 3, 1], 3))        # True
+print(has_recent_repost([1, 0, 1, 1], 1))        # True
+print(has_recent_repost([1, 2, 3, 1, 2, 3], 2))  # False
+print(has_recent_repost([9, 9], 1))              # True
+print(has_recent_repost([5, 5], 0))              # False
+
+# v2 tests
+print(has_recent_repost_v2([1, 2, 3, 1], 3))        # True
+print(has_recent_repost_v2([1, 0, 1, 1], 1))        # True
+print(has_recent_repost_v2([1, 2, 3, 1, 2, 3], 2))  # False
+print(has_recent_repost_v2([9, 9], 1))              # True
+print(has_recent_repost_v2([5, 5], 0))              # False
