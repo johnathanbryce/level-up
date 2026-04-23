@@ -127,7 +127,7 @@ Trimmed from full-text search deep dive — research confirmed inverted indexes,
 ### Resilience & Reliability
 
 - [x] Retries with exponential backoff (+ jitter, bounds, retry-eligible errors 5xx/network)
-- [~] Circuit breaker pattern (concept covered, Q5 state machine recall pending — re-added to notes after quiz fail; one follow-up rep needed before closing)
+- [x] Circuit breaker pattern (three-state machine: CLOSED/OPEN/HALF-OPEN; HALF-OPEN probe is the self-heal mechanism — covered 2026-04-22; Q5 follow-up rep skipped per John's call 2026-04-22 late session, vocabulary stands as-documented in notes)
 - [x] Idempotency — what it is and why it matters for distributed systems (mechanism locked: Idempotency-Key → server caches (key → result) → duplicate returns cached response)
 - [x] Rate limiting — token bucket, sliding window algorithms (layered per-user + per-endpoint + Retry-After response pattern)
 - [x] Graceful degradation — serving partial results vs failing entirely (critical path framing, per-component fallback strategies)
