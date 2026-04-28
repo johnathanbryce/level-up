@@ -185,4 +185,132 @@ The handshake actually **completes** — cert is received, validation fails, bro
 
 ---
 
+### Q2.3 — SSH key-based auth in CI/CD
+
+**Question:** You're setting up a CI/CD pipeline that runs `git clone git@github.com:your-org/repo.git` on a build server. (a) Why use key-based auth instead of password? Two specific reasons. (b) Where does the private key live? Where does the public key live? (c) What's the conceptual link between SSH key auth and something from Section 1?
+
+**Answer:**
+
+**(a) Two reasons for key-based in CI/CD:**
+
+1. **Automation-friendly — no interactive prompt.** Password auth requires someone to type the password; CI/CD runs unattended (3am pipelines, scheduled jobs). Key-based auth is non-interactive: the runner uses the private key, no human in the loop.
+2. **Easy revocation per machine.** One key per build server. If a build server is compromised, delete its public key from GitHub — that single machine loses access without affecting any other system.
+3. (Honorable mention) **No shared secret on the wire.** The private key never leaves the client; only signatures cross. Immune to brute-force guessing or password leaks.
+
+**(b) Where the keys live:**
+
+- **Private key:** `~/.ssh/id_rsa` (or `id_ed25519`) on the **client** machine. NEVER shared, NEVER transmitted. In CI/CD specifically: lives on the build server as a secret (encrypted at rest, accessed by the pipeline runner).
+- **Public key:** `~/.ssh/authorized_keys` on the **server** the user wants to access — one public key per line, each authorized to log in as that user. In CI/CD specifically: added to GitHub as a "deploy key" on the repo, or to a service account's SSH keys.
+
+The build server is the *client* in this scenario (it initiates the SSH connection to GitHub). Private key on the build server; public key registered with GitHub.
+
+**(c) Conceptual link to Section 1: TLS certificates.**
+
+Both SSH key auth and TLS use the **same asymmetric-crypto pattern**:
+
+- **TLS:** the server holds the private key for its cert. Browsers trust a list of CAs (public-key infrastructure). The server proves identity by signing TLS handshake data with its private key; the browser verifies with the cert's public key.
+- **SSH:** the user holds the private key. The server has the user's public key in `authorized_keys`. The user proves identity by signing a server-issued challenge with their private key; the server verifies with the public key.
+
+**Same mechanism, different problem.** Public/private key pairs + challenge/response = the foundation of *both* SSH auth and TLS server identity. Connecting these two as "same crypto, different problems" is a senior-flavor move that crystallizes both concepts.
+
+---
+
+### Q2.4 — WebSockets vs HTTP polling for live stock prices
+
+**Question:** You're building a stock-trading dashboard with live price updates for users' watchlists. (a) WebSockets or HTTP polling? (b) What's the specific failure mode of using HTTP polling? (c) Is there any scenario in this product where polling would be the right call?
+
+**Answer:**
+
+**(a) WebSockets.** Real-time, server-pushed updates with persistent bidirectional connection.
+
+**(b) Four canonical failure modes of HTTP polling for real-time data:**
+
+1. **Latency floor = polling interval.** Poll every 5s → worst-case latency to see a price change is 5s. For stock trading, that's a financial gap (prices move in milliseconds, user could miss the trade).
+2. **Server can't initiate.** The fundamental design difference. With polling, only the client can request; the server has no way to push fresh data. With WebSockets, the server pushes the moment an event happens — zero latency between event and notification.
+3. **Wasted requests.** Poll every 1s but prices don't change for 30s → 30 round-trips of pure overhead. Bandwidth + server load scales as `users × polling frequency` even when nothing's happening.
+4. **Forced trade-off between freshness and load.** Faster polling = lower latency but more waste; slower polling = less waste but worse freshness. WebSockets eliminates the trade-off.
+
+**Interview one-liner:** *"Polling has a fundamental design problem — the server can't push, only the client can ask. So you're stuck choosing between latency and load, even when nothing's happening. WebSockets flips that — the server pushes the moment something changes."*
+
+**(c) Yes — polling is fine for the slow-moving / event-triggered features in the same dashboard:**
+
+- End-of-day portfolio summary — once a day, polling on page load is plenty
+- News headlines / market commentary — 30-60s polling is fine
+- Account balance — changes only on user action; refresh after the transaction completes
+- Watchlist composition — changes only when the user adds/removes
+
+**Pattern:** anything that changes slowly OR only changes in response to user action doesn't justify a persistent connection. Live prices = WebSockets. Everything else on this dashboard = HTTP.
+
+**Auth note:** statelessness ≠ "needs cookies/JWT." Both HTTP and WebSockets need auth — WebSockets just checks it once at connection upgrade time instead of every request. Auth is orthogonal to protocol choice.
+
+---
+
+### Q2.5 — Stateless HTTP: implication chain
+
+**Question:** A user logs in at 9:00 AM and clicks around for 30 minutes. (a) What concrete thing happens at the protocol level on EVERY click that wouldn't be necessary if HTTP were stateful? (b) Statelessness sounds inefficient — name one concrete benefit it gives you that compensates.
+
+**Answer:**
+
+**(a) Every request re-sends auth credentials.**
+
+On every click, the browser re-transmits the auth cookie or JWT (in the `Authorization` header or `Cookie` header). The server validates it from scratch each time — there's no session state on the server saying "oh yeah, that's John, I remember." If HTTP were stateful, you'd authenticate once and the connection would "remember" you, skipping the per-request auth overhead.
+
+**Interview one-liner:** *"Every request re-sends the JWT in the headers. The server validates it from scratch every time."*
+
+**(b) The canonical benefit: HORIZONTAL SCALABILITY.**
+
+With statelessness, **any app server can handle any request.** Spin up 10 more servers behind a load balancer, round-robin requests across them — no "session" pinned to a specific server. Add servers, traffic flows. Drop a server, the next request goes to a different one with the same JWT and it works.
+
+If HTTP were stateful, you'd need:
+- **Session affinity / sticky sessions** at the LB (route a user back to "their" server) — fragile, breaks if that server dies
+- **Shared session store** like Redis — extra infrastructure, extra failure mode
+- **Session replication** across servers — complex, expensive
+
+**Other canonical benefits:**
+
+- **Resilience to server failure** — if a server crashes mid-flight, the next request just goes to another server with the same auth token. No "lost session."
+- **Easier caching** — responses can be cached at CDN/proxy level without per-user state. CDNs only work because of statelessness.
+- **Eliminated bug class** — stateful systems risk per-user state bleeding across requests (race conditions, memory leaks, process-level variable bugs). Statelessness eliminates that entire bug class because there's no shared state to leak.
+- **Easier debugging** — every request is self-contained and replayable in isolation.
+
+---
+
+### Q2.6 — DNS TTL trade-off and failover
+
+**Question:** You're on-call. Production is down. You update your DNS A record to fail traffic over to a DR site. (a) Your TTL is 86400 (24h) — what does that mean for users? (b) What's the trade-off cost of setting TTL much lower (60s) by default — what infrastructure pays? (c) What TTL would you run in production for a typical web app API?
+
+**Answer:**
+
+**(a) Users could be locked into the dead site for up to 24 hours, even after you push the DNS update.**
+
+TTL is enforced **per cache, from when that cache last fetched the record.** So:
+- Worst case: a user whose cache fetched 1 minute before the outage waits the full 24 hours.
+- Best case: a user whose cache fetched 23.5 hours ago refreshes in 30 minutes.
+- Average: roughly TTL/2.
+
+**Key principle:** DNS doesn't know about your incident. Your TTL is a *floor* on how fast you can recover via DNS changes.
+
+**(b) Lower TTL → much higher query volume hitting your authoritative DNS servers.**
+
+Every time a downstream cache expires, the recursive resolver walks back up the hierarchy to your authoritative nameservers. TTL=60s vs TTL=86400s = **1440x more queries** hitting your DNS infrastructure, scaled across every user of every resolver.
+
+**Concrete cost:** most managed DNS services (Route 53, Cloudflare DNS, NS1) **bill per query.** Drop TTL by 1000x, your DNS bill goes up 1000x. For a high-traffic site, that's real money.
+
+**Interview phrasing:** *"Lower TTL means more queries hit my authoritative DNS, which I pay for per-query. Faster failover comes at a literal dollar cost."*
+
+**(c) Practical industry calibration:**
+
+| TTL | Typical use |
+|---|---|
+| **60s** | High-availability APIs needing fast failover (Stripe, AWS APIs, active-active multi-region) |
+| **300s (5 min)** | Default for managed services (Cloudflare, Route 53 default) — good balance |
+| **3600s (1 hour)** | Stable, infrequently-changing services |
+| **86400s (24h)** | Static records that essentially never change |
+
+**Default for a typical web app's API endpoint: 300s.** Fast enough for acceptable failover, low enough query volume to not blow up your DNS bill. **60s if you anticipate failovers** (active-active multi-region setups, frequent IP changes).
+
+**Senior-flavor calibration note:** "I don't know" beats confident-wrong. If you're outside your real-world experience, admit the calibration gap and give a defensible range — that's the senior move.
+
+---
+
 *(More questions added as per-section reviews progress through Sections 3-12.)*
