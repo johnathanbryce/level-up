@@ -1,15 +1,16 @@
 # Internet & Networking Fundamentals
 
-## 8 Networking Topics
+## 9 Networking Topics
 
 1. IP Address
 2. Port
-3. DNS
-4. HTTP
-5. HTTPS / TLS
-6. Web Request Lifecycle
-7. WebSockets
-8. SSH
+3. Packets
+4. DNS
+5. HTTP
+6. HTTPS / TLS
+7. Web Request Lifecycle
+8. WebSockets
+9. SSH
 
 ---
 
@@ -28,6 +29,26 @@ A numbered channel on a single device.
 - e.g. HTTP traffic defaults to 80, HTTPS to 443, Postgres to 5432.
 
 **Mental model:** IP address as the building address (1189), port as the apartment number (903).
+
+### Port binding rule (one process per port)
+
+- **Two processes cannot listen on the same port on the same host at the same time.** The OS prevents it: the first process to bind the port owns it; any second process gets `EADDRINUSE` ("address already in use") and fails.
+- Port binding is **exclusive**, not time-shared. The OS doesn't rotate access between processes.
+- This is why "port already in use" errors happen when restarting a dev server -- the previous instance hasn't released the port yet.
+
+---
+
+## Packets
+
+All data on the network travels as **packets** -- small chunks of data with a header and a payload.
+
+- **Header** carries routing info: source IP, destination IP, source/destination ports, sequence numbers (TCP only), checksum
+- **Payload** is the actual data being sent
+- A single HTTP response is broken into many packets and reassembled at the destination
+- **TCP** guarantees ordered, lossless reassembly (handles retransmits + ordering for you)
+- **UDP** does NOT -- if packets arrive out of order or get dropped, that's the application's problem to handle
+
+**Why this matters:** when you hear "the network is unreliable," packets are why. Any single packet can be dropped, duplicated, or arrive out of order. TCP hides this from you; UDP doesn't.
 
 ---
 
@@ -107,4 +128,18 @@ TLS adds latency but provides much more robust security.
 ## SSH
 
 - A protocol for securely connecting to remote machines
-- Encrypts the connection and authenticates via key pairs or passwords
+- Encrypts the connection and authenticates via **key pairs** or **passwords**
+
+### Key-based vs password authentication
+
+- **Password auth:** shared secret transmitted (encrypted in transit, but still a secret that exists). Vulnerable to brute force, weak password reuse across services, phishing.
+- **Key-based auth:** asymmetric crypto. The user holds a **private key** (stays on their machine, never leaves), the server holds the user's **public key** (placed in `~/.ssh/authorized_keys`).
+  - The user proves they own the private key via a **challenge/response** -- the server sends a challenge, the user signs it with their private key, the server verifies with the public key. The private key never crosses the wire.
+  - **Why preferred:** no shared secret on the wire, immune to brute-force guessing, easy to revoke (delete the public key from the server), automation-friendly (no password prompt → CI/CD pipelines, deploy scripts).
+- This is the **same asymmetric-crypto idea TLS uses for certs** -- the server proves identity by holding the private key for a public cert. SSH keys + TLS certs are the same mechanism applied to different problems.
+
+### Common SSH use cases
+
+- **Connecting to remote servers** -- debugging, deployment, admin work
+- **Git over SSH** -- `git@github.com:user/repo.git` is SSH on port 22 (vs `https://github.com/...` which is HTTPS)
+- **Port forwarding / tunneling** -- routing connections through SSH to access internal-only resources (e.g. tunneling to a database that's only accessible from inside a VPC)
