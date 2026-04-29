@@ -313,4 +313,111 @@ Every time a downstream cache expires, the recursive resolver walks back up the 
 
 ---
 
-*(More questions added as per-section reviews progress through Sections 3-12.)*
+## Section 3: Back-of-Envelope Estimation
+
+### Q3.1 — Estimation fundamentals: formula, 100K trick, and peak
+
+**Question:** (a) What's the standard formula for estimating QPS from user count? (b) Why use 100,000 seconds/day instead of the actual 86,400? (c) Average QPS → peak QPS: what's the multiplier, and why is peak so much higher than average?
+
+**Answer:**
+
+**(a) Formula:**
+
+```
+QPS = (DAU × actions per user per day) / 100,000
+```
+
+All three terms: DAU (daily active users), actions/user/day, and the 100K denominator. Order of operations: multiply first, then divide.
+
+**(b) Why 100K instead of 86,400:**
+
+- Mental math simplicity: dividing by 100,000 = "shift the decimal 5 places left." No calculator needed.
+- The difference is ~15%, well within napkin-math tolerance — this is order-of-magnitude reasoning, not precision.
+- 100K > 86,400, so it slightly *under*-estimates QPS — acceptable.
+
+**(c) Peak multiplier: 2-3x average.**
+
+The mechanism: **diurnal cycle** — natural daily usage wave. Consumer apps peak in evenings (Twitter/Reddit at prime time vs 3am low); B2B apps peak weekday mornings (Slack/Zoom at 10am Tuesday vs weekend low). Peak = top of that wave; average = the 24h mean including valleys.
+
+**Important distinction:** 2-3x describes the daily cycle, NOT event spikes. Ticket drops, Super Bowl, breaking news = 10-100x — different infrastructure strategy (pre-warmed capacity, queueing, surge pricing). Don't conflate these two cases.
+
+---
+
+### Q3.2 — QPS arithmetic: 5M DAU, 6 actions/day
+
+**Question:** A meal-tracking app has 5M DAU, 6 actions/user/day. What's the average QPS? Peak QPS? Walk every step.
+
+**Answer:**
+
+- Total actions/day: `5,000,000 × 6 = 30,000,000`
+- Average QPS: `30,000,000 / 100,000 = 300 QPS`
+- Peak QPS: `300 × 3 = 900 QPS` (take the higher end of 2-3x for capacity planning)
+
+**Capacity-planning default:** when the range is 600-900, size for **900**. Cost of over-provisioning < cost of an outage.
+
+---
+
+### Q3.3 — Read/write split → architecture (rule→implications)
+
+**Question:** A blog platform has 10:1 reads:writes, 2,000 total QPS. (a) Split the QPS. (b) What specific architecture does the read-heavy asymmetry justify? (c) Why can't writes horizontally scale like reads?
+
+**Answer:**
+
+**(a) Ratio split:**
+
+10:1 → 11 total parts. One part = 2,000 ÷ 11 ≈ 182 QPS.
+- Reads: 10 × 182 ≈ **1,818 QPS**
+- Writes: 1 × 182 ≈ **182 QPS**
+- Napkin round: ~1,800 reads/sec, ~200 writes/sec.
+
+**Ratio split mechanic:** total parts = X + Y → divide total QPS by parts → multiply each side by its share.
+
+**(b) Canonical 3-tier read stack for content-heavy systems:**
+
+1. **CDN at the edge** — caches rendered HTML, images, static assets near the user (Cloudflare, Fastly, CloudFront). Catches the bulk of traffic before it hits app servers.
+2. **Redis cache layer** — for dynamic data that survives the CDN: comment threads, user profiles, trending posts.
+3. **Read replicas** at the DB layer — N replicas behind a load balancer; only the primary handles writes.
+
+**Consistency cost:** eventual consistency across all three layers. TTL trade-offs — longer TTL = more cache hits, more staleness.
+
+**(c) Why writes can't horizontally scale like reads:**
+
+| Reason | Mechanism |
+|---|---|
+| **Single source of truth** | Every write must hit the primary DB. Multiple DBs → which one has the latest row 123? Distributed consensus is expensive. Reads can hit any replica. |
+| **Durability cost** | Writes must persist to disk (WAL + fsync), often replicated synchronously before acknowledging. Blocking. Reads have no fsync. |
+| **Index updates** | Every write updates ALL indexes. 5 indexes = 5 extra writes per logical write. |
+| **Lock contention** | Writes take row/page locks. Concurrent writes on the same row serialize. Reads use cheap shared locks or MVCC. |
+| **Only escape: sharding** | Partition across N primary DBs by shard key. Hard: cross-shard transactions, hot shards, rebalancing. |
+
+**Interview one-liner:** *"Reads scale by replication — copy the data, point readers at copies. Writes can't, because you'd lose your single source of truth. The only horizontal write path is sharding, with all its trade-offs."*
+
+---
+
+### Q3.4 — Storage estimation + unit conversion + architectural decision
+
+**Question:** A photo app gets 2M uploads/day, average 1.5 MB each. (a) Storage per day? (b) Storage per year? (c) After 5 years, GB/TB/PB? (d) What storage system does this force, and why?
+
+**Answer:**
+
+**(a)** `2,000,000 × 1.5 MB = 3,000,000 MB = 3,000 GB = **3 TB/day**`
+
+**(b)** `3 TB × 365 = **1,095 TB ≈ 1.1 PB/year**`
+
+**(c)** `1.1 PB × 5 ≈ **5.5 PB** — solidly PB territory`
+
+Unit ladder: 1,000 MB = 1 GB → 1,000 GB = 1 TB → 1,000 TB = 1 PB.
+
+**(d) Object storage (S3 / GCS / Azure Blob).**
+
+**Pattern:** *DB stores the reference, S3 stores the bytes, CDN serves the bytes.*
+
+- DB: `photo_url` or `s3_key` column (~100 bytes/photo) — NOT binary blobs in the DB.
+- S3: holds the actual photo bytes. Cheap per GB, durable (S3 = 11 9s durability), infinitely scalable.
+- CDN: in front of S3 to cache hot photos at the edge.
+
+**Trade-offs:** Higher latency than block storage (EBS) for random access; not transactional. Worth it: cost + durability + scale at PB.
+
+---
+
+*(More questions added as per-section reviews progress through Sections 4-12.)*
