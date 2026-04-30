@@ -420,4 +420,61 @@ Unit ladder: 1,000 MB = 1 GB → 1,000 GB = 1 TB → 1,000 TB = 1 PB.
 
 ---
 
-*(More questions added as per-section reviews progress through Sections 4-12.)*
+---
+
+## Section 4: Core Concepts
+
+### Q4.1 — Scaling applied: where does the money go?
+
+**Question:** Your web servers are at 85% CPU. Your database is at 35% CPU. You have $5K to spend. What do you scale, how, and why?
+
+**Answer:** Scale only the web servers — they are the bottleneck. Scale them horizontally (add instances behind a load balancer): they are stateless, easy to parallelize, and don't require distributed state coordination. The database is at 35% CPU — there is no bottleneck there, so spend nothing on it now. Revisit the DB when it approaches its ceiling, and when it does, scale vertically first (larger instance, no architecture change) before considering read replicas or sharding. Key principle: identify the actual bottleneck before spending — only scale what is constrained.
+
+---
+
+### Q4.2 — CAP theorem: messaging system during a partition
+
+**Question:** You're designing a Discord/Slack-style messaging system. A network partition occurs. Do you choose CP or AP? Walk through the reasoning.
+
+**Answer:** AP — availability over consistency. During a partition, keep serving requests from the nodes that are up. The worst outcome is that some messages arrive slightly out of order or with a brief delay. The alternative — CP — means refusing all requests until nodes re-sync, which means users can't send messages at all. Brief staleness is always preferable to downtime for a messaging system. CP is for money, inventory, and anything where acting on stale data causes a real-world loss.
+
+---
+
+### Q4.3 — Strong consistency: flash sale
+
+**Question:** Flash sale, 1 item left. Two users click Buy at the exact same millisecond from different servers. What consistency model and what is one concrete architectural cost?
+
+**Answer:** Strong consistency. Every read after a write must return the updated inventory count from any node — guaranteed. This prevents both users from seeing "1 item available" simultaneously. Concrete architectural cost: the inventory write must acquire a row-level lock; all concurrent reads of that record block until the lock is released and nodes confirm the write. Reads cannot be served from read replicas for this query — they must hit the primary. This adds latency on every purchase confirmation.
+
+---
+
+### Q4.4 — Latency vs throughput diagnostic
+
+**Question:** Your API handles 500 req/sec at 50ms latency. Throughput stays at 500 req/sec. Latency climbs to 800ms. What's happening and where do you investigate first?
+
+**Answer:** Throughput holding steady means requests are getting in and completing — the system is not shedding load at the gate. The bottleneck is inside the request pipeline, not at ingress. Each individual request is taking longer to process. Investigate in order: (1) cache hit rate — a drop means more requests are falling through to the DB, slowing each one; (2) slow query log — DB queries getting heavier; (3) app worker processing time — heavier computation per request; (4) external API call latency. If throughput had also dropped, you'd suspect the LB or ingress is the bottleneck.
+
+---
+
+### Q4.5 — Hospital records: consistency model + architectural consequence
+
+**Question:** A doctor updates a patient's medication at 9:00am. At 9:00:02, a nurse at a different station reads the same patient. What consistency model and one architectural consequence?
+
+**Answer:** Strong consistency. Stale medication data could cause patient harm — this is exactly the case for strong over eventual. Architectural consequence: medication reads cannot be served from read replicas (they may lag the primary). All reads of critical fields must go to the primary node, which increases read latency. Bonus: non-critical fields (contact info, address) can use eventual consistency — different consistency contracts for different data within the same system (polyglot consistency by data type).
+
+---
+
+### Q4.6 — Read-heavy feed: three-tier architecture
+
+**Question:** 95% reads, 5% writes, DB at 90% CPU. Name three things you add and what each one fixes.
+
+**Answer:** The canonical three-tier read stack, outermost to innermost:
+1. **CDN (edge layer)** — caches rendered content close to users (Cloudflare, Fastly, CloudFront). Absorbs ~80-95% of reads before they reach your infrastructure. Fixes: eliminates the bulk of DB pressure in one move.
+2. **Redis cache (app-adjacent)** — caches hot dynamic data that survives the CDN (feed content, trending posts, user profiles). Fixes: absorbs the reads that fall through the CDN without hitting the DB.
+3. **Read replicas (DB layer)** — additional DB instances handling reads only; primary handles writes only. Fixes: distributes the DB-level reads that fall through both cache layers across N nodes instead of hammering one primary.
+
+Read path: User → CDN → (miss) → Redis → (miss) → Read Replica → (miss) → Primary DB. Write path: User → App Server → Primary DB → replicates out.
+
+---
+
+*(More questions added as per-section reviews progress through Sections 5-12.)*
