@@ -64,6 +64,26 @@ For content-heavy systems (blogs, news, e-commerce catalogs):
 2. **Redis cache layer** — for dynamic data that survives the CDN: comment threads, user profile data, trending posts. App-server-adjacent.
 3. **Read replicas** at the DB layer — for the reads that DO make it to the database. N read replicas behind a load balancer; only the primary handles writes.
 
+Each layer is a shield — reads get absorbed before they reach the next layer in. Most reads die at the CDN and never touch your infrastructure.
+
+```
+┌─────────────────────────────────────────┐
+│           CDN  (edge layer)             │  ← ~80-95% of reads absorbed here
+│  ┌───────────────────────────────────┐  │
+│  │      Redis Cache  (app layer)     │  │  ← most of the remainder
+│  │  ┌─────────────────────────────┐  │  │
+│  │  │   Read Replicas  (DB layer) │  │  │  ← reads that fall through cache
+│  │  │  ┌───────────────────────┐  │  │  │
+│  │  │  │    Primary DB         │  │  │  │  ← writes only
+│  │  │  └───────────────────────┘  │  │  │
+│  │  └─────────────────────────────┘  │  │
+│  └───────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+```
+
+**Read path:** User → CDN → (miss) → Redis → (miss) → Read Replica → (miss) → Primary DB
+**Write path:** User → App Server → Primary DB → replicates out to replicas + invalidates cache
+
 **Consistency cost:** eventual consistency. Stale reads from CDN/Redis/replicas. TTL trade-offs — longer TTL means more cache hits but more staleness; shorter TTL means fresher data but less cache benefit.
 
 ### Why writes can't horizontally scale like reads
