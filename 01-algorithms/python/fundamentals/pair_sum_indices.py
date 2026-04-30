@@ -1,3 +1,4 @@
+# Concept: list comprehension, tuple unpacking
 def pair_sum_indices(data: list[tuple[str, int]], threshold: int):
     return [name for name, score in data if score > threshold]
 

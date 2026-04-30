@@ -1,3 +1,4 @@
+// Pattern: hash set
 const containsDuplicates = (nums: number[]): boolean => {
   if (nums.length <= 1) return false;
 

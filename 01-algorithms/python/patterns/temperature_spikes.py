@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 # Temperature Spike Days
 #
 # You're analyzing daily high-temperature data for a weather service.

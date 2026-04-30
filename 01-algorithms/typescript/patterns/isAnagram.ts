@@ -1,3 +1,4 @@
+// Pattern: frequency counting
 function isAnagram(str1: string, str2: string): boolean {
   // organize each str into a map with a count of letters
 

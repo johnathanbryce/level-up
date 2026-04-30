@@ -1,3 +1,4 @@
+# Concept: array mutation, in-place vs rebind
 # naive approach
 def move_zeros(nums: list[int]) -> None:
     result = []

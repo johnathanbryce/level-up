@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 def gap_day_exists(counts: list[int], k: int) -> bool:
 
     seen_counts = set()

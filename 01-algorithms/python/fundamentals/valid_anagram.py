@@ -1,3 +1,4 @@
+# Concept: frequency counting (sorted approach, manual dict, Counter)
 def valid_anagram_sorted_approach(str1: str, str2: str) -> bool:
     # sort each string, if they equal each other True if not False
     sorted_str_one = "".join(sorted(str1))

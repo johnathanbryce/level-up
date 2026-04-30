@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 def two_sum(nums: list[int], target: int) -> list[int]:
 
     seen_nums = {}

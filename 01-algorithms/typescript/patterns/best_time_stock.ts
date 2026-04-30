@@ -1,3 +1,4 @@
+// Pattern: greedy, running-min
 // Best Time to Buy and Sell Stock
 //
 // You're given an array of stock prices where prices[i] is the price on day i.

@@ -1,3 +1,4 @@
+# Concept: hash map, frequency counting
 def first_unique_char(s):
 
     # loop over string and create a hash map (obj) counting key-value chars

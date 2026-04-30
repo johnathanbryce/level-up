@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 def pair_with_difference_k(nums: list[int], k: int) -> bool:
     seen_nums = set()
 

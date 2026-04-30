@@ -1,3 +1,4 @@
+// Concept: reduce, dynamic object building
 type PeopleType = { name: string; department: string };
 type PeopleGrouped = Record<string, PeopleType[]>;
 

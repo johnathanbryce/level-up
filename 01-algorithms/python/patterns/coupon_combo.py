@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 """
 Coupon Combo Finder
 

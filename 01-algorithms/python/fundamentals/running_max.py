@@ -1,3 +1,4 @@
+# Concept: accumulator
 def running_max(nums: list[int]) -> list[int]:
     # create a new array:
     running_max_arr = []
