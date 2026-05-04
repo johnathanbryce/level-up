@@ -477,4 +477,65 @@ Read path: User → CDN → (miss) → Redis → (miss) → Read Replica → (mi
 
 ---
 
-*(More questions added as per-section reviews progress through Sections 5-12.)*
+---
+
+## Section 5: Architectural Patterns
+
+### Q5.1 — Monolith: reject microservices at 3 engineers
+
+**Question:** Your 3-person startup just hit its first performance issue. A junior dev says "we should split into microservices." What do you tell them?
+
+**Answer:** Not yet. At 3 engineers, the team doesn't have the capacity to support the operational overhead — separate CI/CD pipelines, monitoring, logging, and debugging across services. The right path: build a well-structured, modular monolith first. Extract services only when you have evidence you need them: a specific component with different scaling needs, or team coordination in one codebase becoming the bottleneck. "Monolith → modular monolith → extract services one at a time" is the real-world path.
+
+---
+
+### Q5.2 — Three specific microservices problems
+
+**Question:** Your company just migrated to microservices — 8 services, 3 teams. Name three specific new problems you now have.
+
+**Answer:**
+1. **Network complexity** — function calls between components are now HTTP requests that can fail, time out, or arrive out of order. You need retry logic, timeouts, and circuit breakers for operations that used to be free.
+2. **Data consistency** — each service owns its own database. Keeping data in sync across services (e.g. a user deletion cascading through 4 services) is a hard distributed systems problem.
+3. **Operational overhead** — instead of one deploy pipeline, you have 8. Each service needs its own monitoring, logging, alerting, and CI/CD configuration.
+4. **Debugging difficulty** — a bug spanning two services means correlating logs from two different systems.
+
+---
+
+### Q5.3 — Serverless cost trade-off
+
+**Question:** Your API has steady, predictable traffic: 40,000 req/hr around the clock. Your architect proposes AWS Lambda. What's the actual problem?
+
+**Answer:** Cost. At steady, predictable volume, functions stay warm — cold starts are not the issue. The pay-per-execution model becomes more expensive than a provisioned server running continuously at that scale. Serverless is optimized for bursty or unpredictable traffic where you'd otherwise be paying for idle capacity. At 40K req/hr steady, a provisioned server is cheaper and easier to reason about.
+
+---
+
+### Q5.4 — Sync vs async: job application flow
+
+**Question:** A user clicks Apply. Your system must: (1) save application to DB, (2) email the employer, (3) email the user confirmation, (4) log to analytics. Which are sync and which async?
+
+**Answer:** Only (1) is synchronous — the user needs confirmation their application was saved before the response returns. Steps (2), (3), and (4) are all async: publish `application_submitted` event, and let the email service and analytics service consume it independently. The user doesn't need to wait for emails or analytics logging. If the email service is down, the application is still saved — resilience via decoupling.
+
+---
+
+### Q5.5 — Three signals to extract a service
+
+**Question:** Give three specific triggers that tell you it's time to extract a service from your monolith.
+
+**Answer:**
+1. A specific component has meaningfully different scaling needs from the rest (e.g. image processing uses 10x more CPU than everything else) — you have evidence, not just a hunch.
+2. Team size makes coordination in one codebase painful (typically >15-20 engineers stepping on each other).
+3. You have clear, stable domain boundaries AND can afford the operational overhead (dedicated DevOps, per-service CI/CD, monitoring).
+
+All three should be true before extracting. Missing clear domain boundaries means you'll be refactoring the split itself as requirements evolve.
+
+---
+
+### Q5.6 — Event ordering failure mode
+
+**Question:** Events `subscription_renewed` then `subscription_cancelled` are published 10ms apart. Consumer processes them in reverse order. What's the problem and how do you fix it?
+
+**Answer:** The consumer applies `subscription_renewed` last, leaving the user with an active subscription when they intended to cancel. Final state depends on processing order, not event intent. Fixes: (1) **Partition by customer ID** in Kafka — events for the same customer always go to the same partition, preserving order; (2) **Sequence numbers or timestamps on events** — consumer discards events older than the last processed; (3) **Idempotent consumers that check current state** — before applying `renewed`, check whether the customer is already cancelled; if so, ignore the stale event. In practice: partition keys for ordering + timestamps as a safety net.
+
+---
+
+*(More questions added as per-section reviews progress through Sections 6-12.)*

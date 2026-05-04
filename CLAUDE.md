@@ -250,10 +250,10 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-04-30
-**Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design — **REVIEW PHASE in progress: 4 of 12 sections quizzed**)
-**Current Sub-topic:** Architectural Patterns — next to review. John solo-studies first.
-**Last Session Summary:** **Algo directory restructure (fundamentals/ vs patterns/ split, one-line concept/pattern labels added to all 30 files, labeling-timing rule saved to memory). Python algo: gap_day.py (difference-flavor hash-map-complement, A-, hash-map-complement officially LOCKED). Core Concepts review quiz: 6 questions, B+ overall, section closed.**
+**Last Updated:** 2026-05-04
+**Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design — **REVIEW PHASE in progress: 5 of 12 sections quizzed**)
+**Current Sub-topic:** Caching — next to review. John solo-studies first.
+**Last Session Summary:** **Algo directory restructure (fundamentals/ vs patterns/ split, one-line concept/pattern labels, scaffold rules saved to memory). Python algo: gap_day.py (hash-map-complement LOCKED, A-). Bonus JS: team_votes.ts (frequency counting, B+). Bonus Python: one_time_visitors.py (frequency counting, John used O(n²) list.count() — showed Counter + list comprehension refactor). Core Concepts review: B+ overall. Architectural Patterns review: A- overall — strongest quiz yet.**
 
 **Python algo — coupon_combo.py (multiplication-flavor variant of hash-map-complement). B/B-. NOT a clean rep #2.** Pattern still **MOSTLY LOCKED**, ~rep 1.5 of 2 banked. John reached for the hash map unprompted, computed complement formula (`target / rate`) unprompted, used `enumerate` + check-before-add structure unprompted — pattern *recognition* is solid. But pattern *mechanic* needed real nudging: initial draft had `if diff_num in rates` (linear O(n) scan, defeats the hash map's purpose) AND map declared but never populated. The "store as you iterate" engine of the pattern wasn't reflexive. Final question after a 5-hour gap ("do I collect outside the loop?") was rust + sign that "first hit = immediate return" reflex isn't locked. **Save hygiene CLEAN this time** (no commented test cases, no debug prints, cleanup self-managed) — first session since flagging this where John handled it himself. **Pattern progress:** still need ONE more clean variant rep with NO storage-direction nudges and NO O(n)-scan misstep before officially LOCKED. Schedule rep #3 next Python rotation.
 
@@ -281,9 +281,10 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 **Algo detail (2026-04-29):** temperature_spikes.py (difference-flavor hash-map-complement). B+. Prior mechanic wobbles GONE (storage direction clean, lookup against map not original array). NEW wobbles: (1) complement direction hedge — computed both ±k instead of reasoning to one direction; (2) nested-loop question mid-implementation. Save hygiene CLEAN again (2nd consecutive). Pattern stays MOSTLY LOCKED — need ONE more rep with (a) single complement direction no hedge, (b) no nested-loop question.
 
-**Next Session Plan:** Architectural Patterns review. John solo-studies first. Open items to weave in:
-- **Rule→implications drill on every applied answer** — multi-step chain still the weak muscle. Force "what specifically does that mean for this component?"
-- **Latency vs throughput diagnostic framing** — new addition to notes today; retest in a future session.
+**Next Session Plan:** Caching review. John solo-studies first. Open items to weave in:
+- **Cache invalidation vocabulary** — called invalidate-on-write "write-through" twice in original session (2026-04-14). Retest cold.
+- **Cache stampede fix** — applied staggered TTLs to single-hot-key problem instead of lock-based recomputation. Retest.
+- **Rule→implications drill on every applied answer** — still the recurring weak muscle.
 
 **Open items still outstanding (carry forward to relevant section reviews):**
 - **Consistent hashing cache-locality fix** → Load Balancing review (2nd occurrence stubborn gap)
