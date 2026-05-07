@@ -538,4 +538,131 @@ All three should be true before extracting. Missing clear domain boundaries mean
 
 ---
 
-*(More questions added as per-section reviews progress through Sections 6-12.)*
+---
+
+## Section 6: Caching
+
+### Q6.1 — Cache-aside: actors and steps
+
+**Question:** Walk through cache-aside end-to-end on a cache miss, then on a cache hit. Name every actor involved.
+
+**Answer:**
+
+**Cache miss path:**
+1. **Application** checks Redis — cache miss (key not found).
+2. **Application** queries the **database** directly.
+3. **Application** writes the result to **Redis** with a **TTL** (expiry time).
+4. **Application** returns the result to the user.
+
+**Cache hit path:**
+1. **Application** checks Redis — cache hit.
+2. **Application** returns cached value immediately. DB is never touched.
+
+**Key characteristic:** the **application layer** is responsible for all three operations (check, query, populate). The cache itself is passive. This distinguishes cache-aside from write-through, where the cache layer handles the DB write automatically.
+
+**Interview one-liner:** *"Cache-aside puts the application in charge: check the cache, miss → query DB → populate cache with a TTL → return. The cache has no knowledge of the DB."*
+
+---
+
+### Q6.2 — Write strategies: naming precision
+
+**Question:** Name three write caching strategies and what each one does. Which do you pick for a cart service that requires no stale reads?
+
+**Answer:**
+
+**Write-through:** on a write, app writes to cache synchronously AND cache/app writes to DB synchronously. User waits for both. Cache and DB stay in sync on every write. Latency cost: every write blocks on two stores.
+
+**Write-behind (write-back):** on a write, app writes to cache and immediately returns success. DB updated asynchronously in background. Lower write latency; risk of data loss if cache fails before DB sync.
+
+**Invalidate-on-write:** on a write, app **deletes** the cache entry instead of updating it. Next read is a cache miss → fetches fresh from DB → repopulates. Simpler than write-through (no two-store sync); trades a write-time op for a one-time miss on next read.
+
+**For cart service:** **write-through.** Cart data must be consistent — user must see what's in the DB. Synchronous DB + cache write latency is acceptable; stale cart data (wrong items, prices, quantities) is not.
+
+**Critical distinction:** write-through pushes new data *into* the cache. Invalidate-on-write *removes* the entry. Same consistency goal, different mechanism. These are NOT the same thing.
+
+---
+
+### Q6.3 — Eviction policies: LRU vs LFU applied
+
+**Question:** Redis is at 95% capacity. Active session tokens AND 3-week-old flash sale HTML fragments live in the same instance. Which eviction policy, and what's the architectural catch?
+
+**Answer:**
+
+**LRU (Least Recently Used):** evicts the key accessed least recently. For this scenario: flash sale fragments from 3 weeks ago haven't been accessed recently — LRU naturally evicts them first. Correct choice here.
+
+**LFU (Least Frequently Used):** evicts the key with fewest total accesses over time. Better for burst-traffic content (accessed thousands of times during a window, then nothing). LRU would evict a flash sale item that was hot last week; LFU correctly identifies historical popularity.
+
+**The architectural catch:** `maxmemory-policy` in Redis is **instance-wide** — you cannot set different eviction policies per key or namespace. If different data types need different eviction behaviors, you need **separate Redis instances**.
+
+**Session token risk:** session tokens should NOT be subject to memory-pressure eviction at all. If Redis evicts a session token under load, the user gets silently logged out mid-session — no error, just a redirect to the login page. Session tokens belong in a **dedicated Redis instance with enough headroom**, managed by **explicit TTL** (idle timeout), not by memory pressure.
+
+---
+
+### Q6.4 — Cache stampede / thundering herd
+
+**Question:** Redis key `homepage:featured_products` expires. 8,000 users hit the homepage simultaneously. (a) Failure mode? (b) Two specific mitigations? (c) Which one for a single hot key?
+
+**Answer:**
+
+**(a) Cache stampede (thundering herd):** all 8,000 requests get a cache miss simultaneously. All 8,000 hit the DB at once. DB receives 8,000 queries instead of 1. Can crash or severely degrade, causing cascading failure.
+
+**(b) Two mitigations:**
+
+1. **Staggered TTLs / jitter:** randomize expiry instead of a fixed TTL: `TTL = base + random(0, 60)`. Keys in a population expire at different times → stampedes spread across a window instead of all firing at once.
+
+2. **Lock-based recomputation (mutex / distributed lock):** when a key expires, the first request acquires a Redis lock (`SET NX` — set if not exists). That one request hits the DB, recomputes, populates the cache, releases the lock. All other requests wait on the lock or return a stale value. Result: DB gets exactly **1 query** instead of 8,000.
+
+**(c) Single hot key → lock-based recomputation.**
+
+Jitter is the wrong tool for a single key. Randomizing the TTL of ONE key doesn't help — all threads still race for it when it expires. Jitter prevents stampedes across *populations* of keys. For one hot key, use a distributed lock.
+
+**Mental model: single hot key → lock. Population of keys → jitter.**
+
+---
+
+### Q6.5 — When NOT to cache
+
+**Question:** PM wants to cache the user notifications feed. What questions do you ask, and what conditions make this a bad idea?
+
+**Answer:**
+
+**Three questions to ask:**
+1. **Is it personalized?** Each user has a unique feed → N users = N cache entries, each served to exactly one person. Cache hit rate ≈ 1. Near-zero ROI.
+2. **Read frequency vs write frequency?** Notifications are high-write (arrive constantly) and often read-once (user sees it, dismisses it). If writes ≥ reads, cache invalidates as fast as you populate it.
+3. **How stale is acceptable?** Notifications are time-sensitive. A cache TTL introduces staleness users will notice ("why didn't I see that message?").
+
+**Bad idea when all three conditions hold:**
+- Highly personalized → low hit rate
+- High-write / read-once → entries stale immediately
+- Freshness required → TTL can't be long enough to amortize the miss cost
+
+**What you CAN cache:** global/shared notifications — site-wide announcements, promotional banners, system status messages. One cache entry, all users.
+
+**The clean rule:** cache is valuable when data is **read many times, changes infrequently, and is shared across users**. Notifications fail all three.
+
+---
+
+### Q6.6 — CDN caching + cache busting
+
+**Question:** New JS bundle deployed. Two hours later, users still load the old version. (a) What's happening? (b) Correct fix? (c) Naive fix and why it's worse?
+
+**Answer:**
+
+**(a) What's happening:** CDN cached `bundle.js` with a long TTL. New version deployed to origin; CDN doesn't check — it serves its cached copy until TTL expires. Same URL = same CDN response.
+
+**(b) Correct fix — content-addressed filenames:**
+
+```
+bundle.js           ← same URL, CDN caches forever
+bundle.a1b2c3.js    ← filename includes a hash of file content
+```
+
+When content changes, hash changes, filename changes. CDN sees a **new URL** and fetches from origin automatically. You can set TTL of **1 year** on JS/CSS assets — stale content is literally unreachable (old filename doesn't exist in the new deploy). Webpack/Vite/Rollup do this automatically.
+
+**Pattern:** long TTL on static assets + content-addressed names + short TTL on the HTML file (so users get the new bundle filename quickly).
+
+**(c) Naive fix — CDN purge API:** manually invalidate the cached object after every deploy. Works, but: reactive (must remember to do it), slow to propagate across all edge nodes, brittle (miss one deploy = users see old version), expensive (many CDNs charge per-purge). Content-addressed filenames make purging unnecessary entirely.
+
+---
+
+*(More questions added as per-section reviews progress through Sections 7-12.)*
