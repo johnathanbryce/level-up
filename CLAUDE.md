@@ -250,10 +250,10 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-07
+**Last Updated:** 2026-05-09
 **Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design — **REVIEW PHASE in progress: 6 of 12 sections quizzed**)
 **Current Sub-topic:** Load Balancing & Networking — next to review. John solo-studies first.
-**Last Session Summary:** **Algo directory restructure (fundamentals/ vs patterns/ split, one-line concept/pattern labels, scaffold rules saved to memory). Python algo: gap_day.py (hash-map-complement LOCKED, A-). Bonus JS: team_votes.ts (frequency counting, B+). Bonus Python: one_time_visitors.py (frequency counting, John used O(n²) list.count() — showed Counter + list comprehension refactor). Core Concepts review: B+ overall. Architectural Patterns review: A- overall — strongest quiz yet.**
+**Last Session Summary:** Misc algo warmup — **Script Checker (bracket validation). B-. First exposure to the Stack pattern.** Got core structure right unprompted (pre-built opener→closer map, empty list as stack, loop with opener push). Needed 4 bugs pointed out: (1) stack concept itself (LIFO, list.append/pop), (2) inverted `==` vs `!=` on match check, (3) missing empty-stack check at end (`return len(stack) == 0`), (4) `else` → `elif` to skip non-bracket chars. Save hygiene clean. **Stack now INTRODUCED in Python.** No System Design work this session.
 
 **Python algo — coupon_combo.py (multiplication-flavor variant of hash-map-complement). B/B-. NOT a clean rep #2.** Pattern still **MOSTLY LOCKED**, ~rep 1.5 of 2 banked. John reached for the hash map unprompted, computed complement formula (`target / rate`) unprompted, used `enumerate` + check-before-add structure unprompted — pattern *recognition* is solid. But pattern *mechanic* needed real nudging: initial draft had `if diff_num in rates` (linear O(n) scan, defeats the hash map's purpose) AND map declared but never populated. The "store as you iterate" engine of the pattern wasn't reflexive. Final question after a 5-hour gap ("do I collect outside the loop?") was rust + sign that "first hit = immediate return" reflex isn't locked. **Save hygiene CLEAN this time** (no commented test cases, no debug prints, cleanup self-managed) — first session since flagging this where John handled it himself. **Pattern progress:** still need ONE more clean variant rep with NO storage-direction nudges and NO O(n)-scan misstep before officially LOCKED. Schedule rep #3 next Python rotation.
 
