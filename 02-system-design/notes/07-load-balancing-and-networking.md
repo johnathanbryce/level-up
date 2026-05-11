@@ -59,6 +59,21 @@
 
 > **Trade-off one-liner:** Stickiness trades fault tolerance for stateful convenience. When a server dies, sticky users feel it. With externalized state (Redis), server death is invisible to users.
 
+### Common Confusion: Stickiness vs. Consistent Hashing
+
+These solve different problems. Getting them mixed up is the #1 LB interview mistake.
+
+| | Session Stickiness | Consistent Hashing |
+|---|---|---|
+| **Routes by** | User identity | Key identity |
+| **Solves** | Server-local session state | Cache key locality |
+| **Problem it fixes** | "This user's cart is stuck on Server A" | "Cache hit rate tanks when keys spread across nodes" |
+| **Typical context** | App server tier | Cache/DB node tier |
+
+**The one-liner to tattoo:** Stickiness = route by **who**. Consistent hashing = route by **what**.
+
+**Interview diagnostic:** If the scenario mentions *user state* (carts, sessions, WebSocket connections) → think stickiness (or better: externalize to Redis and skip it entirely). If the scenario mentions *cache hit rate* or *keys ending up on the wrong node* → think consistent hashing.
+
 ## Reverse Proxy vs. Load Balancer
 
 - **Reverse proxy:** a server that sits between your clients and your backend, acting on behalf of the backend. The client talks to the proxy, the proxy talks to your server(s). The client never knows the backend's real address
