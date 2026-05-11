@@ -665,4 +665,114 @@ When content changes, hash changes, filename changes. CDN sees a **new URL** and
 
 ---
 
-*(More questions added as per-section reviews progress through Sections 7-12.)*
+---
+
+## Section 7: Load Balancing & Networking
+
+### Q7.1 — Four LB algorithms: mechanisms + use cases
+
+**Question:** Walk through the four main load balancing algorithms. For each one, name the use case where it's the right choice.
+
+**Answer:**
+
+1. **Round-robin** — rotate through servers in order. Request 1 → Server A, Request 2 → Server B, etc. Use when: stateless requests on **homogeneous** servers (identical CPU/RAM) with roughly equal request cost.
+
+2. **Weighted round-robin** — same rotation, but servers with higher capacity get more turns (Server A gets 2 requests for every 1 Server B gets). Use when: servers are **heterogeneous** — different CPU/RAM across instances. Weights are static and pre-configured, not reactive.
+
+3. **Least connections** — send to whichever server has the fewest active connections right now. Use when: requests have **wildly different durations** — video uploads, WebSocket connections, streaming. Round-robin treats a 7-minute upload the same as a 20ms API call; least connections sees the actual load.
+
+4. **Consistent hashing** — hash the request key (cache key, shard key) and map it to a node. Same key always routes to the same node. Use when: you need **cache key locality** — the same cache key always hitting the same cache node keeps that node's cache warm. When a node dies, only its keys redistribute (ring minimizes churn).
+
+**Critical distinction:** consistent hashing routes *keys to nodes* for cache locality. Session stickiness routes *users to servers* for stateful session reasons. Different problem, different tool.
+
+---
+
+### Q7.2 — Session stickiness vs consistent hashing
+
+**Question:** A multiplayer game stores each game room's state in memory on the app server managing it. A player disconnects and reconnects. What mechanism do you use, and what's the better long-term architecture?
+
+**Answer:**
+
+**Immediate mechanism: session stickiness.** The LB tracks which server that user was pinned to (via cookie or IP) and routes them back. The game room state is still there; reconnect is seamless.
+
+**Better architecture: externalize state to Redis.** Don't rely on stickiness at all. If state is stored in Redis instead of app-server memory, any server can handle any player — reconnecting to a different server doesn't matter. Stateless app servers + external state store is the architecture that scales and survives server failures.
+
+**The consistent hashing distinction:** if you have a distributed cache layer (N Redis nodes) and want the same cache key to always hit the same Redis node (for cache locality), that's consistent hashing — routing by key. Stickiness routes by user identity. Not the same problem.
+
+---
+
+### Q7.3 — Reverse proxy vs load balancer
+
+**Question:** What's the difference between a reverse proxy and a load balancer? Are they the same thing?
+
+**Answer:**
+
+**Not the same, but overlapping.** A load balancer is a *type* of reverse proxy — a reverse proxy that specializes in distributing traffic. A reverse proxy is the broader category.
+
+**Reverse proxy** sits between clients and backend, acting on the backend's behalf. Can do: SSL termination, compression, caching, security (hide backend IPs), routing (`/api` → Service A, `/images` → Service B).
+
+**Load balancer** distributes requests across multiple backend servers. Its core job is traffic distribution — algorithm-based routing across N instances.
+
+**The overlap:** tools like Nginx do both. AWS ALB is primarily a load balancer but also terminates TLS.
+
+**Three-tier mental model:**
+1. One backend server → still want a reverse proxy (SSL, caching, security)
+2. Multiple backend servers → need load balancing; reverse proxy often handles it
+3. At scale → dedicated managed LB (AWS ALB) out front + Nginx as reverse proxy per server
+
+*"A reverse proxy is about what sits in front of your servers. Load balancing is about distributing across them. Most real tools do both."*
+
+---
+
+### Q7.4 — API gateway: what it buys you and the critical don't
+
+**Question:** You have 8 microservices. A senior engineer says "put an API gateway in front of everything." What does it buy you, and what's the one thing you must NOT do with it?
+
+**Answer:**
+
+**What it buys you (cross-cutting concerns in one place):**
+- **Authentication/authorization** — validate JWTs or API keys before requests reach your services
+- **Rate limiting** — per-user or per-endpoint limits enforced once, not duplicated in every service
+- **Request routing** — `/users` → User Service, `/orders` → Order Service
+- **Logging and metrics** — one place to observe all traffic
+- **Protocol translation** — client speaks REST, backend speaks gRPC
+
+**Architecture:** Client → Public LB → API Gateway cluster (N identical instances) → backend services. The gateway is one logical service, horizontally scaled as identical instances. Never one gateway per service — that duplicates the auth/rate-limiting logic N times and forces the client to know which gateway to call.
+
+**The one critical don't: do not put business logic in the gateway.**
+
+The gateway handles cross-cutting concerns only. The moment you add data transformation, service orchestration, or service-specific logic, you've created a God service — hard to test, hard to deploy, and every team has to touch it when their service changes. The gateway becomes the bottleneck instead of infrastructure.
+
+**Rule:** gateway handles cross-cutting concerns, services handle business logic. Never cross the streams.
+
+---
+
+### Q7.5 — Session stickiness failure mode
+
+**Question:** Your LB uses session stickiness across three app servers. Server B goes down. What happens to the users pinned to Server B, and what does this reveal about the trade-off?
+
+**Answer:**
+
+**What happens:** the LB can no longer route to Server B. Users pinned to it get redistributed to Server A or C — but Server B's in-memory state is gone. Those users start from a clean slate: lost session, lost in-progress work, likely forced back to login.
+
+**What this reveals:** stickiness undermines the core benefit of load balancing, which is fault tolerance. The whole point of multiple servers is that if one fails, others absorb the traffic seamlessly. Stickiness breaks that — a chunk of users can't be absorbed cleanly because their state lived only on the dead machine.
+
+**Trade-off one-liner:** *Stickiness trades fault tolerance for stateful convenience. When a server dies, sticky users feel it. With externalized state (Redis), server death is invisible to users.*
+
+---
+
+### Q7.6 — Least connections vs round-robin for long-lived uploads
+
+**Question:** A file upload service handles videos that take 3–8 minutes to upload. Your LB uses round-robin. An engineer argues for switching to least connections. Are they right? Make the case.
+
+**Answer:**
+
+**They're right.** Round-robin assumes all requests cost roughly the same — it doesn't adapt. A server handling 10 active 8-minute uploads looks identical to one handling 10 idle connections from the LB's perspective; round-robin sends the next upload to whichever server is "next in line" regardless.
+
+Least connections sees the actual open connection count. If Server A has 12 active uploads and Server C has 2, least connections routes to C. It naturally distributes the actual load, not the theoretical equal load.
+
+**When round-robin is fine:** stateless API calls where each request takes ~20ms and cost is roughly equal. When to reach for least connections: long-lived connections — video uploads, WebSocket sessions, streaming, large file processing — where duration variance is high and "equal turns" doesn't mean "equal load."
+
+---
+
+*(More questions added as per-section reviews progress through Sections 8-12.)*

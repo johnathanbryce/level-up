@@ -251,8 +251,8 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 ## CURRENT STATE
 
 **Last Updated:** 2026-05-09
-**Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design — **REVIEW PHASE in progress: 6 of 12 sections quizzed**)
-**Current Sub-topic:** Load Balancing & Networking — next to review. John solo-studies first.
+**Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design — **REVIEW PHASE in progress: 7 of 12 sections quizzed**)
+**Current Sub-topic:** Message Queues & Async Processing — next to review. John solo-studies first.
 **Last Session Summary:** Misc algo warmup — **Script Checker (bracket validation). B-. First exposure to the Stack pattern.** Got core structure right unprompted (pre-built opener→closer map, empty list as stack, loop with opener push). Needed 4 bugs pointed out: (1) stack concept itself (LIFO, list.append/pop), (2) inverted `==` vs `!=` on match check, (3) missing empty-stack check at end (`return len(stack) == 0`), (4) `else` → `elif` to skip non-bracket chars. Save hygiene clean. **Stack now INTRODUCED in Python.** No System Design work this session.
 
 **Python algo — coupon_combo.py (multiplication-flavor variant of hash-map-complement). B/B-. NOT a clean rep #2.** Pattern still **MOSTLY LOCKED**, ~rep 1.5 of 2 banked. John reached for the hash map unprompted, computed complement formula (`target / rate`) unprompted, used `enumerate` + check-before-add structure unprompted — pattern *recognition* is solid. But pattern *mechanic* needed real nudging: initial draft had `if diff_num in rates` (linear O(n) scan, defeats the hash map's purpose) AND map declared but never populated. The "store as you iterate" engine of the pattern wasn't reflexive. Final question after a 5-hour gap ("do I collect outside the loop?") was rust + sign that "first hit = immediate return" reflex isn't locked. **Save hygiene CLEAN this time** (no commented test cases, no debug prints, cleanup self-managed) — first session since flagging this where John handled it himself. **Pattern progress:** still need ONE more clean variant rep with NO storage-direction nudges and NO O(n)-scan misstep before officially LOCKED. Schedule rep #3 next Python rotation.
@@ -283,12 +283,12 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 **Caching review (2026-05-07). B- overall.** Q1 cache-aside B+ (core flow correct; missed app layer as explicit actor and TTL on cache populate). Q2 write strategies A- (**invalidate-on-write gap from 2026-04-14 CLOSED** — named correctly when prompted, distinguished from write-through cleanly). Q3 eviction policies B (LRU/LFU correct; missed: maxmemory-policy is instance-wide — can't mix per key in one Redis instance; missed: session tokens should NOT be LRU-evicted — silent logout under memory pressure). Q4 stampede C+ — **SAME GAP as 2026-04-14** — missed lock-based recomputation (mutex/SET NX), didn't answer single-hot-key question, reached for jitter first (wrong tool for a single key). Q5 when-not-to-cache B+ (personalization + RAM implication correct; missed read-frequency/read-once and write-frequency/staleness-rate). Q6 CDN cache busting C+ (identified CDN/TTL problem; named purge API — it's the naive fix; missed content-addressed filenames as the correct fix).
 
-**Next Session Plan:** Load Balancing & Networking review. John solo-studies first. Open items to weave in:
-- **Consistent hashing / session stickiness conflation** — 2nd documented occurrence (2026-04-16, 2026-04-23). Retest cold, different scenario than before.
-- **Rule→implications drill on every applied answer** — still the recurring weak muscle.
+**Load Balancing & Networking review (2026-05-09). B/B+ overall.** Q1 LB algorithms B- (all 4 named; weighted + least connections missing use cases; consistent hashing conflated with stickiness — **3rd documented occurrence**). Q2 session stickiness B+/A- (right answer + Redis externalization bonus — senior-level move). Q3 reverse proxy vs LB B+ ("TLS invalidation" → should be TLS termination; LB-as-subset-of-proxy framing missed). Q4 API gateway B (named one-gateway-per-service anti-pattern but missed the more important one: business logic creep). Q5 stickiness failure mode B- (failure correct, trade-off implication not articulated). Q6 least connections B+ (right call, clean reasoning). Notes updated mid-quiz for all gaps. Algo warmup (same session): headliner_votes.py — Frequency Counting formal Pattern Lesson + first drill, B+. Bridge question: cache stampede single-hot-key — B+ (named lock-based recomputation correctly this time; Tier 1 gap showing real improvement).
+
+**Next Session Plan:** Message Queues & Async Processing review. John solo-studies first.
 
 **Open items still outstanding (carry forward to relevant section reviews):**
-- **Consistent hashing cache-locality fix** → Load Balancing review (2nd occurrence stubborn gap)
+- **Consistent hashing / session stickiness conflation — 3rd occurrence** → Confirmed stubborn gap. Now in notes explicitly. Retest in master pre-case-study quiz with a fresh scenario.
 - **Percentile gotcha** → Observability review (5th rule→implications)
 - **Circuit breaker three-state machine** → Resilience review (Q5 follow-up still outstanding)
 - **Q3.6 full interview script** → Capstone Prep. Practice on fresh prompt (not Twitter). End-to-end napkin math + architecture conclusion.
