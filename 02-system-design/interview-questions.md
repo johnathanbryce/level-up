@@ -775,4 +775,31 @@ Least connections sees the actual open connection count. If Server A has 12 acti
 
 ---
 
-*(More questions added as per-section reviews progress through Sections 8-12.)*
+## Section 8: Message Queues & Async Processing
+
+### Q8.1 — When to queue vs. stay synchronous
+
+**Question:** A user uploads a profile photo. Your API needs to: (1) save the raw image, (2) resize to 3 thumbnail sizes, (3) update the user's profile record with the new image URL, (4) send a push notification. Which steps are synchronous? Which go on a queue?
+
+**Answer:**
+
+- **Step 1 — Synchronous.** User must know immediately if the save failed so they can retry. This is the critical path.
+- **Step 2 — Queue.** Resize is CPU-intensive and not needed before the user gets a response. Drop it on the queue; a worker handles it in the background.
+- **Step 3 — Synchronous, but with a nuance.** Update the profile record immediately with the **raw image URL** from step 1 — the user expects to see their new photo right away. The thumbnail URLs don't exist yet (step 2 is still queued), so a second consumer updates the profile record again once thumbnails are ready. Two updates, not one.
+- **Step 4 — Queue.** Not user-blocking, not critical path.
+
+### Q8.2 — At-least-once delivery and idempotency
+
+**Question:** A consumer picks up an order notification, successfully notifies the restaurant, then crashes before acking. What happens next, what problem does it create, and how do you prevent it?
+
+**Answer:**
+
+**What happens:** the queue never received the ack, so it treats the message as unprocessed and redelivers it to the next available consumer.
+
+**The problem:** the restaurant gets notified twice — double processing. At scale this means duplicate emails, duplicate charges, duplicate order entries.
+
+**The fix — idempotency.** Before processing, check whether this message has already been handled. For the restaurant notification: before notifying, check if `order_id` already has a `restaurant_notified` flag set. If yes → skip (no-op). If no → notify and set the flag. The key property: processing the same message twice produces the same outcome as once — the second run is a no-op, not a second action.
+
+---
+
+*(More questions added as per-section reviews progress through Sections 9-12.)*
