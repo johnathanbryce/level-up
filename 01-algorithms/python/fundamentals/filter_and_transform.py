@@ -1,3 +1,4 @@
+# Concept: list comprehension
 def filter_and_transform(nums: list[int]) -> list[int]:
 
     return [num**2 for num in nums if num % 2 == 0]

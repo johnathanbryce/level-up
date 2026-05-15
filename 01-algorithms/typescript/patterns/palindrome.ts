@@ -1,3 +1,4 @@
+// Pattern: two pointers (opposite direction)
 const palindrome = (str: string): boolean => {
   const reversedStr = [...str].reverse().join("");
   return reversedStr === str;

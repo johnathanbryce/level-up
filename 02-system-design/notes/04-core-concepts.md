@@ -69,3 +69,21 @@ ___
 ## Latency vs. Throughput
 - **Latency:** How long one request takes from start to finish
 - **Throughput:** How many requests your system handles per unit of time
+
+### The diagnostic signal they give you together
+
+The combination tells you *where* the problem lives — not just that something is slow.
+
+| Signal | What it means | Where to look |
+|---|---|---|
+| Throughput drops + latency spikes | System is shedding load — requests queuing or being dropped at the gate | LB, ingress capacity, connection limits |
+| Throughput stable + latency spikes | Requests are getting in and completing, but each one is slow | Inside the pipeline — DB queries, cache hit rate, app processing, external calls |
+| Throughput drops + latency normal | Traffic fell off (scaling event, traffic shift) — not a perf problem | Routing, upstream health |
+
+**The key interview insight:** if throughput is holding steady but latency is climbing, the bottleneck is downstream — something inside the request is taking longer, not something at the front door. Start with cache hit rate (drop = more DB fallthrough), then slow query log, then app worker saturation.
+
+### Optimizing for one vs. the other
+
+- **Low latency priority:** minimize the critical path for a single request — caching, connection pooling, async offload of non-blocking work
+- **High throughput priority:** parallelize — horizontal scaling, batch processing, async queues, non-blocking I/O
+- **The tension:** optimizing for throughput (batching, queuing) often adds latency to individual requests. Pick your constraint first.

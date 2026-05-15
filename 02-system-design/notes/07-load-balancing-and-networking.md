@@ -29,9 +29,15 @@
 
 - The LB gets a request, how does it pick one? There are 4 main strategies:
   1. **Round-Robin** -- simplest possible: go in order. Request 1 -> Server A, Request 2 -> Server B, Request 3 -> Server C and cycle through. Con: assumes all requests are equal cost and all servers equal capacity — doesn't adapt to real load.
+     - **Use when:** stateless requests on homogeneous servers (identical CPU/RAM). Simple APIs, read-heavy endpoints where any server can answer equally.
   2. **Weighted Round-Robin** -- same rotation, but some servers get more turns. Con: weights are static — pre-configured, not reactive to real-time load. Doesn't adapt if a high-weight server gets slammed.
+     - **Use when:** servers are **heterogeneous** — one server has 2× the CPU/RAM of another, so it gets 2× the weight. Same stateless-request assumption as round-robin, but accounts for unequal capacity.
   3. **Least Connections** -- send the request to whichever server currently has the fewest active connections. Adapts to reality — if one server is slow or handling expensive requests, it accumulates connections and the LB routes away from it.
-  4. **Consistent Hashing** -- hash something about the request (e.g. user ID) and map it to a server. Same user always hits the same server. Pro: great for stateful workloads or local caching — if Server A always handles User 123, it can cache that user's data locally. Con: when a server goes down, its users must be redistributed. Naive hashing redistributes everyone; consistent hashing (ring approach) only redistributes the dead server's users. You'll see this again in database sharding.
+     - **Use when:** requests have **wildly different durations** — video uploads, WebSocket connections, streaming. Round-robin breaks down here because a server handling 10 five-minute uploads looks "equal" to one handling 10 ten-millisecond pings. Least connections sees the actual load.
+  4. **Consistent Hashing** -- hash something about the **request key** (e.g. cache key, shard key) and map it to a node. The same key always routes to the same node.
+     - **Use when:** you need **cache key locality** — routing the same cache key to the same cache node keeps that node's cache warm. If round-robin spreads keys across all nodes, every node only caches a fraction of any key's traffic and hit rates tank.
+     - **Not the same as session stickiness.** Stickiness routes *users* to *servers* for stateful session reasons. Consistent hashing routes *keys* to *nodes* for cache locality reasons. Different problem, different tool.
+     - Con: when a node goes down, its keys must be redistributed. Naive hashing redistributes ALL keys; the consistent hashing ring approach only redistributes the dead node's keys — minimizing cache churn.
 
 ## Session Stickiness
 
@@ -39,6 +45,7 @@
 - Why? If a server stores session state locally (e.g. shopping cart in memory or a websocket), sending the next request to a different server means the server has no idea who the user is
 - **How it works:**
   - The LB tracks which server a user was assigned to (usually via a cookie or IP) and keeps routing that user to the same server
+
 ### The trade-off
 
 - **Pro:** Simple way to handle server-local state
@@ -49,6 +56,23 @@
   - Now any server can handle any request
   - Stateless servers + external state store pattern is a pattern that scales
 - **When sticky sessions are still OK:** legacy apps you can't refactor, or short-lived affinity where teh cost of externalizing isn't worth it
+
+> **Trade-off one-liner:** Stickiness trades fault tolerance for stateful convenience. When a server dies, sticky users feel it. With externalized state (Redis), server death is invisible to users.
+
+### Common Confusion: Stickiness vs. Consistent Hashing
+
+These solve different problems. Getting them mixed up is the #1 LB interview mistake.
+
+| | Session Stickiness | Consistent Hashing |
+|---|---|---|
+| **Routes by** | User identity | Key identity |
+| **Solves** | Server-local session state | Cache key locality |
+| **Problem it fixes** | "This user's cart is stuck on Server A" | "Cache hit rate tanks when keys spread across nodes" |
+| **Typical context** | App server tier | Cache/DB node tier |
+
+**The one-liner to tattoo:** Stickiness = route by **who**. Consistent hashing = route by **what**.
+
+**Interview diagnostic:** If the scenario mentions *user state* (carts, sessions, WebSocket connections) → think stickiness (or better: externalize to Redis and skip it entirely). If the scenario mentions *cache hit rate* or *keys ending up on the wrong node* → think consistent hashing.
 
 ## Reverse Proxy vs. Load Balancer
 
@@ -100,6 +124,12 @@
 - Monolith with one backend -- a reverse proxy covers you
 - Small number of services where an ALB with path-based routing to target groups is simpler and sufficient. The gateway earns its complexity when you need things like rate limiting and centralized auth, not just because you have multiple services.
 
+### The critical "don't"
+
+**Do not put business logic in the gateway.** The gateway handles cross-cutting concerns only: auth, rate limiting, routing, logging. The moment you add data transformation, service orchestration, or service-specific logic, you've created a God service — hard to test, hard to deploy, and every team has to touch it when their service changes. The gateway becomes a bottleneck instead of infrastructure.
+
+Rule: **gateway handles cross-cutting concerns, services handle business logic. Never cross the streams.**
+
 - Real world tools: AWS API Gateway, Kong, Traefik
 
 ### How Gateway Instances Work
@@ -107,6 +137,7 @@
 The gateway is a **shared, replicated layer** that knows about all services. Its horizontal scaling is for its own HA and throughput — not one gateway per service.
 
 Two layers of "1 of N" selection happen on every request:
+
 1. **Public LB → gateway instance** — doesn't matter which, they're all identical
 2. **Gateway → service instance** — path determines the service, internal LB picks the instance
 
@@ -129,4 +160,3 @@ Public LB  ← distributes across gateway instances
 ```
 
 **Key rule:** There is one gateway — one codebase, one config, one logical service. What gets horizontally scaled are **instances** of that single gateway (think: multiple Docker containers running the same image). Whether those instances are managed for you (AWS API Gateway) or provisioned manually (Kong in Docker Compose, gateway pods in Kubernetes), they are all clones of the same thing. "One gateway per service" is the anti-pattern — that would mean three separate gateway configs, each only knowing about one service, which forces the client to know which gateway to call for which operation and duplicates auth/rate limiting three times.
-

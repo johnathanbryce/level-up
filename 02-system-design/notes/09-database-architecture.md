@@ -72,6 +72,15 @@
 - Low cardinality -- a status column with 3 possible values isn't worth it
 - Speculative columns -- don't index everything just in case
 
+### Composite index
+
+Index on multiple columns. Use when a query filters on one column **and** sorts on another. Filter column goes first, sort column second.
+
+```
+-- query: WHERE user_id = ? ORDER BY created_at DESC
+-- index: (user_id, created_at)
+```
+
 ## Database replication
 - Replication solves: a single database is a point of failure. If it goes down, everything goes down. Can also be a bottleneck when read traffic gets heavy
 - **How it works**: you have one **primary** (handles all writes) and one or more **replicas** (copies that stay in sync with the primary)

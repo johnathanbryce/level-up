@@ -50,6 +50,8 @@ Two layers:
 - **TCP** is reliable, ordered, connection-oriented -- when correctness matters more than latency (HTTP, email, file transfer, SSH, db connections)
 - **UDP** is fast, fire-and-forget, connectionless -- when latency matters more (live video, voice calls, online games, DNS queries)
 
+**Mental model for UDP use cases:** *stale data is worse than missing data.* A retransmitted position from 200ms ago is useless because newer data has already arrived. TCP would block the line waiting for the retransmit; UDP drops the missing packet and moves on. The freshness is the point, not the precision.
+
 ---
 
 ## Stage 3: TLS Handshake
@@ -64,6 +66,15 @@ Two layers:
   - When you see `https://` that's HTTP running over a TLS-secured TCP connection
 - The **server proves identity via a TLS certificate signed by a trusted authority (CA)**
   - your browser trusts a built-in list of CAs (the root certificate store)
+
+### Cert validation failures ("Your connection is not private")
+
+- **Triggers:** cert expired, untrusted CA (self-signed / unknown issuer), hostname mismatch, clock skew on client device
+- **Mechanism:** handshake actually starts -- cert is received, validation fails, browser blocks the page with the red interstitial
+- **If user proceeds anyway:** traffic IS encrypted, but server identity is unverified → vulnerable to MITM
+- **NOT triggered by:**
+  - Plain HTTP (no warning page, just "Not Secure" badge in URL bar)
+  - Connection refused (no TLS support on the server) -- different error entirely
 
 ---
 
@@ -106,6 +117,23 @@ Interview concept here is **idempotency**: repeating the same operation has the 
 - An operation is idempotent if making the same request multiple times leaves the resource in the same final state as making it once
 - GET, PUT, DELETE are idempotent. POST is not.
 - Idempotent operations are generally safer to retry because **repeating the same request should not apply the effect twice**
+
+### Case study: GET-as-DELETE -- why method semantics matter
+
+Concrete scenario: a junior dev exposes `GET /admin/users/123/delete` to delete a user. It works in Postman. It works when they click the button. Code review approves. Ships to production. Breaks in five different ways within a week.
+
+**Why this is catastrophic -- the whole web ecosystem assumes GET is safe:**
+
+1. **Browser prefetch / link previews** -- browsers proactively fetch URLs (hover prefetch, prerender hints). User hovers over the link → user deleted, no click required. Slack/Discord/iMessage preview the URL when pasted → fire the delete.
+2. **CDN / proxy caching** -- GETs are cacheable by default. CDN caches the delete response. Second user gets a cached "200 OK" that never reached the app server. Or the first delete result is served from cache forever, never re-executing.
+3. **Browser back / refresh / share** -- URL is in browser history, bookmarkable, shareable. User pages back → delete fires again. URL shared in chat → recipient clicks → another user deleted.
+4. **CSRF amplification** -- standard CSRF protection (tokens) only applies to POST/PUT/DELETE. GET sails through. Attacker embeds `<img src="https://your-site.com/admin/users/123/delete">` in any webpage; any logged-in admin who visits that page silently fires the delete via their session cookie.
+5. **Crawlers / LLM scrapers / search bots / link checkers** -- auto-fire GETs on every link they discover. Googlebot, security scanners, and LLM training crawlers all hit GET URLs unprompted.
+6. **Logging leakage** -- GET URLs are written to server access logs, proxy logs, browser history, analytics, and Referer headers by default. User IDs and the action itself leak into systems that may have looser access controls than the database.
+
+**The takeaway:** the entire HTTP contract is built on the assumption that GET is safe to repeat, cache, prefetch, log, share, crawl, and embed. Every layer of the web -- browsers, CDNs, proxies, search engines, social media link previewers, security scanners, LLM training crawlers -- assumes this. **Violating it doesn't just break "semantics" -- it weaponizes the entire ecosystem against your data.**
+
+State changes go through POST/PUT/DELETE -- not just for correctness, but because every safety mechanism in the web stack depends on the method matching the intent. **Auth and method choice are orthogonal concerns**: a `POST /admin/users/123/delete` with no auth has the same authorization problem, but it doesn't get prefetched, cached, embedded as an `<img>`, or replayed by crawlers.
 
 ### Status codes
 

@@ -1,3 +1,4 @@
+// Concept: array manipulation, recursion
 type NestedNumber = number | NestedNumber[];
 
 const flattenOne = (numsArr: NestedNumber[]): number[] => {

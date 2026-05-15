@@ -1,3 +1,4 @@
+// Concept: array manipulation
 function chunk(arr: number[], chunks: number) {
   // while loop that goes to chunks
   let chunkedArr = [];

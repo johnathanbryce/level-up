@@ -1,3 +1,4 @@
+# Concept: nested iteration, range()
 def pair_sums_loop(nums: list[int], target: int) -> list[tuple[int, int]]:
 
     # tracking arr

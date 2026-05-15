@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 # Feed Repost Detector
 #
 # You're building a social feed. Users sometimes accidentally double-post

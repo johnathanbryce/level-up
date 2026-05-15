@@ -1,3 +1,4 @@
+# Concept: dict comprehension
 def frequent_words(words: list[str]) -> dict[str, int]:
 
     words_dict = {}

@@ -1,3 +1,4 @@
+# Concept: string iteration, state tracking
 def compress(s: str) -> str:
     if not s:
         return ""

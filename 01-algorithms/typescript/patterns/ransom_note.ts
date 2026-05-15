@@ -1,3 +1,4 @@
+// Pattern: frequency counting, decrement walk
 function canConstruct(ransomNote: string, magazine: string): boolean {
   const magazineMap = new Map();
 

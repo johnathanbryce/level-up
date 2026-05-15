@@ -1,3 +1,4 @@
+# Pattern: hash-map-complement
 def pair_products(nums: list[int], target: int) -> list[list[int]]:
 
     seen_nums = set()

@@ -1,3 +1,4 @@
+// Pattern: frequency counting, sort + slice
 const topOccuringElements = (nums: number[], k: number): number[] => {
   const numsMap = new Map();
   for (const num of nums) {

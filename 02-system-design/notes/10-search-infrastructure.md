@@ -45,6 +45,18 @@
 
 - The trade-off: **eventual consistency**. A new job posting might not appear in search results for a second or two. That's acceptable for almost every search use case
 
+## Sync Lag Is Not a Bug
+
+When a search layer (Elasticsearch) is layered on top of a primary DB (Postgres), new data takes time to propagate:
+
+1. Write goes to Postgres (source of truth)
+2. Sync process (queue consumer or event stream) copies to Elasticsearch
+3. Elasticsearch serves search queries
+
+A new record not appearing in search results immediately is **expected behavior** — this is eventual consistency, not a defect. The propagation delay is the trade-off accepted when using a search layer. For almost all search use cases, seconds of lag is acceptable. If lag is consistently too long, tune the sync interval.
+
+> Interview frame: "Elasticsearch is not real-time. There's a propagation delay — that's the trade-off of using a search layer. If X seconds is too long, we can tune the sync interval."
+
 ## Keyword Search vs. Semantic Search (BM25 vs. Embeddings)
 - **BM25** = keyword relevance scoring
     - Looks how often the search term appears in a document and how rare it is across all documents

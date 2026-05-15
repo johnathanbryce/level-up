@@ -1,3 +1,4 @@
+# Concept: hash map, frequency counting
 def first_unique(s: str) -> str:
 
     if not s:
