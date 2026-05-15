@@ -802,4 +802,129 @@ Least connections sees the actual open connection count. If Server A has 12 acti
 
 ---
 
+## Section 11: Resilience & Reliability
+
+### Q11.1 — Circuit breaker state machine
+
+**Question:** A payment gateway you depend on starts failing. Your service has a circuit breaker wrapping every call. Walk through all three states by name, what each one does, and what triggers each transition. Then explain which state is load-bearing and why.
+
+**Answer:**
+
+**Three states:**
+
+- **CLOSED** — Normal operation. Requests flow through to the downstream. The breaker counts failures in the background.
+- **OPEN** — Tripped. Requests fail immediately without attempting the downstream call. Gives the downstream breathing room. Cooldown is a timer (e.g. 30s), not a condition on traffic.
+- **HALF-OPEN** — Cooldown elapsed, testing recovery. One probe request is allowed through.
+  - Probe **succeeds** → transition to CLOSED, normal traffic resumes.
+  - Probe **fails** → back to OPEN, another cooldown window, try again next probe.
+
+**Transitions:**
+- CLOSED → OPEN: failure threshold crossed (rate-over-window or consecutive failures)
+- OPEN → HALF-OPEN: cooldown timer elapsed
+- HALF-OPEN → CLOSED: probe succeeds
+- HALF-OPEN → OPEN: probe fails
+
+**HALF-OPEN is load-bearing.** Without it, you'd be stuck in OPEN forever — or need a human to manually flip the switch back to CLOSED. HALF-OPEN is the self-healing automation: it re-tests the downstream by itself with a single probe and decides whether to resume traffic. Just ONE probe — not a flood — because 1000 requests hitting a still-broken downstream re-triggers cascading failure.
+
+**Trip conditions:** Failure-rate-over-window (e.g., "50 failures in 30 seconds") is more robust than consecutive-failures because it accounts for mixed success/failure traffic. Consecutive-failures is simpler but noisy — one slow minute can trip you unnecessarily.
+
+---
+
+### Q11.2 — Why exponential backoff alone isn't enough
+
+**Question:** 10K clients had requests in flight when a downstream gateway went down for 30s. Walk through (a) the failure mode of naive immediate retry, (b) whether exponential backoff fully solves it and what the residual problem is, (c) what jitter does mechanistically, and (d) the one operation type where retries are unsafe even with backoff + jitter.
+
+**Answer:**
+
+**(a) Naive immediate retry — thundering herd / retry storm.** All 10K clients retry the moment they fail. When the gateway recovers, 10K requests slam it simultaneously and re-crash it. Plus while the gateway is dying, immediate retries hammer it and slow recovery.
+
+**(b) Exponential backoff alone doesn't fully solve it.** If 10K clients all failed at the same moment, they all wait *exactly* 1s, then *exactly* 2s, then *exactly* 4s. They're **synchronized.** Backoff spaces the synchronized stampedes further apart in time but doesn't de-synchronize the clients. Same cohort, same shape, just stretched.
+
+**(c) Jitter de-synchronizes the cohort.** Instead of "wait 2s exactly," wait "a random value in 1.5–2.5s." Different clients pick different waits → arrivals spread across a window → no single moment when 10K hit at once. Formula: `wait = min(base * 2^attempt, max_delay) + random_jitter`. The mechanism is *randomized de-synchronization*, not just delay.
+
+**(d) Non-idempotent operations.** Retrying a POST that creates state (charge a card, place an order, send an email) can create duplicates — the first POST succeeded but the response was lost in transit; retry processes a second charge. Backoff + jitter don't save you. **The fix: idempotency keys.** Client sends `Idempotency-Key: <uuid>` header; server caches `(key → response)` for ~24h; duplicate retry returns the cached response without re-executing. **Retry + idempotency is a package deal — you can't safely have one without the other.**
+
+---
+
+### Q11.3 — Token bucket vs sliding window applied
+
+**Question:** Pick the algorithm and give concrete numbers (capacity/refill or window/limit) for three endpoints: (a) dashboard page that fires ~15 parallel API requests on load then idles 30-60s, (b) password-reset email endpoint ($0.0001/email, abuse risk), (c) AI summarize endpoint ($0.05/call, 3-8s response time, abuse can cost hundreds/hour).
+
+**Answer:**
+
+**(a) Token bucket.** Bursts are expected and benign (page load fires N parallel requests, then quiet). **Capacity: 35 tokens, refill: 1/sec sustained.** Capacity covers the page-load burst plus a refresh; refill rate covers steady idle-and-click usage. **Always state both capacity AND refill rate** — capacity defines the burst, refill defines the sustained rate.
+
+**(b) Sliding window. 3 requests per 5 minutes.** No legitimate burst use case (no one needs to send themselves 3 reset emails in 10 seconds), and a hard cap is exactly the right shape. Layer with per-IP fallback for unauthed traffic.
+
+**(c) Sliding window, layered.** Short: **5/min** (allows accidental double-clicks and legitimate retries). Long: **50/hr** (caps abuse at $2.50/hr/user — bounded cost). 429 + Retry-After response pattern. Per-IP fallback. **Key calibration discipline:** for any expensive endpoint, anchor the rate-limit to the worst-case $/hour per abusive user. "What's the max cost this limit allows?" is the senior framing.
+
+**Response pattern:** Return `HTTP 429 Too Many Requests` with a `Retry-After` header telling the client when they can retry.
+
+---
+
+### Q11.4 — Idempotency mechanism applied (flaky network)
+
+**Question:** User on hotel wifi clicks "Place Order" → POST to /api/orders/checkout charging $189. Server processes and charges the card, but the response packet is lost in transit. Client auto-retries. Walk the full mechanism: (a) what client generates and where it goes, (b) server logic on first POST, (c) server logic on retry — and critically, how many times is the card charged, (d) cache TTL strategy.
+
+**Answer:**
+
+**(a) Client side.** Client generates a **UUID** at the moment of the logical action (when the user clicks "Place Order" — NOT regenerated per retry). The SAME value is reused across all retries of that logical operation. Sent in the HTTP header named **`Idempotency-Key`**. The persistence-across-retries is what makes the entire mechanism work — if the client regenerated a fresh UUID per retry, dedup is defeated.
+
+**(b) First POST — server logic in order:**
+
+1. Read `Idempotency-Key` header.
+2. Check cache: is this key already stored?
+3. If MISS → process the request normally (charge card, save order), then cache `(key → full HTTP response payload + status code)`, then return response.
+4. If HIT → see (c).
+
+**Cache the response, not the request.** The cached value should be the full response body + status code, so the client experience on retry is byte-identical to the original.
+
+**(c) Retry POST — same logic, cache hit branch:**
+
+1. Read `Idempotency-Key` header (same UUID as first attempt).
+2. Cache check: HIT.
+3. Return the cached response immediately — no card charge, no DB writes, no side effects.
+
+**The card is charged ONCE.** The user sees one successful order confirmation, one charge on their statement, one shipped item. From the user's perspective, the network blip and the retry are *completely invisible.* That invisibility is the whole point of the pattern.
+
+**(d) TTL: ~24 hours (Stripe convention).**
+
+- **Why 24h works:** any retry happening more than 24h after the original is, by definition, an intentional re-action by the user (not a network-layer retry). Returning a cached response after 24h would actually be a bug.
+- **Why 30s is too short:** real flaky-network retries can stack over minutes (TCP timeouts + client backoff + user manually refreshing). Evict at 30s, a slow retry slips through → card charged twice.
+- **Why cache-forever is bad:** (i) unbounded storage growth, (ii) bigger UX bug — user legitimately re-purchases the same item 6 months later, server returns the cached 6-month-old response with the old order ID, user never sees their new order go through. Worse than the duplicate charge it was meant to prevent.
+
+**Calibration rule:** TTL must outlast all realistic retry windows but be short enough that intentional re-actions are treated as fresh.
+
+---
+
+### Q11.5 — Graceful degradation in a partial-failure scenario
+
+**Question:** B2B SaaS analytics dashboard has 7 components: auth, core metrics, real-time event stream, AI insights panel (Anthropic API), saved-segment dropdown, team activity sidebar (presence Redis), recent exports widget (S3 listings). At 9:42 AM: Anthropic returns 503s, presence Redis crashed, S3 listings p99 went from 200ms to 8s. Dashboard timing out at 12+ seconds. (a) Identify critical path. (b) Specific degradation for each of the 3 failing dependencies. (c) Rebut the "just show a banner" argument. (d) Which failure causes cascading failure if treated naively?
+
+**Answer:**
+
+**(a) Critical path: Auth + Core Metrics + Saved Segments.** These are the components the user must have for the page to be worth loading at all — the user's core goal is "view my product's analytics." Everything else degrades. Test for critical-path: "Can the user complete their core goal without this component?" If yes, it's not critical.
+
+**(b) Degradation for each failing dependency:**
+
+- **Anthropic API (AI insights panel) → Disable feature** (hide the panel with a small inline note: "Insights temporarily unavailable") OR **cached data** — serve last-known-good insight from cache. Yesterday's retention summary is fine; most senior teams cache LLM responses for cost reasons anyway.
+- **Presence Redis (Team activity sidebar) → Disable feature.** Hide the sidebar entirely or show "Team activity unavailable." Cheapest degradation — no one loses sleep over a missing sidebar.
+- **S3 listings slow (Recent exports widget) → Partial response + aggressive timeout.** Load the dashboard *without* this widget; render it async with a 500ms-1s timeout; on timeout show "Loading exports..." or fall back to "Exports temporarily unavailable." **Do not block the page load on this 8-second call.**
+
+**(c) Senior rebuttal to "just show a banner":**
+
+1. **Different failures have different lifespans.** Anthropic might be down for hours, Redis reboots in 15 min, S3 is just slow. One banner forces the longest-lived failure to set the user experience for everyone.
+2. **The user's primary job — viewing analytics — is fully operational.** Forcing a refresh when the core product is healthy makes outages bigger than they have to be.
+3. **Partial failure is the normal state of distributed systems.** All-or-nothing thinking is the junior-engineer trap — designing for it turns every dependency outage into a full outage.
+
+**(d) S3 listings slow → cascading failure via thread/connection pool exhaustion.**
+
+If your app calls S3 synchronously during dashboard load and S3 is taking 8s per call, every dashboard request holds an app server thread for 8s. App servers have finite thread pools (say, 100). At ~13 req/sec the pool is exhausted; new requests queue; queue overflows; **dashboard returns 503 even for users who don't care about the exports widget.**
+
+**Slow-but-not-failing is more dangerous than outright failure.** Anthropic's 503 fails in ~50ms — thread frees up. Redis crash fails in ~10ms — thread frees up. S3 holds the thread for 8 seconds.
+
+**The fix is the circuit breaker.** When S3 latency crosses a threshold, trip the breaker, fail fast for S3 calls, threads stay free. Or: aggressive timeout (1s max) + treat the widget as partial-response. **Slow dependencies are the canonical use case for circuit breakers, not just down dependencies.**
+
+---
+
 *(More questions added as per-section reviews progress through Sections 9-12.)*
