@@ -802,6 +802,218 @@ Least connections sees the actual open connection count. If Server A has 12 acti
 
 ---
 
+## Section 9: Database Architecture
+
+### Q9.1 — ACID and when ACID requirements rule out NoSQL
+
+**Question:** Walk through ACID. Then: when would you reject MongoDB (or any document store) for a use case purely on ACID grounds?
+
+**Answer:**
+
+**ACID:**
+
+- **Atomicity** — a transaction is all-or-nothing. If part of it fails partway through, the DB **rolls back** to the pre-transaction state at the DB layer (not the app layer). Classic example: transferring $100 between accounts — debit A succeeds, credit B fails → both reverted. You never end up in a half-done state.
+- **Consistency** — a transaction can only move the DB from one valid state to another. Constraints, foreign keys, and unique-checks hold across the transaction.
+- **Isolation** — concurrent transactions don't step on each other. Two users buying the last concert ticket can't both succeed.
+- **Durability** — once a transaction commits, it survives a crash. The DB writes to disk before returning "success."
+
+**One-liner:** ACID is the guarantee that the DB won't lie to you or leave your data in a broken state, even when things go wrong.
+
+**When to reject MongoDB on ACID grounds:**
+
+1. **Multi-document transactions.** When a single logical operation spans multiple records (money transfer touching two accounts; order creation touching `orders` + `inventory` + `payment_log`) and you need all-or-nothing semantics. MongoDB has multi-document transaction support now but it's a more recent feature and has performance trade-offs; Postgres has had it for decades and it's a first-class citizen.
+2. **Schema flexibility as liability.** Document stores let any document have any shape — great when data shape varies legitimately (CMS content, user-defined fields). **Liability** when data integrity matters: there's no schema enforcement at the boundary, so a buggy service can write malformed records and the DB happily accepts them. For financial / regulatory / inventory data, you want the DB to reject bad data at the door.
+
+**Heuristic:** if the requirements mention "money, inventory, bookings, or audit," default to SQL.
+
+---
+
+### Q9.2 — Composite index, when and how to order
+
+**Question:** When do you reach for a composite index, and how do you order the columns?
+
+**Answer:**
+
+**When:** the query filters on one column AND sorts on another (or filters on multiple columns together).
+
+**Column order:** filter column first, sort column second. The DB walks the index from the filter value, then reads rows in sort order without a separate sort step.
+
+```sql
+-- query: WHERE user_id = ? ORDER BY created_at DESC
+-- index: (user_id, created_at)
+```
+
+Get the order wrong and the index either doesn't get used or only helps with half the query.
+
+---
+
+### Q9.3 — User refreshes after updating profile photo and sees the old photo
+
+**Question:** A user updates their profile photo. They refresh and see the OLD photo. What's happening, and how do you fix it without breaking the read-scaling architecture?
+
+**Answer:**
+
+**What's happening: replica lag — normal asynchronous behavior, not a crash or failover.**
+
+The write went to the primary DB. Reads (including this user's refresh) get routed to a replica for read scalability. **Replicas catch up asynchronously** — usually milliseconds, sometimes seconds under heavy write load. The user's refresh hit a replica that hadn't applied the photo update yet, so they saw stale data. This happens every day under normal operating conditions. **No outage required.**
+
+This is eventual consistency in practice (CAP theorem) — the cost of read-replica scaling.
+
+**Fix: Read-Your-Own-Writes (RYO-W) consistency.** After a user writes, route **that user's** subsequent reads to the primary for a short window (e.g., 5-10 seconds), or just for the response to that specific write request. Other users' reads continue hitting replicas — only the write originator pays the consistency cost.
+
+**Important framing:** RYO-W is scoped to the user who just wrote, NOT "send all reads to the primary." Sending all reads to the primary defeats the entire point of having replicas.
+
+---
+
+### Q9.4 — Shard key for a messaging app
+
+**Question:** You're sharding a messaging app's `messages` table. Pick a shard key. Defend it. Name what you'd avoid and what failure mode to avoid.
+
+**Answer:**
+
+**Shard key: `conversation_id`.**
+
+Two properties make it the right choice:
+
+1. **High cardinality, even distribution** — many conversations across the user base; no single conversation dominates the total message volume.
+2. **Query locality** — all messages in a conversation live on one shard. Fetching "show me this conversation" is a single-shard lookup. No fan-out.
+
+**Avoid `message_id`** — distributes uniformly but **destroys query locality**. Every "fetch this conversation" becomes a **scatter-gather** query: hit every shard, merge results. Latency explodes, especially as the shard count grows.
+
+**Avoid `user_id`** — looks reasonable, but a heavy-traffic user (a celebrity, a service account) creates a **hot shard**. One shard gets disproportionate write/read load while others sit idle.
+
+**Hot shard** = a shard receiving disproportionate traffic due to uneven key distribution or access pattern. Term to know cold for senior interviews — describing the problem without naming it costs vocabulary points.
+
+---
+
+### Q9.5 — Postgres is choking, 20 app instances, no connection pool
+
+**Question:** You have 20 app instances making DB queries directly with no connection pool — each request opens a fresh connection, runs its query, closes the connection. Postgres is failing under load. (a) What's the root cause? (b) What's the math when you add a pool? (c) What's the canonical fix in production?
+
+**Answer:**
+
+**(a) Root cause: no pool at all.** Every single request pays the cost of a fresh connection: TCP handshake, auth, session setup. Under load, this overhead is brutal — Postgres connection slots are finite (default `max_connections = 100`), and you exhaust them faster than the OS can clean up the closed ones.
+
+The fix in concept: a **connection pool** maintains a set of open connections that get **reused** across requests. Request comes in → grab an idle connection from the pool → run the query → return it to the pool. No handshake overhead per request.
+
+**(b) Math with a typical pool size of 15 per instance:** 20 instances × 15 connections = **300 connections**. Postgres default `max_connections = 100`. **You're 3x over the default.** Even with a pool, you'd saturate Postgres unless you raise the limit or reduce per-instance pool size — and raising `max_connections` has its own memory costs.
+
+This is why the math matters: a pool isn't free, it just shifts the bottleneck.
+
+**(c) Canonical production fix: PgBouncer.**
+
+A connection pooler that sits **between the app and Postgres**. Apps connect to PgBouncer; PgBouncer multiplexes thousands of app-side connections down to a much smaller pool of actual Postgres connections. The standard tool for this exact problem in production.
+
+**Standard architecture:** App instances → PgBouncer → Postgres. Per-instance pool size goes down because PgBouncer is the real pool.
+
+---
+
+### Q9.6 — Storage strategy for a legal doc analysis tool
+
+**Question:** Building a legal document analysis tool. Users upload PDF contracts. Product needs to: (a) store raw PDFs, (b) let users search by keyword within document text, (c) let users find contracts semantically similar to a query like "non-compete clause for sales reps." What storage do you use for each, and what mistake should you avoid?
+
+**Answer:**
+
+**(a) Raw PDFs → S3 (object/blob storage).**
+
+Cheap, infinitely scalable, designed for files. The DB stores a reference (the S3 key), files don't bloat the DB. Never store raw blobs in Postgres rows — it kills query performance and inflates backup size.
+
+**(b) Keyword search within document text → Elasticsearch (BM25).**
+
+ES indexes the extracted text and scores results by keyword relevance using BM25 (term frequency + rarity). Handles typos, partial matches, stemming, phrase matching. SQL `LIKE '%foo%'` works for one document but can't rank or scale. SQL can't rank.
+
+**(c) Semantic similarity → vector embeddings + vector store.**
+
+Convert each document chunk to a vector (embedding), convert the query to a vector, find nearest neighbors by cosine similarity. **pgvector** (Postgres extension) is fine for moderate scale; dedicated vector DBs (Pinecone, Weaviate, Qdrant) for large scale.
+
+**The mistake to avoid: reaching for Elasticsearch for semantic search.** ES added vector capabilities later but it is a **search engine first**, not a purpose-built vector DB. The conflation is:
+
+- **BM25 (Elasticsearch native)** = keyword relevance scoring. Term frequency × rarity. Matches exact words and variations.
+- **Semantic similarity (vector DBs)** = vector math. Finds conceptually similar content even if no words overlap.
+
+Different problems, different tools. "Non-compete clause for sales reps" matching a document that talks about "restrictive covenants for account executives" is **semantic**, not keyword — BM25 misses it because the words don't overlap.
+
+**Hybrid search** = BM25 (ES) + semantic (vector store) running in **parallel**, results merged with weighted scoring. Not sequential — neither pipeline feeds the other.
+
+---
+
+## Section 10: Search Infrastructure
+
+### Q10.1 — Postgres or Elasticsearch for natural-language job search
+
+**Question:** Your startup has a Postgres table with 5M job listings. Users type queries like "senior react engineer remote NYC." Do you query Postgres or add Elasticsearch? Why?
+
+**Answer:**
+
+**Add Elasticsearch.**
+
+Postgres can do exact filters and `LIKE '%query%'` matches, but it cannot **rank by relevance**. ES scores results using BM25 — term frequency × rarity. A listing that contains all 5 keywords from the query ranks above one that contains 2. ES also handles typos ("reactt" → "react"), stemming ("engineers" matches "engineer"), and phrase matching.
+
+**The cue for adding a search layer:** the requirement says "search by keyword" / "free-form query with ranked results." SQL is for **filtered lookups** (`WHERE` clauses with structured fields). ES is for **relevance-ranked search** over freeform text.
+
+**For semantic intent too (user types "remote react job" and wants results that mention "WFH front-end engineer"):**
+
+BM25 (Elasticsearch) and vector embeddings (pgvector / Pinecone) run **in parallel** — each retrieves its top-N independently, a merge step combines them with weighted scoring (e.g., 60% BM25 + 40% semantic). **Not sequential** — BM25 doesn't filter the semantic results, and semantic doesn't rerank BM25 output. They are two independent retrievers feeding one merge step.
+
+---
+
+### Q10.2 — "New listings don't appear in search for 30 seconds" — bug or feature?
+
+**Question:** A product manager files a bug: *"When sellers add a new listing, it doesn't appear in search results for ~30 seconds."* (a) What's the architecture causing this? (b) Is this a bug? How do you frame the answer for the PM?
+
+**Answer:**
+
+**(a) Architecture:**
+
+1. Write goes to Postgres (source of truth).
+2. A sync process — typically a queue consumer or event stream (CDC, Kafka, Redis pub/sub) — copies the new record to Elasticsearch.
+3. Search queries hit Elasticsearch, not Postgres.
+
+The 30-second delay is the **propagation lag** between the Postgres commit and the ES index update.
+
+**(b) Not a bug — it's the trade-off.**
+
+Elasticsearch is a **read-optimized view** of the primary data, never the source of truth. The propagation delay is the cost of having a search layer at all. **This is eventual consistency working as designed.**
+
+**Framing for the PM:**
+
+> *"Elasticsearch isn't real-time — it's seconds behind Postgres by design. That's the trade-off we accepted when we added the search layer in exchange for ranked relevance search, partial matches, and the ability to handle freeform queries Postgres can't. If 30 seconds is consistently too long for the product, we can tune the sync interval — but that has cost implications (more frequent syncs = more load). It's a knob, not a defect."*
+
+The framing matters in real product conversations: **"trade-off we accepted"** beats **"this is how it works"** every time — the first invites a product conversation about whether the trade-off is still right; the second sounds dismissive.
+
+---
+
+### Q10.3 — Customer success wants Elasticsearch for invoice filtering
+
+**Question:** Customer success asks you to add Elasticsearch to power a new feature: *"Let users find all invoices from Q3 2024 marked as overdue, sorted by amount."* Should you add ES?
+
+**Answer:**
+
+**No. This is not a search problem — it's a structured filter query.**
+
+The query is a SQL `WHERE` clause:
+
+```sql
+SELECT * FROM invoices
+WHERE quarter = 'Q3 2024' AND status = 'overdue'
+ORDER BY amount DESC;
+```
+
+There's no freeform text, no relevance ranking needed, no fuzzy matching, no partial matches. Just exact matches on structured fields and a sort. Postgres with appropriate indexes (composite on `(status, quarter, amount)` or similar) handles this fast at any reasonable scale.
+
+**The diagnostic question to ask before recommending ES:**
+
+> *"Is this relevance-ranked freeform search, or structured filtered lookups?"*
+
+- **Search** = "find me anything matching 'react engineer NYC'" → freeform, no exact field-value pairs, results need relevance ranking → **ES.**
+- **Filter** = "give me records where field X = Y and Z > N, sorted by W" → exact field-value matching, structured → **SQL `WHERE` + index.**
+
+**The trap:** reaching for ES anytime the word "search" appears in a feature request. UI labels say "search" for everything — search invoices, search users, search settings. Most B2B record-finding features are filter problems, not search problems.
+
+**Test it on every "add ES" request:** would `WHERE` clauses + indexes solve this on Postgres? If yes, don't add ES. You'd be paying the cost of an additional system (sync pipeline, eventual consistency, ops overhead) for zero benefit.
+
+---
+
 ## Section 11: Resilience & Reliability
 
 ### Q11.1 — Circuit breaker state machine
