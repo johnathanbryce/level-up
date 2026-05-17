@@ -12,6 +12,56 @@ Can explain RAG architecture end-to-end, describe chunking trade-offs with speci
 
 ---
 
+## Section Operating Model
+
+Locked in 2026-05-17 before the first chunk of real material. Future-Claude in a fresh window should read this section first to understand how this section is taught and where artifacts live.
+
+### Folder map
+
+```
+03-ai-foundations/
+├── CLAUDE.md
+├── notes/          numbered .md files per sub-topic group (one file per group)
+│                   01-embeddings-and-vector-concepts.md, 02-rag-architecture.md, 03-search-and-retrieval-concepts.md
+│                   (files created lazily — only when John starts taking notes on that group)
+├── experiments/    micro-scripts (~10-15 min each) that ride inside conceptual chunks to make abstract ideas concrete
+│                   examples: embeddings_demo.py, cosine_similarity.py, chunking_demo.py
+└── rag-poc/        capstone hands-on project (FastAPI + embeddings + vector store + LLM call)
+                    populated only when sub-topic group 4 starts
+```
+
+### Notes-file pattern
+
+Identical to System Design. Within each `notes/NN-*.md` file:
+- `#` file title only
+- `##` major sections (one per CLAUDE.md sub-bullet group)
+- `###` sub-sections
+- `**bold**` reserved for vocabulary/emphasis only — NEVER as a section marker
+
+End-of-session heading audit (per project CLAUDE.md) applies.
+
+### Teaching cadence
+
+| Granularity | What happens |
+|---|---|
+| **Chunk** (5-10 min) | Teach one concept → one quick applied check question → confirm landed → next chunk. No formal quiz at this granularity. |
+| **Sub-topic group** | "Now apply it" beat — applied scenario, diagram, or 2-3 question check before marking the group done. Per Daily Session Structure rule. |
+| **Pre-POC gate** (after groups 1-3) | End-of-section warm-down quiz, 5-7 mixed-format questions across embeddings + RAG + search/retrieval. Mandatory gate before starting the POC build. |
+| **Capstone** | POC Demo + Verbal Walkthrough — already defined further down this file. Section close gate. |
+
+### Hands-on mix per sub-topic group
+
+| Group | Mix | Specific hands-on |
+|---|---|---|
+| 1. Embeddings & Vector Concepts | Concept-heavy + 2 micro scripts | `embeddings_demo.py`, `cosine_similarity.py` |
+| 2. RAG Architecture | Concept-heavy + diagram + 1 micro script | Pipeline flow diagram (ingest → chunk → embed → store → retrieve → generate); `chunking_demo.py` |
+| 3. Search & Retrieval Concepts | Concept-only by default | Optional `bm25_vs_vector.py` if BM25 vs embeddings confusion lingers (flagged 2026-04-21, 2026-05-14) |
+| 4. Hands-On: Basic RAG POC | Pure hands-on build under `rag-poc/` | Full pipeline — see Sub-Topics below |
+
+Micro-scripts: Claude scaffolds the boilerplate, John writes the meaningful lines. Same rule as algos.
+
+---
+
 ## Sub-Topics
 
 ### Embeddings & Vector Concepts
