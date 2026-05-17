@@ -250,7 +250,24 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-14 (Pre-Case-Study Review Phase CLOSED)
+**Last Updated:** 2026-05-17 (Active Interview Cycle opened — Remitly intro chat 2026-05-20)
+
+---
+
+### Active Interview Cycle — PRIORITY MODE ON
+
+**Remitly intro chat — Wednesday 2026-05-20.** Role TBD (likely AI software engineer track). Per `interviews/CLAUDE.md` Priority Mode rule: default session shape is algo warmup + bridge + **interview cram block** (replaces Block 2 roadmap topic) until the interview is logged and debriefed.
+
+**At session start**, Claude should announce the default: *"Remitly is active — defaulting to interview cram today. Say the word if you want regular pipeline instead."* John can opt back to regular pipeline at any session start, no friction.
+
+**Status of interview prep (2026-05-17):** scaffolding complete — [interviews/CLAUDE.md](interviews/CLAUDE.md) governance + [interviews/remitly/](interviews/remitly/) folder seeded (`CLAUDE.md`, `role.md`, `talking-points.md`, `interview-log.md`, `study-plan/README.md`). All files are stubs with TODO markers. **Next Remitly session**: company research (web search → fill `talking-points.md` Part 1) + start drafting "tell me about yourself" and "why Remitly."
+
+When Remitly is `Closed` in [interviews/CLAUDE.md](interviews/CLAUDE.md), default reverts to the regular pipeline (Case Studies queue below).
+
+---
+
+### Regular Pipeline State (resumes when no Active interview)
+
 **Current Section:** Section 1 (Algorithms — ongoing) + Section 2 (System Design — **PRE-CASE-STUDY REVIEW PHASE COMPLETE; CASE STUDIES PHASE next**)
 **Current Sub-topic:** Case Studies — **#1 URL Shortener** is the kick-off. 5 case studies → Failure Analysis (2-3 post-mortems) → Capstone Prep (gap drilling + dry-run quiz) → End-of-Section Capstone (3-part gate) → Section 2 officially closed.
 **Last Session Summary (2026-05-14, Resilience & Reliability review):** No algo, no bridge — John burnt out from prior session, went direct-to-quiz. 5 of 6 Qs completed (Q6 skipped on legit burnout call at end of Q5). **B-/C+ overall. Two MAJOR positives + one regression.** **Q1 Circuit breaker B+/A- — MAJOR WIN: 22-day outstanding gap from 2026-04-22 CLOSED COLD.** Three states + both major transitions + HALF-OPEN load-bearing reasoning all named with NO notes. Minor specifics missed: HALF-OPEN → OPEN failure branch unnamed, load-bearing framing slightly muddled ("prevents infinite states" vs canonical "self-healing exit from OPEN"). Q2 Retry storm + jitter B+: thundering herd mechanism ✓; (b) honest "I don't know" with intuition that was effectively the right answer (synchronized cohort) — undersold himself; (c) jitter mechanism locked; (d) honest don't-know on non-idempotent retries, taught package-deal framing. **TWO honest "I don't know" calls in one session — senior move, named explicitly.** Q3 Rate limiting B/B+: all 3 algorithm picks correct; (a) missed refill rate spec (only stated capacity 35, no refill); (c) 2 req/5sec for $0.05 LLM endpoint allows $72/hr per abusive user — same rate-limit numerical calibration miss as 2026-04-22 dashboard refill (recurring shape). **Q4 Idempotency B/B+ — LOCKED rep #2 on fresh surface (e-commerce, not ride-share). Mechanism shape held across surfaces — senior signal: transfer not pattern-match.** Gaps were interview specificity only: missed `Idempotency-Key` header name, missed "same value across retries" as load-bearing, didn't drive home "card charged ONCE" answer. **Q5 Graceful degradation D+/C- — REGRESSION. Same exact gap as 2026-04-22 (Grade C original): didn't engage with the specific failing services in the scenario.** Three failing deps explicitly listed (Anthropic 503, presence Redis crash, S3 8s slow). John answered (b) about auth/core-metrics/event-stream (which were HEALTHY) instead of the named failures. Generic-principles fallback under applied pressure. On (d), missed canonical cascading-failure mechanism (slow S3 → thread pool exhaustion → circuit breaker as the fix). **Q1→Q5 transfer failure 30 min apart: walked the circuit breaker pattern cold in Q1, didn't reach for it in Q5 when the canonical use case appeared. 7th occurrence of knows-rule-not-application, new shape (knows-pattern, doesn't apply when scenario demands it).** Q6 skipped on burnout — respected, John has done real work today and recognized he was unfocused.
