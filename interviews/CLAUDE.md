@@ -47,8 +47,17 @@ When a new company lands:
 
 1. **Intake** — populate the company's `CLAUDE.md`: status, interview date, role (or "TBD"), source (referral / recruiter / applied), interviewer if known.
 2. **Company research** — web search for mission, products, recent news (last 6-12 months), engineering blog, public architecture, leadership. Output: top half of `talking-points.md` + a memorized 2-3 sentence elevator pitch.
-3. **Role analysis** — paste JD verbatim into `role.md` when available. Extract tech stack, responsibilities, seniority signals. If JD is unknown, prep against an archetype (e.g. "AI software engineer at a fintech / payments company") until the role lands.
-4. **Study plan build** — `study-plan/README.md` maps the role's stack to roadmap sections, flags gaps to drill, lays out a day-by-day cram schedule. Topic-specific notes go into `study-plan/` as sibling files. Uploaded materials (recruiter PDFs, JD docs, decks, public talks) also live in `study-plan/`.
+3. **Role / JD Analysis** — all deliverables go into `role.md`. This is the canonical pattern every company follows:
+   1. **JD verbatim** (or a clean summary if a recruiter hasn't shared a link yet) — title, team, salary, location, full responsibilities + qualifications.
+   2. **Tech stack** — bullet list of every named technology.
+   3. **Stack Coverage Table** — for each stack item, mark John's coverage (strong / surface / none) and point to the relevant roadmap section CLAUDE.md.
+   4. **Gap Inventory** — table: gap | role(s) affected | severity | cram-able in remaining days?
+   5. **Must Speak Intelligently On** — 5-7 non-negotiable items. Mix of: technical concepts, product/strategy context, role-specific framings. Each with a 1-line "why this matters here." These are *things to understand* (inputs), distinct from talking points (lines to say in the room — those live in `talking-points.md`).
+   6. **Cram Priority** — ordered list of what to drill in remaining days, with 1-line reasoning each. References the Gap Inventory.
+   7. **Seniority signals + Why-fit pitch.**
+
+   If the JD isn't yet known, prep against an archetype (e.g. "AI software engineer at a fintech / payments company") until the role lands, then run this pattern.
+4. **Study plan build** — `study-plan/README.md` is purely the **day-by-day cram schedule** + topic-notes index + uploaded-materials index. It does NOT duplicate the JD analysis — that lives in `role.md`. Topic-specific notes go into `study-plan/` as sibling files. Uploaded materials (recruiter PDFs, JD docs, decks, public talks) also live in `study-plan/`.
 5. **Behavioral prep** — bottom half of `talking-points.md`: "tell me about yourself," "why this company," "why are you leaving," 4-6 STAR stories tailored to the role, standard curveballs.
 6. **Mock rounds (optional)** — if time allows. Log into `interview-log.md` with `(Mock)` prefix in the Round column.
 7. **Debrief** — after each real round: log questions, performance, follow-ups, surfaced gaps. Gaps get fed back into the main roadmap as weak spots — write them into the relevant section's CLAUDE.md so they surface in future learning sessions.
