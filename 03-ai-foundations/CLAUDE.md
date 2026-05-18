@@ -60,6 +60,21 @@ End-of-session heading audit (per project CLAUDE.md) applies.
 
 Micro-scripts: Claude scaffolds the boilerplate, John writes the meaningful lines. Same rule as algos.
 
+### Granularity guide — how deep to go on AI topics
+
+Locked in 2026-05-17 in response to John's "how granular do I need to go?" question during chunk 2. Use as the rubric for any sub-topic in this section.
+
+| Tier | Meaning | Examples |
+|---|---|---|
+| **1 — Must know cold** | Interview-death-blow level. Cannot fumble. | What an embedding IS; why semantic search beats keyword for freeform queries; general RAG pipeline shape (ingest → chunk → embed → store → retrieve → generate); that chunking is necessary |
+| **2 — Should reason about it** | Mid-level differentiator. Explain + justify trade-offs, don't memorize. | Cosine similarity (roughly why); chunking trade-offs (small vs large); API mechanics (tokens, batching, rate limits); different models → incompatible vectors |
+| **3 — Senior / nice-to-have** | Look up when needed; do NOT memorize. | Specific dimensions per model (1536, 1024); specific token limits (8191); cost per 1M tokens; vector DB choice rationale; HNSW / ANN index internals; re-ranking strategies |
+| **4 — Specialized only** | Not required for general AI engineering. | Transformer internals (attention math, layer norm); training your own embedding model; embedding fine-tuning |
+
+**Rule of thumb:** if John can articulate Tier 1 + reason about Tier 2 trade-offs, that's mid-level competency for this section. Tier 3 specifics can be Googled when actually needed — don't burn cycles memorizing tier-3 numbers, burn them on locking Tier 1-2 mental models.
+
+**When teaching:** flag concepts by tier as they come up ("this is a Tier 3 detail — know it exists, look it up"). When John pushes back on density, default to: keep Tier 1-2 in notes, mention Tier 3 in passing, skip Tier 4 entirely.
+
 ---
 
 ## Sub-Topics
