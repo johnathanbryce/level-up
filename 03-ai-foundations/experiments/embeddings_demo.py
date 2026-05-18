@@ -37,13 +37,10 @@ SENTENCES = [
 #   - the first 10 floats of the vector
 # Hint: look at the pseudo-code in your notes (chunk 2, "In practice — API calls").
 def single_embedding():
-    # TODO
     response = client.embeddings.create(model=MODEL, input=SENTENCES[0])
-
     vector = response.data[0].embedding
-    vector_len = len(vector)
-    first_10_floats = [num for num in vector[:10]]
-    return {"vector_leng": vector_len, "first_10_floats": first_10_floats}
+    print(f"vector length: {len(vector)}")
+    print(f"first 10 floats: {vector[:10]}")
 
 
 # ---------------------------------------------------------------
@@ -57,17 +54,19 @@ def single_embedding():
 #   - confirm each embedding has the same length (loop + assert)
 def batched_embeddings():
     response = client.embeddings.create(model=MODEL, input=SENTENCES)
-    vector = response.data
-    # 1.
-    if len(SENTENCES) == len(vector):
-        print(f"{len(vector)} embeddings")
-    # 2.
-    len_first_embedding = len(vector[0].embedding)
-    print(len_first_embedding)
-    # 3.
-    for i, embedding in vector:
-        print(f"EMBEDDING {i}: {embedding}")
-    pass
+    vector_list = response.data
+
+    # 1. how many embeddings came back
+    print(f"{len(vector_list)} embeddings (expected {len(SENTENCES)})")
+
+    # 2. length of the first embedding
+    print(f"first embedding length: {len(vector_list[0].embedding)}")
+
+    # 3. confirm each embedding has the same length
+    embeddings = [d.embedding for d in vector_list]
+    for embedding in embeddings:
+        assert len(embedding) == len(embeddings[0])
+    print(f"all {len(embeddings)} embeddings have length {len(embeddings[0])}")
 
 
 # ---------------------------------------------------------------
@@ -77,8 +76,14 @@ def batched_embeddings():
 # Compare the two returned vectors — confirm they are exactly equal.
 # (Hint: Python's `==` on lists of floats does element-wise comparison.)
 def determinism_check():
-    # TODO
-    pass
+    response_one = client.embeddings.create(model=MODEL, input=SENTENCES[0])
+    vector_one = response_one.data[0].embedding
+
+    response_two = client.embeddings.create(model=MODEL, input=SENTENCES[0])
+    vector_two = response_two.data[0].embedding
+
+    print(vector_one == vector_two)
+    return vector_one == vector_two
 
 
 if __name__ == "__main__":

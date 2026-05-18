@@ -81,8 +81,8 @@ Locked in 2026-05-17 in response to John's "how granular do I need to go?" quest
 
 ### Embeddings & Vector Concepts
 
-- [ ] What embeddings are — text as numerical vectors, semantic similarity
-- [ ] How embedding models work (high level — not transformer internals)
+- [x] What embeddings are — text as numerical vectors, semantic similarity (2026-05-17)
+- [x] How embedding models work (high level — not transformer internals) (2026-05-18)
 - [ ] Cosine similarity and distance metrics
 - [ ] Dimensionality and its impact on performance/quality
 - [ ] Common embedding models and their trade-offs (OpenAI, Cohere, open-source)
@@ -137,13 +137,20 @@ John runs the working RAG POC and explains the full pipeline end-to-end (ingest 
 
 | Date | Topics Covered | Assessment | Next Focus |
 |------|---------------|------------|------------|
-| — | — | — | — |
+| 2026-05-17 → 2026-05-18 | Section Operating Model locked (folder structure, teaching cadence, Granularity Guide); Chunk 1 (What an embedding is); Chunk 2 (How embedding models work); `embeddings_demo.py` micro-script (3 TODOs: single embedding, batched embeddings, determinism — all running end-to-end) | Strong session, but TWO critical mental-model corrections required mid-session: (1) embeddings ≠ LLMs (separate model categories, shared transformer architecture, different jobs) — John initially framed the section as "how LLMs work / how to train models" — corrected with "What this section IS/IS NOT" + "Embeddings ≠ LLMs" callouts added at top of notes file; (2) embedding output dimensions are FIXED by the model, NOT by input length — John asked "len(embedding) should match length of each SENTENCE in characters?" — corrected with strengthened "variable-length text → fixed-size vector is the whole point" framing in notes. Three real-world snags hit on the micro-script: modern OpenAI SDK v1.x instance-based pattern (`client.embeddings.create`, not legacy `openai.embeddings.create`), `Embedding` wrapper object vs `.embedding` float-list attribute, `assert` as a Python primitive (new to John). All addressed cleanly. POSITIVE: John self-asked for verbosity audit + tier-granularity rubric — strong calibration instinct. | Chunk 3 — Cosine similarity and distance metrics (concept ~10-15 min, then paired `cosine_similarity.py` micro-script computing pairwise similarity across the 5 sentences from `embeddings_demo.py` — should show bank/loan and dog/puppy as closest pairs, validating semantic-similarity property hands-on) |
 
 ---
 
 ## Notes & Weak Spots
 
-- (none yet)
+- **Foundational AI vocabulary needs definitions, not just terms (2026-05-18).** "Neural network" and "transformer" were terms-without-meaning until taught with one-sentence definitions + WHY-it-matters explanations. Expect this pattern for every new AI domain concept — define the term, explain the mechanism, then move on. Don't drop named concepts without grounding them.
+- **Embedding length misconception caught (2026-05-18).** John asked if `len(embedding)` should equal the number of characters in each input sentence. Corrected hard: embedding output dimensions are FIXED by the model (1536 for text-embedding-3-small), NOT by input. The variable-length-text → fixed-size-vector mapping IS the whole point of embedding models. Notes strengthened. Watch for similar shape-of-output confusion in chunk 3 (cosine similarity output is a single float, not a vector) and chunk 4 (dimensionality trade-offs).
+- **Embeddings ≠ LLMs mental model (2026-05-18).** John initially framed this section as "how LLMs work under the hood + how to train models" — both wrong. Embeddings and LLMs are SEPARATE model categories with different jobs (search/retrieval vs generation), sharing transformer architecture as common building block. We are CONSUMERS of pre-trained models in this section. Locked via "What this section IS/IS NOT" + "Embeddings ≠ LLMs" comparison table at top of notes file. Re-test at chunk 3+ start to confirm it stayed locked.
+- **Modern OpenAI SDK pattern (2026-05-18).** Pre-2023 tutorials all show `openai.embeddings.create(...)` (legacy v0.x module-based). Modern SDK is instance-based: `client = OpenAI(); client.embeddings.create(...)`. Real interview gotcha for anyone Google-searching for "Python openai embeddings."
+- **OpenAI response wrapper structure (2026-05-18).** `response.data[i]` is an `Embedding` object, NOT a float list. The actual vector is `response.data[i].embedding`. Cleaner habit: extract once with `[d.embedding for d in response.data]` before doing anything downstream — gives clean `List[List[float]]` and decouples from OpenAI-specific wrapper types.
+- **`assert` is new to John (2026-05-18).** Taught syntax, truthy/falsy evaluation, senior caveat (stripped with `-O`, never use for security/control flow / input validation — use `if not condition: raise ValueError(...)` instead).
+- **POSITIVE: tier-granularity rubric born from John's pushback (2026-05-18).** John asked "how granular do I need to go?" — codified as 4-tier Granularity Guide in the Section Operating Model. He immediately validated by correctly identifying "memorize 8191 tokens for text-embedding-3-small" as Tier 3 (look up when needed). Use this rubric consistently going forward.
+- **POSITIVE: verbosity self-awareness (2026-05-18).** John explicitly asked for trim audit mid-section before content piled up. Healthy senior-flavor calibration. Honor it — don't bloat notes with Tier 3 specifics.
 
 ---
 

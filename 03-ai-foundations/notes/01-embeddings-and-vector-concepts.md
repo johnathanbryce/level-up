@@ -3,7 +3,7 @@
 ## Section Legend
 
 - [x] Chunk 1: What an embedding is
-- [ ] Chunk 2: How embedding models work (high level)
+- [x] Chunk 2: How embedding models work (high level)
 - [ ] Chunk 3: Cosine similarity and distance metrics
 - [ ] Chunk 4: Dimensionality and its impact on performance/quality
 - [ ] Chunk 5: Common embedding models and trade-offs
@@ -90,8 +90,13 @@ They are **separate model categories** with different jobs.
 ### What an embedding model actually is
 
 - An embedding model is a **neural network** — specifically a **transformer-based model**. Same family of architecture as GPT, Claude, BERT.
-- **Input:** text (a string, up to the model's token limit)
-- **Output:** a vector of floats (same dimensions every time for that model)
+- **Input:** text (a string, up to the model's token limit) — **variable length**
+- **Output:** a vector of floats — **FIXED dimensions, determined by the model, NOT by the input**
+    - `"cat"` → 1536 floats
+    - `"The quick brown fox jumps over the lazy dog"` → 1536 floats
+    - A 500-word product description → 1536 floats
+    - All identical output shape from `text-embedding-3-small`. The input length does NOT change the output dimensions.
+- **Why this is the whole point:** the model maps *variable-length text → fixed-size vector*. This is what makes cosine similarity, nearest-neighbor search, and vector store indexing possible — every vector lives in the SAME dimensional space and can be compared.
 - **Text in, vector out.**
 
 ### What's a "neural network" (one sentence)
