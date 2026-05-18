@@ -10,13 +10,47 @@
 
 ---
 
+## What this section IS (and is NOT)
+
+**IS:** Understanding embeddings — a category of model that converts text into vectors representing meaning. Used for SEARCH and RETRIEVAL (the "R" in RAG).
+
+**IS NOT:** How LLMs work internally. Embeddings and LLMs are separate models with different jobs, though both use transformer architecture under the hood.
+
+**IS NOT:** How to train models. We are consumers of pre-trained models — call an API, get a vector. Training is Tier 4 (specialized).
+
+---
+
+## Embeddings ≠ LLMs
+
+They are **separate model categories** with different jobs.
+
+| | Embedding model | LLM (Claude, GPT-4) |
+|---|---|---|
+| **Input** | Text | Text |
+| **Output** | A vector of floats | More text |
+| **Job** | Turn meaning into geometry (for SEARCH/RETRIEVAL) | Generate human-like responses to prompts |
+| **Architecture** | Transformer (typically) | Transformer (typically) |
+| **Use case** | Search index, RAG retrieval, dedup, recommendations | Answers, code, summaries, chat |
+
+**The shared piece:** both use transformer architecture. That's why chunk 2 covered transformers — same building block, different model trained for a different job.
+
+**Where they meet (this is RAG):**
+
+1. **Embedding model** finds the most relevant docs from your knowledge base
+2. Those docs get stuffed into the **LLM's prompt** as context
+3. **LLM** generates the final answer using question + retrieved docs
+
+**Embeddings = the search engine. LLM = the writer.** Two different models, two jobs, used together.
+
+**And — we are NOT training models in this section.** We are **consumers** of pre-trained embedding models. Call OpenAI's API, get vectors back, use them to power search. Training your own embedding model is **Tier 4** (specialized — not general AI engineering).
+
+---
+
 ## What an Embedding Is
 
 - An **embedding** is a list of floating-point numbers - a **vector** - that represents the _meaning_ of a piece of text (or an image, or audio - but text is our focus)
 - EXAMPLE: if you embed the string _"the cat say on the mat"_ with OpenAI's small model, you get back something like:
   - [0.012, -0.084, 0.231, 0.005, -0.117, ..., 0.043] # 1536 numbers
-
-- The list of numbers is the embedding. Nothing magical happens to the string after - that vector IS the model's numerical representation of the meaning.
 
 ### The core property - why embeddings matter
 
@@ -79,17 +113,22 @@
 
 - You make a request (or run a local model) and get back a vector:
 
-    # Pseudo-code shape — actual script comes after chunk 3
-    response = openai.embeddings.create(
+    # Pseudo-code shape — modern OpenAI SDK (v1.x, instance-based)
+    from openai import OpenAI
+    client = OpenAI()  # auto-reads OPENAI_API_KEY from env
+
+    response = client.embeddings.create(
         model="text-embedding-3-small",
         input="how do I reset my password"
     )
 
     vector = response.data[0].embedding   # [0.012, -0.084, ..., 0.043]  (1536 floats)
 
+    # NOTE: pre-2023 tutorials show `openai.embeddings.create(...)` — that's the legacy v0.x
+    # module-based API and DOES NOT work in modern SDKs. Always use a client instance.
+
 - 3 practical things to know:
     - **You pay per token**
     - **Latency**: typically 50-300ms per call. **Batching** multiple inputs in one API call is the big speedup
-    - **Token limit:** every model has a max input length. 
-        - text-embedding-3-small caps at 8191 tokens (~6000 words)
-        - Anything longer must be chunked first (which is why "chunking strategies" is a whole sub-topic in RAG architecture) 
+    - **Token limit:** every embedding model has a max input length, typically in the low thousands of tokens. Long docs must be chunked first (which is why "chunking strategies" is a whole sub-topic in RAG architecture).
+        - *Reference (Tier 3): text-embedding-3-small caps at 8191 tokens (~6000 words). Look up your model's specific limit when you actually need it.*
