@@ -87,23 +87,43 @@ A function remembers the variables of the scope it was defined in, even after th
 
 ### Event loop — microtasks vs macrotasks
 
-JS is single-threaded. Async work queues callbacks; the runtime drains them when the call stack is empty.
+JavaScript is **single-threaded** — one call stack, one thing executing at a time. Async work doesn't run in parallel; it runs *later*, when the call stack is empty.
 
-- **Microtasks** — Promise `.then`, `queueMicrotask`. **Drained completely** before the next macrotask.
-- **Macrotasks** — `setTimeout`, `setInterval`, I/O, UI rendering.
+When you call something async (`setTimeout`, `fetch`, a Promise), the work is handed off to the runtime (browser Web APIs or Node's libuv). When it completes, the callback lands on one of two queues:
 
-**Order:** sync code → all microtasks → one macrotask → all microtasks → next macrotask. This is why `await` resolves before `setTimeout(0)`.
+- **Microtask queue** — Promise `.then`, `queueMicrotask`, `MutationObserver`.
+- **Macrotask queue** — `setTimeout`, `setInterval`, I/O, UI rendering.
+
+The **event loop** is the runtime mechanism that pulls work off these queues onto the call stack. After each macrotask, the runtime **drains the entire microtask queue** before picking the next macrotask. This is why `await` resolves before `setTimeout(0)` — Promise callbacks beat timers.
+
+```
+┌────────────────────────────────────┐
+│           Call Stack               │
+│      (sync code executes here)     │
+└────────────────┬───────────────────┘
+                 │ when empty:
+                 ▼
+        ┌─────────────────┐
+        │ Microtask Queue │  ← drained COMPLETELY
+        │ (Promise.then)  │
+        └────────┬────────┘
+                 │ then:
+                 ▼
+        ┌─────────────────┐
+        │ Macrotask Queue │  ← ONE per loop tick
+        │ (setTimeout)    │
+        └────────┬────────┘
+                 │
+                 └──→ loop back to microtask queue
+```
 
 ### Promises + async/await
 
-A Promise has three states: **pending → fulfilled / rejected.** Once settled, immutable.
+A **Promise** is an object representing a value that doesn't exist yet — the eventual result of an async operation (network call, file read, timer). It has three states: **pending → fulfilled or rejected.** Once settled, the result is locked in and immutable.
 
-- **`Promise.all([...])`** — waits for all; rejects on first failure.
-- **`Promise.allSettled([...])`** — waits for all; never rejects.
-- **`Promise.race([...])`** — settles with the first to settle (resolve OR reject).
-- **`Promise.any([...])`** — settles with first fulfilled; rejects only if all reject.
+Promises compose: `.then()` attaches a handler AND returns a *new* Promise, which is what enables chaining. `.catch()` handles rejection anywhere in the chain; `.finally()` runs regardless. They replaced "callback hell" — deeply nested callbacks for sequential async work — with a flatter, composable model.
 
-**`async` / `await`** is syntactic sugar. An `async` function always returns a Promise. `await` pauses inside the function until the Promise settles.
+**`async` / `await`** is syntactic sugar over Promises. An `async` function always returns a Promise. `await` pauses execution inside that function until the awaited Promise settles, then resumes with its resolved value. Code reads top-to-bottom, but is still async underneath.
 
 ### `==` vs `===`
 
