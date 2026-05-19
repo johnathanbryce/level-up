@@ -22,58 +22,23 @@ Remitly's core engineering problem is **moving money correctly across borders.**
 
 ---
 
-## FX rate locking
+## Settlement vs. disbursement (Remitly product moat)
 
-When you initiate a cross-border transfer at 10:00am, the FX rate is X. By the time the transfer settles 30 minutes later, the rate may have moved. Customers expect the rate they saw at 10:00am — not the rate at settlement.
+- **Settlement** = slow underlying clearing between banks (hours to days).
+- **Disbursement** = customer-facing delivery of funds (minutes — Remitly's value prop).
 
-**The engineering pattern:** Lock a quoted rate at request time, hold it for some window (often minutes to hours), and execute the transfer at the locked rate. If the window expires, re-quote.
-
-**Why it's hard:** the company carries FX risk during the locked window — if the market moves, they eat the spread. So the locking duration is a **business + risk decision**, not just an engineering one.
-
----
-
-## Atomicity across multi-leg transfers
-
-A cross-border transfer often has multiple legs:
-
-1. Debit sender's card / bank account
-2. Convert USD → local currency
-3. Credit recipient's bank account (or cash agent)
-
-These can happen across different systems, sometimes days apart. **You cannot run a single database transaction across all of them.** So how do you guarantee that either ALL legs complete or NONE do?
-
-**Patterns used:**
-
-- **Saga pattern** — sequence of local transactions, each with a *compensating action* if a downstream leg fails. E.g. if step 3 fails, step 1 issues a refund.
-- **Event-driven choreography** — each leg emits an event; downstream legs react.
-- **State machines** — every transfer has an explicit state (`INITIATED`, `DEBITED`, `CONVERTED`, `CREDITED`, `FAILED`, `REVERSED`). The whole system is built around getting transfers through the state graph correctly.
-
-You don't need to implement these for a recruiter chat — just recognize the words.
-
----
-
-## Settlement vs. disbursement
-
-- **Settlement** — the underlying clearing of funds between banks. The actual money movement at the rail level. **Slow** (hours to days).
-- **Disbursement** — the customer-facing event of the recipient receiving funds. **Fast** (Remitly's value prop: minutes).
-
-Remitly's product is fast disbursement on top of slow underlying rails. They *front* the recipient's funds and settle with the sending side asynchronously. **This is the financial engineering moat** — it requires trust, capital reserves, fraud controls, and operational excellence.
-
----
-
-## AML / KYC basics
-
-- **AML** — Anti-Money Laundering. Regulations preventing money laundering through financial services.
-- **KYC** — Know Your Customer. Identity verification at onboarding.
-- **Sanctions screening** — checking senders / recipients against government watchlists (OFAC in the US, equivalents in other jurisdictions).
-- **Transaction monitoring** — flagging suspicious patterns (structuring, unusual destinations, velocity anomalies, large round numbers).
-
-These are **regulatory obligations, not optional.** They shape engineering decisions: identity data must be retained for X years, certain corridors require additional checks, every transaction must produce an auditable trail.
+Remitly *fronts* the recipient's funds and settles with the sending side asynchronously. **That's the financial engineering moat** — fast disbursement on top of slow rails, made possible by trust, capital reserves, and fraud controls.
 
 ---
 
 ## Likely recruiter prompts + canonical answers
 
-- **"Have you worked on payments systems before?"** → "Not specifically, but I have strong vocabulary on the core patterns — idempotency, atomicity across legs, settlement vs disbursement. Idempotency in particular is the foundation of any reliable transfer system, and I've worked deeply with it on the system design side."
+- **"Have you worked on payments systems before?"** → "Not specifically, but I have strong vocabulary on the core patterns — idempotency in particular, which is the foundation of any reliable transfer system. I've worked deeply with it on the system design side."
 - **"What interests you about fintech?"** → *Genuine answer.* Suggested framing: "The engineering constraints are unusually load-bearing — compliance, atomicity, and reliability aren't bolt-ons, they shape the architecture. That's interesting work."
-- **"What do you think the hardest part of Remitly's engineering problem is?"** → "Probably layering the new Wallet / Card / Borrow products on top of the existing transfer engine without compromising the compliance and reliability guarantees the transfer side already meets. New product surfaces on a regulated platform is hard."
+- **"What do you think the hardest part of Remitly's engineering problem is?"** → "Probably layering the new Wallet / Card / Borrow products on top of the existing transfer engine without compromising the reliability guarantees the transfer side already meets. New product surfaces on a regulated platform is hard."
+
+---
+
+## Phase 2 expansion topics (deferred — if WARP advances)
+
+If Role 3 (WARP / Wallet Product Risk) goes to a technical screen, re-read prior git history of this file or expand `phase-2-technical-cram.md` to cover: **FX rate locking**, **multi-leg atomicity (saga pattern, state machines)**, **AML / KYC basics, sanctions screening, transaction monitoring**. Not needed for the recruiter chat.
