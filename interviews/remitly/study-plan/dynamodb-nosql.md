@@ -6,7 +6,7 @@ Highest-leverage Phase 1 topic. Role 2 (Customer Data Platform) explicitly names
 
 ## What it is
 
-DynamoDB is **AWS's managed NoSQL database.** Key-value + document model. Single-digit millisecond latency at scale. You don't manage servers, replication, or sharding — AWS handles all of that. You define your access patterns and pay per request (or provisioned capacity).
+DynamoDB is **AWS's managed NoSQL database.** Key-value + document model. Single-digit millisecond latency at scale. You don't manage servers, replication, or sharding — AWS does all of that. ("Zero ops" = no infrastructure work on your team's plate.) You define your access patterns and pay per request (or provisioned capacity).
 
 NoSQL more broadly = "not SQL" — a family of databases that drop relational features (joins, schemas, ACID across rows) in exchange for **scale, flexibility, or both.** DynamoDB is in the key-value / document subfamily, alongside Redis (in-memory) and MongoDB (document).
 
@@ -58,12 +58,9 @@ Most teams start on Postgres and move parts of the workload to DynamoDB when sca
 ## Must-know vocabulary
 
 - **Partition key (PK), Sort key (SK)** — primary key components.
-- **GSI** (Global Secondary Index) — alternative access pattern; like a separate index table copied from the main one.
-- **LSI** (Local Secondary Index) — alternative sort key within the same partition.
 - **Hot partition** — a single partition getting disproportionate traffic. The classic DynamoDB failure mode.
 - **Single-table design** — pattern of storing many entity types in one table.
 - **TTL** — built-in time-to-live for items; auto-deletes expired ones.
-- **DynamoDB Streams** — change-data-capture feed; trigger Lambdas on item changes.
 
 ---
 
