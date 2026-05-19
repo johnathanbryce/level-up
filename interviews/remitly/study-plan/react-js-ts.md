@@ -52,6 +52,85 @@ This is the "you said mutations" thing. React detects changes by **reference equ
 
 ---
 
+## JavaScript Fundamentals
+
+Daily-use territory. Every topic below is something you've used hundreds of times — goal is *speaking about it* fluently, not learning it.
+
+### `var` / `let` / `const`
+
+- **`var`** — function-scoped, hoisted with `undefined`, reassignable. Pre-ES6 default. Don't use in new code.
+- **`let`** — block-scoped, hoisted but in TDZ (throws on access before declaration), reassignable.
+- **`const`** — block-scoped, hoisted in TDZ. *Reference* is locked; object/array contents can still mutate.
+
+**TDZ** = Temporal Dead Zone. Window between scope-entry and the `let`/`const` declaration line where the binding exists but reading it throws.
+
+### Hoisting
+
+JS moves declarations to the top of their scope before execution.
+
+- **Function declarations** — hoisted fully (callable before their declaration line).
+- **`var`** — hoisted, initialized to `undefined`.
+- **`let` / `const`** — hoisted but uninitialized (TDZ).
+- **Function expressions** assigned to a variable — follow the variable's hoisting rules.
+
+### Closures
+
+A function remembers the variables of the scope it was defined in, even after that scope returns.
+
+**Classic gotcha:** `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))` logs `3, 3, 3` — all callbacks share one `i`. Switch to `let` for a fresh binding per iteration.
+
+### `this` binding — the 4 rules
+
+- **Default** — bare call: `this` = global (`window`) in non-strict, `undefined` in strict.
+- **Implicit** — method call (`obj.fn()`): `this` = the object.
+- **Explicit** — `fn.call(ctx)` / `fn.apply(ctx)` / `fn.bind(ctx)`.
+- **`new`** — `new Fn()`: `this` = the newly created object.
+
+**Arrow functions** don't bind `this` — they inherit from the enclosing scope. That's why they're the safe default for React handlers.
+
+### Event loop — microtasks vs macrotasks
+
+JS is single-threaded. Async work queues callbacks; the runtime drains them when the call stack is empty.
+
+- **Microtasks** — Promise `.then`, `queueMicrotask`. **Drained completely** before the next macrotask.
+- **Macrotasks** — `setTimeout`, `setInterval`, I/O, UI rendering.
+
+**Order:** sync code → all microtasks → one macrotask → all microtasks → next macrotask. This is why `await` resolves before `setTimeout(0)`.
+
+### Promises + async/await
+
+A Promise has three states: **pending → fulfilled / rejected.** Once settled, immutable.
+
+- **`Promise.all([...])`** — waits for all; rejects on first failure.
+- **`Promise.allSettled([...])`** — waits for all; never rejects.
+- **`Promise.race([...])`** — settles with the first to settle (resolve OR reject).
+- **`Promise.any([...])`** — settles with first fulfilled; rejects only if all reject.
+
+**`async` / `await`** is syntactic sugar. An `async` function always returns a Promise. `await` pauses inside the function until the Promise settles.
+
+### `==` vs `===`
+
+- **`===`** — strict equality, no type coercion. `1 === "1"` → `false`.
+- **`==`** — loose, coerces types. `1 == "1"` → `true`. Coercion rules are notoriously weird.
+
+**Rule:** always `===`. Canonical `==` exception: `x == null` matches both `null` and `undefined` in one check.
+
+### Pass-by-value vs reference
+
+- **Primitives** (string, number, boolean, null, undefined, symbol, bigint) — assigned/passed *by value*. Copies are independent.
+- **Objects** (incl. arrays and functions) — assigned/passed *by reference*. Multiple variables can point to the same object; mutating through one is visible through all.
+
+Root cause of half of all React bugs. React detects changes by **reference identity** — mutating in place misses the re-render.
+
+### Array methods — mutating vs non-mutating
+
+- **Mutate the original:** `push`, `pop`, `shift`, `unshift`, `splice`, `sort`, `reverse`.
+- **Return new:** `map`, `filter`, `slice`, `reduce`, `concat`, `flat`, `flatMap`, `find`, `some`, `every`.
+
+**Gotcha:** `sort` and `reverse` mutate. In React, clone first: `[...arr].sort()`.
+
+---
+
 ## TypeScript
 
 ### Why use TypeScript (canonical answer)
