@@ -79,14 +79,11 @@ A function remembers the variables of the scope it was defined in, even after th
 
 **Classic gotcha:** `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))` logs `3, 3, 3` — all callbacks share one `i`. Switch to `let` for a fresh binding per iteration.
 
-### `this` binding — the 4 rules
+### The `this` keyword
 
-- **Default** — bare call: `this` = global (`window`) in non-strict, `undefined` in strict.
-- **Implicit** — method call (`obj.fn()`): `this` = the object.
-- **Explicit** — `fn.call(ctx)` / `fn.apply(ctx)` / `fn.bind(ctx)`.
-- **`new`** — `new Fn()`: `this` = the newly created object.
+`this` refers to a function's **execution context** — *what called it*, not where it was defined. Its value isn't fixed; it's determined at call time. For a method call (`obj.fn()`), `this` is the object. For a bare function call, `this` is the global object (or `undefined` in strict mode). `bind`, `call`, and `apply` let you set it explicitly.
 
-**Arrow functions** don't bind `this` — they inherit from the enclosing scope. That's why they're the safe default for React handlers.
+**Arrow functions are the exception** — they don't have their own `this`; they inherit it from the surrounding scope. That's why they're the safe default for React handlers and callbacks.
 
 ### Event loop — microtasks vs macrotasks
 
