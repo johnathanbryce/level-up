@@ -250,17 +250,19 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-18 (AI Foundations kicked off as Sunday-bonus deviation; Remitly Priority Mode still active for 2026-05-19+ sessions)
+**Last Updated:** 2026-05-20 (Remitly recruiter screen PASSED — Phase 2 technical cram active, awaiting hiring manager decision; first Phase 2 LC drills delivered, Kadane's needs cold retry next session)
 
 ---
 
-### Active Interview Cycle — PRIORITY MODE ON
+### Active Interview Cycle — PHASE 2 (Awaiting Hiring Manager)
 
-**Remitly intro chat — Wednesday 2026-05-20.** Role TBD (likely AI software engineer track). Per `interviews/CLAUDE.md` Priority Mode rule: default session shape is algo warmup + bridge + **interview cram block** (replaces Block 2 roadmap topic) until the interview is logged and debriefed.
+**Remitly recruiter screen — Wednesday 2026-05-20: PASSED.** 20-min casual chat, no technical questions, positive vibe. Annie referral landed. "Why Remitly" V3 (Annie-first + AI hook + Caseway bridge) delivered cleanly. TMAY V2 had origin-block bloat → flagged + trimmed pre-call. Recruiter shared the tech-screen + 4-round loop process — captured in [interviews/remitly/study-plan/phase-2-technical-cram.md](interviews/remitly/study-plan/phase-2-technical-cram.md). Awaiting hiring manager to advance.
 
-**At session start**, Claude should announce the default: *"Remitly is active — defaulting to interview cram today. Say the word if you want regular pipeline instead."* John can opt back to regular pipeline at any session start, no friction.
+**Phase 1 cram (recruiter screen prep): COMPLETE 2026-05-20.** Five Phase 1 topic notes built and read across React/JS/TS, DynamoDB, AWS services, payments, message brokers. Two foundational concept corrections locked through cold-recall quiz: (1) eventual vs strong consistency (John had inverted), (2) single-table design ("deliberate access-pattern-first" not "dump everything"). Payments-domain trimmed mid-section by 60% per John's Tier-3 scoping call (FX locking / multi-leg / AML-KYC pushed to Phase 2 deferred queue).
 
-**Status of interview prep (2026-05-17):** scaffolding complete — [interviews/CLAUDE.md](interviews/CLAUDE.md) governance + [interviews/remitly/](interviews/remitly/) folder seeded (`CLAUDE.md`, `role.md`, `talking-points.md`, `interview-log.md`, `study-plan/README.md`). All files are stubs with TODO markers. **Next Remitly session**: company research (web search → fill `talking-points.md` Part 1) + start drafting "tell me about yourself" and "why Remitly."
+**Phase 2 cram (technical) — ACTIVE in parallel while awaiting HM.** Default session shape: algo warmup + bridge + **Phase 2 cram block** (LeetCode reps + STAR drafts). Top priorities: cold retry of Kadane's, scaffold `12-testing/`, draft 2+ STAR stories. Full plan in [interviews/remitly/study-plan/phase-2-technical-cram.md](interviews/remitly/study-plan/phase-2-technical-cram.md).
+
+**At session start**, Claude should announce: *"Remitly is still active — defaulting to Phase 2 cram today. Say the word if you want regular pipeline or AI Foundations from your parallel window instead."* John can opt to regular pipeline at any session start.
 
 When Remitly is `Closed` in [interviews/CLAUDE.md](interviews/CLAUDE.md), default reverts to the regular pipeline (Case Studies queue below).
 
@@ -272,7 +274,33 @@ When Remitly is `Closed` in [interviews/CLAUDE.md](interviews/CLAUDE.md), defaul
 **Current Sub-topic (regular pipeline now BIFURCATED — John picks at next session start):**
   - (A) **AI Foundations Chunk 3** — Cosine similarity and distance metrics (continuing fresh from today's stop)
   - (B) **Section 2 Case Studies — #1 URL Shortener** (suspended by today's deviation; remaining queue: Real-time Chat, Rate Limiter, Social Feed, Notification System → Failure Analysis → Capstone Prep → End-of-Section Capstone)
-**Last Session Summary (2026-05-17 → 2026-05-18, AI Foundations kick-off — Embeddings & Vector Concepts chunks 1-2 + `embeddings_demo.py`):** Section deviation — John burnt out from sys design case studies, asked to start AI Foundations as Sunday-bonus study. Approved with the agreement Remitly cram + sys design closure resume 2026-05-19 onwards.
+**Last Session Summary (2026-05-20, Remitly interview-day + Phase 2 LC kick-off):** Heavy interview-day. **Recruiter screen PASSED** — 20 min casual, no tech, positive vibe. Annie referral landed. Pre-call: TMAY V2 origin-bloat flagged and trimmed; "Why Remitly" V2/V3 polished (Annie-first + AI hook + Caseway bridge). Post-call: scaffolded `phase-2-technical-cram.md` with Remitly's stated interview process (T1 live LC + test cases + STAR; 15-min prep; 4-round loop — sys design, general coding, HM, frontend/product). Logged in [interviews/remitly/interview-log.md](interviews/remitly/interview-log.md).
+
+**Phase 1 cram completion (2026-05-19 → 2026-05-20):** Five topic notes built + quizzed under [interviews/remitly/study-plan/](interviews/remitly/study-plan/) — `react-js-ts.md` (React + JS fundamentals + TS — quizzed B+ across 7 Qs), `dynamodb-nosql.md` (quizzed B+ on 3 of 6 Qs before wrap), `aws-services.md`, `payments-domain.md` (trimmed 60% mid-section per John's scope-out), `message-brokers.md`. **Two mid-section conceptual corrections locked through cold-recall quiz:** (1) eventual vs strong consistency (John had inverted), (2) single-table design ("dump everything" → "deliberate access-pattern-first"). Both held under cold recall.
+
+**Phase 2 LC kick-off — running-state pattern (NEW formal lesson):**
+- **best_trade.py (Best Time to Buy/Sell — Python).** Pattern Lesson delivered pre-problem. John solved using the skeleton as reference, self-flagged he "wouldn't have invented cold." Full intuition walkthrough delivered post-solve: brute force O(n²) → reduction insight ("for any sell day, only the running MIN matters from the past"). Pattern *recognition* introduced, *mechanic* needs cold reps.
+- **max_segment.py (Kadane's, same-family drill, same session).** **Hit a wall.** Reset-on-negative mechanic was a steeper leap than the "same pattern family" framing implied. John struggled to derive the threshold condition (compared `arr[i]` to `running_sum` instead of `running_sum` to 0). Two rounds of progressive hints, then John self-called "I am so unbelievably lost." Full walkthrough delivered. **Claude calibration miss: undersold Kadane's difficulty curve — the SHAPE transfers but the extend-or-restart decision is genuinely a NEW mechanic.** Wrapped on high notes (interview passed + Best Trade locked + Phase 2 scaffolded) rather than grinding.
+
+**Persistent patterns this session:**
+- **POSITIVE: Tier-3 scoping instinct — 3rd documented occurrence** (payments-domain trim mid-section). Pattern locking. When John flags content as overbuilt for the actual interview target: RESEARCH + AGREE + ADJUST — don't insist.
+- **POSITIVE: Brevity / "wall of text" pushback — 2nd direct callout this session** (quiz wall-of-text format + AWS-recitation "no one would ask this"). John's calibration is sharp under interview-day pressure.
+- **POSITIVE: Annie referral surfaced** — recruiter referral is now a documented Phase 2 asset (lead with it whenever referenced; Annie's tenure should be confirmed before claiming culture vouching weight).
+- **POSITIVE: Two corrections-then-locked-cold-recall** (eventual/strong consistency, single-table design). Phase 1 quiz drilling worked as designed.
+- **NEW: Claude pedagogy calibration — pattern-transfer framing.** When transferring patterns, name what's the SAME (shape, structure) vs what's NEW (the decision logic / threshold condition) SEPARATELY. "Same pattern family" framing is too loose if the decision mechanic differs. Apply this in next pattern-transfer drill.
+
+**Files modified/created today:**
+- `interviews/remitly/study-plan/` — 5 Phase 1 topic notes + `phase-1-recruiter-screen.md` + `phase-2-technical-cram.md` rewritten + `README.md` updated
+- `interviews/remitly/interview-log.md` — recruiter screen debrief + interview process detail
+- `interviews/remitly/CLAUDE.md` — status, cram focus, session log
+- `interviews/CLAUDE.md` — Active Interviews table row updated
+- `01-algorithms/python/best_trade.py` — first Phase 2 LC (skeleton-referenced solve)
+- `01-algorithms/python/max_segment.py` — Kadane's drill (TODO state, cold retry next session)
+- `01-algorithms/CLAUDE.md` — Pattern Tracking + Session Log appended (running-state INTRODUCED)
+
+**Promised but deferred to next session:** scaffold `12-testing/` directory (CLAUDE.md placeholder + `pytest-basics.md` crash-course note). John explicitly agreed to add testing as a flexible-order standalone curriculum section — tied to Remitly T1's stated test-case requirement.
+
+**Prior session summary (2026-05-17 → 2026-05-18, AI Foundations kick-off — Embeddings & Vector Concepts chunks 1-2 + `embeddings_demo.py`):** Section deviation — John burnt out from sys design case studies, asked to start AI Foundations as Sunday-bonus study. Approved with the agreement Remitly cram + sys design closure resume 2026-05-19 onwards.
 
 **Algo (JS — overdue rotation, 7 Python in a row before this):** `first_solo_visitor.ts`. Frequency counting (count-then-inspect) drill rep. **A-/B+. MAJOR WIN: 3rd-recurrence verbose-if/else weak spot LOCKED — `(map.get(k) || 0) + 1` idiom written cold first-try unprompted** (flagged 2026-04-09, -04-18, -04-22 with handed-mid-session). Frequency counting (count-then-inspect) advances to **LOCKED** in Pattern Tracking. Cleanup target: lookup phase over-engineered (Array.from(entries).find + indexOf detour — relies on JS `Map` insertion-order spec; canonical is walk-original-array second pass). Reasoning question on insertion order: John punted ("just tell me") — taught the senior-flavor dependency-naming habit (when code relies on a non-obvious language-spec property, name it in a comment or refactor).
 
@@ -345,15 +373,22 @@ When Remitly is `Closed` in [interviews/CLAUDE.md](interviews/CLAUDE.md), defaul
 
 **Load Balancing & Networking review (2026-05-09). B/B+ overall.** Q1 LB algorithms B- (all 4 named; weighted + least connections missing use cases; consistent hashing conflated with stickiness — **3rd documented occurrence**). Q2 session stickiness B+/A- (right answer + Redis externalization bonus — senior-level move). Q3 reverse proxy vs LB B+ ("TLS invalidation" → should be TLS termination; LB-as-subset-of-proxy framing missed). Q4 API gateway B (named one-gateway-per-service anti-pattern but missed the more important one: business logic creep). Q5 stickiness failure mode B- (failure correct, trade-off implication not articulated). Q6 least connections B+ (right call, clean reasoning). Notes updated mid-quiz for all gaps. Algo warmup (same session): headliner_votes.py — Frequency Counting formal Pattern Lesson + first drill, B+. Bridge question: cache stampede single-hot-key — B+ (named lock-based recomputation correctly this time; Tier 1 gap showing real improvement).
 
-**Next Session Plan:** Per [interviews/CLAUDE.md](interviews/CLAUDE.md) Priority Mode rule — **Remitly cram day** (intro chat 2026-05-20, 2 days out). Default session shape: algo + bridge + **Remitly cram block** (company research → fill `talking-points.md` Part 1; draft "tell me about yourself"; draft "why Remitly"). John explicitly committed Mon onwards to Remitly cram + sys design closure after today's Sunday-bonus AI deviation.
+**Next Session Plan:** Remitly is still Active (awaiting hiring manager) — default session shape: algo warmup + bridge + **Phase 2 cram block** (LC reps + STAR drafts).
 
-**At session start**, Claude should announce: *"Remitly is active — defaulting to interview cram today. Say the word if you want regular pipeline instead."* John can opt back to regular pipeline at any session start.
+**Top priorities for next session:**
+1. **Cold retry of `max_segment.py` (Kadane's)** with the running-state framework + reset-on-negative mechanic now in toolkit. If clean → running-state pattern advances to MOSTLY LOCKED. If wobbly → another retry rep needed.
+2. **Scaffold `12-testing/` directory** (CLAUDE.md placeholder + `pytest-basics.md` crash-course note) — John explicitly agreed; flexible-order standalone curriculum section. Ties to Remitly T1's stated test-case requirement.
+3. **STAR story drafting** — at least 2 of 4 needed: Caseway scope-jump (CTO + dev left same week, John promoted to lead, no handover), AI/RAG ship (public search engine with rate limiting + BM25), failure/learning (TODO — John picks), cross-functional (TODO — interactions with PMs / business stakeholders).
 
-**If John opts back to regular pipeline, regular pipeline state is BIFURCATED — John picks:**
-- (A) **AI Foundations Chunk 3 — Cosine similarity and distance metrics.** Continuing fresh from today's stop. Concept ~10-15 min, then paired `cosine_similarity.py` micro-script computing pairwise similarity across the 5 sentences from `embeddings_demo.py` (should show bank/loan and dog/puppy as closest pairs, validating the semantic-similarity property hands-on). Then chunks 4-5 (dimensionality + model trade-offs) close the Embeddings & Vector Concepts sub-topic group.
-- (B) **Section 2 Case Studies — #1 URL Shortener** (suspended by today's deviation). Fire in cold, no re-study. ~60-90 min. Queue continues: Real-time Chat → Rate Limiter → Social Feed → Notification System → Failure Analysis (2-3 post-mortems) → Capstone Prep → End-of-Section Capstone.
+**At session start**, Claude should announce: *"Remitly is still active — defaulting to Phase 2 cram today. Say the word if you want regular pipeline or AI Foundations from your parallel window instead."*
 
-**Confirm the chunk-2 mental models stayed locked at AI session start** (one sentence each): (1) *"this section is about consuming pre-trained embedding models to convert text into meaning-vectors for search/retrieval — not LLMs, not training"*; (2) *"embedding output dimensions are fixed by the model, not by input length."* If either feels fuzzy, re-anchor before Chunk 3.
+**Confirm Kadane's mental model at session start** (one sentence): *"When do you reset vs extend the running sum?"* (Answer: reset when `running_sum < 0`; otherwise extend.) If fuzzy, re-anchor before the cold retry.
+
+**If John opts back to regular pipeline, state is BIFURCATED:**
+- (A) **AI Foundations Chunk 3 — Cosine similarity and distance metrics.** John started this in a parallel context window 2026-05-20 evening (separate from this Remitly-cram window). Check parallel-window state first if AI track is picked.
+- (B) **Section 2 Case Studies — #1 URL Shortener** (suspended 2026-05-18). Fire in cold, no re-study. ~60-90 min. Queue continues: Real-time Chat → Rate Limiter → Social Feed → Notification System → Failure Analysis → Capstone Prep → End-of-Section Capstone.
+
+**Confirm AI Foundations chunk-2 mental models if John picks AI track** (one sentence each): (1) *"this section is about consuming pre-trained embedding models to convert text into meaning-vectors for search/retrieval — not LLMs, not training"*; (2) *"embedding output dimensions are fixed by the model, not by input length."* If either feels fuzzy, re-anchor before Chunk 3.
 
 **Pre-Case-Study Review Phase final state (closed 2026-05-14):** 11 of 12 sections quizzed; Observability skipped (Tier 3, defensible per protocol). `interview-questions.md` complete and backfilled across all 11 quizzed sections — usable as active-recall practice resource through Case Studies + Capstone Prep.
 

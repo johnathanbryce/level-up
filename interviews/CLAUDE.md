@@ -12,7 +12,7 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Role | Date | Status | Next Action |
 |---------|------|------|--------|-------------|
-| [Remitly](remitly/) | TBD (likely AI SWE) | 2026-05-20 | Active | Company research + behavioral prep |
+| [Remitly](remitly/) | TBD (SDE II — 1 of 3 in Burnaby BC) | 2026-05-20 recruiter screen PASSED; tech screen TBD | Active — awaiting HM | Phase 2 LC drills + STAR story drafts |
 
 ---
 
