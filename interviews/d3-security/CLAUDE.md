@@ -30,11 +30,19 @@
 
 ## Current Position — READ THIS FIRST
 
-> **Last completed:** _Nothing yet — cram not started. Scaffolding only._
-> **Up next:** Lesson 1 — AI Engineering Foundations, Chunk 1 (Mon Block 1).
+> **Last completed:** Lesson 1 — AI Engineering Foundations (all 8 chunks + cold quiz + written exercise). B+/A- (~78%). Sunday 2026-05-24, running ahead of plan.
+> **Up next:** Lesson 2 — RAG Deep (2h, 9 chunks). Recommend fresh context window.
 > **Lesson plan source of truth:** [lesson-tracker.md](lesson-tracker.md) — read it before teaching anything.
 
 Any context window asked to "continue with D3" → read this section + the Current Position in [lesson-tracker.md](lesson-tracker.md) → pick up from the next chunk. Don't re-teach unless John flags it.
+
+**Open weak spots carried into Lesson 2+ (must surface in mock test):**
+- **Structured outputs as a FIX, not just a concept.** Knows-rule-doesn't-apply pattern surfaced in written exercise (Problem 2). On any scenario about "JSON parse failures" or "downstream needs structured data" → first answer is structured outputs / function calling + Pydantic schema, NOT eval-and-retry.
+- **System-prompt placement needs BOTH reasons** (trust boundary + prompt caching). Missed the caching half twice in one session.
+- **`max_tokens` cap** as a cost-control reflex.
+
+**Strengths locking:**
+- Tier-3 scoping pushback excellent today — trimmed three sections (7-part prompt list, 2-pattern structured-output split, router-speed details) and was right on all three. Continue to honor this instinct.
 
 ---
 
@@ -80,3 +88,4 @@ Deferred entirely: Round 2 (Hiring Manager) prep — only built out if Round 1 p
 | Date | Focus | Outcome / Notes |
 |------|-------|-----------------|
 | 2026-05-22 | Intake + full scaffolding | Directory + 4 base files + study-plan README + interview-format + all 8 topic-note scaffolds + logic-puzzles drill bank + mock-test drill bank + **lesson-tracker.md (teaching content + progress tracker)** created. Plan mode → execution. Cram window: Mon+Tue full days, Wed 1h review. Skip C#, defer Round 2 prep, all content in this dir. Initially I wrote 3 topic notes with full content — corrected to scaffolds + lesson-tracker per John's "you teach, I take notes" model. |
+| 2026-05-24 | Lesson 1 — AI Engineering Foundations (running ahead of plan, Sunday before Mon+Tue cram) | All 8 chunks taught + cold quiz + first end-of-lesson written exercise. **B+/A- (~78%), PASSED 75% bar.** Cold quiz: A-/B+ (4 of 5 correct cleanly, 1 partial on system-prompt-placement). Written exercise (D3-format 3-symptom diagnostic): B+/A-. Exercise filed at [study-plan/exercises/lesson-01-ai-engineering-foundations.md](study-plan/exercises/lesson-01-ai-engineering-foundations.md). Established `exercises/` directory pattern + locked the lesson-end protocol (cold quiz + written exercise) in lesson-tracker. Trimmed three Tier-3 sections by John's pushback (7-part prompt structure list memorization, 2-pattern structured-output split, router-speed-and-tooling). All three trims correct calls. **Two retrieval-under-pressure misses surfaced** (structured-outputs-as-fix, system-prompt caching reason) — both flagged in Open Weak Spots above. Tracking files updated, ready for fresh-window Lesson 2. |

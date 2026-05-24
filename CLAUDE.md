@@ -250,11 +250,35 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-20 (Remitly recruiter screen PASSED — Phase 2 technical cram active, awaiting hiring manager decision; first Phase 2 LC drills delivered, Kadane's needs cold retry next session)
+**Last Updated:** 2026-05-24 (D3 Security cram started Sunday — Lesson 1 of 8 complete at B+/A-. Remitly Phase 2 PAUSED during D3 cram window through 2026-05-27. Lesson 2 next in fresh window.)
 
 ---
 
-### Active Interview Cycle — PHASE 2 (Awaiting Hiring Manager)
+### Active Interview Cycle — D3 SECURITY (hard date Wed 2026-05-27) — TOP PRIORITY
+
+**D3 Security written test — Wednesday 2026-05-27, 3pm PT. In-person, 2hr, closed-book.** Multi-select + short structured answers across AI Engineering, Multi-Agent Governance, Prompt/Trust Controls + a large logical-reasoning section. Full intel: [interviews/d3-security/study-plan/interview-format.md](interviews/d3-security/study-plan/interview-format.md).
+
+**Cram plan:** Sun 2026-05-24 head-start (running ahead) + Mon-Tue full days + Wed 1h review. 8 lessons total, lesson-tracker is source of truth: [interviews/d3-security/lesson-tracker.md](interviews/d3-security/lesson-tracker.md). **Read [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) at session start before doing anything else** — that's where the granular state lives.
+
+**Lesson 1 — AI Engineering Foundations: COMPLETE 2026-05-24 (Sunday).** All 8 chunks taught + cold quiz + end-of-lesson written exercise. **B+/A- (~78%), passed 75% bar.** First written exercise filed at [interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md](interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md). Established `exercises/` directory pattern + locked the lesson-end protocol (cold quiz + written exercise) in lesson-tracker.
+
+**At session start** (when D3 is active), Claude should announce: *"D3 Security cram is active (hard date Wed 2026-05-27). Defaulting to D3 today. Say the word if you want Remitly Phase 2 or regular pipeline instead."*
+
+**D3 open weak spots carried into Lesson 2+ (must surface during mock test):**
+- **Structured outputs as a FIX, not just a concept.** On written exercise Problem 2 ("JSON parse failures downstream"), John reached for eval-agent + retry-loop instead of the structural fix (structured outputs / function calling + Pydantic schema). Owns the concept cold (Chunk 3 + cold quiz). Classic "knows-rule-doesn't-apply" pattern from sysdesign carrying into D3 prep. Drill: any scenario about "JSON parse failures" or "downstream needs structured data" → first answer is structured outputs.
+- **System-prompt placement reasoning** missed the prompt-caching half **twice in one session** (chunk 1 check + cold quiz Q1). Force BOTH reasons (trust boundary + caching) on any system-vs-user-prompt question.
+- **`max_tokens` cap** named in cold quiz, missed in exercise. Add to cost-control reflex.
+
+**D3 strengths locked this session:**
+- **Tier-3 scoping pushback excellent — three correct trims in one session.** John trimmed (1) the 7-part prompt-structure list memorization, (2) the 2-pattern structured-output split, (3) the router-speed + tooling section. All three correct calls. This is now ~6th+ occurrence of senior-flavor scope discipline across recent sessions — locked habit.
+
+**Pedagogy reminder for fresh windows:** John explicitly does NOT want to be over-taught on Tier-3 textbook depth. When teaching D3 lessons, default leaner — flag any concept as Tier 1 (must know cold) / Tier 2 (reason about) / Tier 3 (recognize, don't recite). John pushes back if anything drifts toward textbook trivia. Honor that instinct.
+
+---
+
+### Paused — Remitly Phase 2 (resume Thu 2026-05-28+ post-D3)
+
+**Remitly Phase 2 paused through 2026-05-27 during D3 cram window.** Top priorities still outstanding for Thursday onwards: (1) cold retry of `max_segment.py` (Kadane's running-state) — confirm mental model at session start; (2) scaffold `12-testing/` directory + `pytest-basics.md`; (3) STAR story drafts (Caseway scope-jump, AI/RAG ship, failure/learning, cross-functional — 2 of 4 minimum needed).
 
 **Remitly recruiter screen — Wednesday 2026-05-20: PASSED.** 20-min casual chat, no technical questions, positive vibe. Annie referral landed. "Why Remitly" V3 (Annie-first + AI hook + Caseway bridge) delivered cleanly. TMAY V2 had origin-block bloat → flagged + trimmed pre-call. Recruiter shared the tech-screen + 4-round loop process — captured in [interviews/remitly/study-plan/phase-2-technical-cram.md](interviews/remitly/study-plan/phase-2-technical-cram.md). Awaiting hiring manager to advance.
 

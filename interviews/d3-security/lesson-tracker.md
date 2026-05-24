@@ -6,9 +6,9 @@
 
 ## Current Position
 
-> **Last completed:** _Nothing yet — cram not started._
-> **Up next:** Lesson 1 — AI Engineering Foundations, Chunk 1 (Mon Block 1).
-> **Last session date:** _Pre-cram scaffolding only (2026-05-22)._
+> **Last completed:** Lesson 1 — AI Engineering Foundations (all 8 chunks + cold quiz + written exercise). B+/A- (~78%). Passed.
+> **Up next:** Lesson 2 — RAG Deep (2h, 9 chunks). Fresh context window recommended.
+> **Last session date:** 2026-05-24 (Sunday — running ahead of plan).
 >
 > **Update this section at the END of every teaching session.** Format: `Lesson N — <name>, Chunk K` for last completed; same for next up. Update the session log at bottom too.
 
@@ -70,7 +70,7 @@
 ## Lesson 1 — AI Engineering Foundations
 
 **Time:** ~1.5h (Mon Block 1)
-**Status:** Not started
+**Status:** COMPLETE (2026-05-24) — B+/A- (~78%). Passed. Exercise: [study-plan/exercises/lesson-01-ai-engineering-foundations.md](study-plan/exercises/lesson-01-ai-engineering-foundations.md)
 **Notes file:** [study-plan/ai-engineering-foundations.md](study-plan/ai-engineering-foundations.md)
 **Goal:** John can speak authoritatively about production LLM engineering — prompts, structured outputs, streaming, error handling, cost control, model routing, evaluation.
 
@@ -357,4 +357,4 @@ Update after every teaching session. Format: date | lessons covered | chunks com
 
 | Date | Lessons | Chunks | Weak spots | Next session |
 |---|---|---|---|---|
-| _ | _ | _ | _ | _ |
+| 2026-05-24 | Lesson 1 (AI Engineering Foundations) | 8/8 + cold quiz + written exercise. B+/A- (~78%) | (1) **Structured outputs as a FIX missed under applied pressure** — owns the concept (Chunk 3), reached for eval/retry instead of structured outputs+Pydantic on JSON-parse exercise problem. Classic "knows-rule-doesn't-apply" pattern from sysdesign carrying into D3 prep. (2) **Prompt caching as 2nd reason for system-prompt placement** — missed twice in one session (chunk 1 check + cold quiz Q1). (3) `max_tokens` cap — named in quiz, forgot in exercise. **Strength to name:** Tier-3 scoping pushback excellent — trimmed 7-part prompt list, 2-pattern structured-output split, router-speed details. Three correct calls in one session. | Lesson 2 (RAG Deep, 2h, 9 chunks) in fresh window. Confirm structured-outputs-as-fix reflex when revisiting Lesson 1 material. |

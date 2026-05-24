@@ -1,8 +1,8 @@
 # AI Engineering Foundations — My Notes
 
-> **Status:** Not yet taught.
+> **Status:** Lesson 1 complete (2026-05-24). Cold quiz + written exercise passed at B+/A- (~78%).
 > **Lesson plan:** [../lesson-tracker.md](../lesson-tracker.md) → AI Engineering Foundations section.
-> Take notes below as Claude teaches each chunk. Use whatever structure feels natural — these chunk headers are just an anchor.
+> **Written exercise:** [../exercises/lesson-01-ai-engineering-foundations.md](../exercises/lesson-01-ai-engineering-foundations.md).
 
 ---
 
@@ -27,7 +27,7 @@
     - Anthropic/OpenAI offer **prompt caching** - if you send the same prefix tokens repeatedly, you pay 90% less for the cached portion on cache hits
         - System prompt is stable across requests, its the perfect cache target
 
--- **Key vocab:**
+- **Key vocab:**
     - system prompt, user prompt, prompt caching, cache hit (the cached portion of input gets discount), stable vs. dynamic content (determines what is cacheable)
 
 ---
