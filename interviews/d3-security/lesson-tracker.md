@@ -19,8 +19,13 @@
 1. **Claude teaches from this file**, lesson by lesson, chunk by chunk.
 2. **John takes notes in the matching `study-plan/<topic>.md` scaffold** as Claude teaches each chunk.
 3. **Between chunks:** Claude asks the chunk's check question; John answers in his own words; Claude confirms or clarifies before moving on.
-4. **At end of each lesson:** Claude runs the end-of-lesson self-quiz (5-7 questions); John answers cold; Claude grades.
+4. **At end of each lesson:** Claude runs TWO assessments back-to-back —
+    - (a) **Cold quiz** — 5-7 questions, no notes, conversational answers
+    - (b) **Quick written exercise (<10 min)** — ONE structured-answer prompt in the D3 test format (bullets, pseudo-code, or architecture sketch). Drills the actual test format, not just recall. Claude drafts the prompt at lesson-end when context is fresh.
+    - **Storage:** written exercises live in [study-plan/exercises/](study-plan/exercises/) as `lesson-NN-<topic>.md`. Each file has prompt + answer space + grading section + re-drill items. Persistent record across the cram.
 5. **End of session:** update Current Position above + add session log entry below + flag any weak spots.
+
+**Granularity rule (locked 2026-05-24):** every chunk taught at one of three tiers — Tier 1 (must know cold, full mechanism), Tier 2 (reason about, no recitation), Tier 3 (mentioned, not drilled). Default to leaner; trim memorization of lists; favor concept fluency. John pushes back if anything drifts toward textbook trivia.
 
 **Resumability rule:** any context window says "let's continue with d3" → read CLAUDE.md → see Current Position pointer here → pick up from the next chunk. No re-teaching unless John flags it.
 
