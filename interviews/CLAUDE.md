@@ -12,7 +12,8 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Role | Date | Status | Next Action |
 |---------|------|------|--------|-------------|
-| [Remitly](remitly/) | TBD (SDE II — 1 of 3 in Burnaby BC) | 2026-05-20 recruiter screen PASSED; tech screen TBD | Active — awaiting HM | Phase 2 LC drills + STAR story drafts |
+| [D3 Security](d3-security/) | AI Engineer | 2026-05-27 3pm PT (in-person written test, 2hr) | **Active — hard date** | 2-day compressed cram Mon+Tue (AI eng depth + logic puzzles + D3 context) |
+| [Remitly](remitly/) | TBD (SDE II — 1 of 3 in Burnaby BC) | 2026-05-20 recruiter screen PASSED; tech screen TBD | Active — awaiting HM | Phase 2 LC drills + STAR story drafts (paused during D3 cram) |
 
 ---
 
@@ -20,7 +21,8 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Folder | Status |
 |---------|--------|--------|
-| Remitly | [remitly/](remitly/) | Active |
+| D3 Security | [d3-security/](d3-security/) | Active — hard date 2026-05-27 |
+| Remitly | [remitly/](remitly/) | Active — awaiting HM |
 
 ---
 
