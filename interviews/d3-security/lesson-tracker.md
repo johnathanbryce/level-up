@@ -181,10 +181,12 @@
 - Chunk 1: drop "O(n²)" / "25-35k context" specifics → qualitative "context explodes"
 - Chunk 2: keep 4 failure modes (testable list); drop "~60% at 10 steps" benchmark
 - Chunk 3: drop "~40% cheaper" → qualitative "fewer LLM calls + one HITL gate"
-- Chunk 4: drop PRM acronym; Reflexion + critic + self-refine as 1-line each
+- Chunk 4: **CONDENSED to 3 bullets (2026-05-25 John's call)** — reflection definition, critic vs self-refine, when-to-use. Done. No deeper teach.
 - Chunk 5: drop "20-40% vs 70-80%" and "60-70% latency cut" → qualitative
-- Chunk 6: drop "97M downloads / 5800 servers" counts; keep "USB-C of AI" + Linux Foundation
+- Chunk 6: **LEAN ~5 min (2026-05-25)** — what MCP is + what it standardizes + Linux Foundation Dec 2025 + governance/audit tie. Drop downloads/server-count trivia.
+- Chunk 7: **LEAN ~8 min (2026-05-25)** — 4 topologies as 1-liners + canonical failure mode (context inconsistency). Foundation for L4. Don't deep-dive any single topology.
 - Chunk 8: LangGraph is load-bearing for Morpheus; AutoGen/AG2 → name-drop only
+- Chunk 9: tiered-autonomy here OVERLAPS L4 Chunk 4 — teach fully here, then compress L4 Chunk 4 to the governance-specific angle (RBAC, time-boxing) at L4 time
 
 ### End-of-Lesson Quiz
 
@@ -228,6 +230,7 @@
 
 - Chunk 3: keep the 5-7 field list as bullets, don't elaborate per field — list IS the test
 - Chunk 4: drop "30 min low-risk / 5 min emergency" specifics → qualitative "time-boxed by risk tier"
+- **Chunk 4 OVERLAP with L3 Chunk 9 (tiered autonomy) — assume L3 Chunk 9 already taught (2026-05-25 sequencing)**: compress L4 Chunk 4 to the governance-specific angle (RBAC, time-boxed approval windows, escalation policy as a *written policy artifact*) — skip re-teaching the tier mapping itself
 
 ### End-of-Lesson Quiz
 
@@ -289,8 +292,12 @@
 
 ### Trim notes (apply at teach-time)
 
-- Chunk 3: drop "24 months / 60 specialists / RSA 2025 launch" trivia; KEEP pricing differentiator + L2-depth investigations + 800+ integrations (these are the load-bearing pitch points)
-- Chunk 4: trim Torq "95% T1 auto" specific stat; the load-bearing distinction is **agentic vs workflow** (Morpheus generates playbooks at runtime vs Tines/legacy SOAR runs ones you wrote)
+- **HEAVIER TRIM 2026-05-25 v2 (puzzles-are-50%-of-test intel from D3 engineer):** compress to **~15-20 min total**.
+  - Chunk 1 (ASOC definition): 1 sentence — "agentic AI doing T1-T3 SOC work"
+  - Chunk 2 (T1/T2/T3 SOC tiers): KEEP — useful framing for any agent-tier discussion
+  - Chunk 3 (Morpheus positioning): **1 line only** — "no per-alert / no token billing, L2-depth, 800+ integrations." Skip product trivia.
+  - Chunk 4 (competitive landscape): **SKIP** — won't appear on test; the "agentic vs workflow" distinction can come up naturally from agent-loop knowledge
+  - Chunk 5 (SIEM/SOAR/EDR/MDR/XDR vocab): KEEP FULL — vocab IS the test, highest yield in this lesson
 
 ### End-of-Lesson Quiz
 
@@ -321,10 +328,12 @@
 
 ### Trim notes (apply at teach-time)
 
-- Chunk 2: keep 7 stages + "$match first" rule; drop deeper $lookup mechanics — recognition not derivation
-- Chunk 3: ESR is highly testable, drill it; drop covered-query / index-intersection elaboration
-- Chunk 4: hashed vs range trade-off is the load-bearing bit; drop mongos router deep mechanics
-- Chunk 5: 1-line each on "Mongo wins / Postgres wins"; drop "polyglot persistence" jargon
+- **HEAVIER TRIM 2026-05-25 v2 (puzzles-are-50%-of-test intel):** target ~10-12 min total.
+  - Chunk 1 (vocab): KEEP, ~3 min — document/collection/BSON/embed vs reference
+  - Chunk 2 (aggregation): KEEP TIGHT — 7 stages as a list + "$match first" rule only
+  - Chunk 3 (ESR rule): KEEP — most testable item in this lesson
+  - Chunk 4 (sharding + replicas): **SKIP entirely** — not D3-relevant
+  - Chunk 5 (Mongo vs Postgres): **1-line each**, drop "polyglot persistence" jargon
 
 ### End-of-Lesson Quiz
 
@@ -353,7 +362,10 @@
 
 ### Trim notes (apply at teach-time)
 
-- Chunk 3: drop SigNoz / Langfuse / LangSmith comparison — name-drop only; the **4 LLM-specific metrics** (per-call cost, faithfulness, drift, hallucination rate) are the load-bearing list
+- **HEAVIER TRIM 2026-05-25 v2 (puzzles-are-50%-of-test intel):** target ~10 min total.
+  - Chunk 1 (reference architecture): **SKIP** — John already owns this from `02-system-design/notes/`. Don't re-teach.
+  - Chunk 2 (sys design crossover): **3 bullets** — rate limiting at gateway, idempotency for agent writes, circuit breaker for LLM provider. John already owns these.
+  - Chunk 3 (LLM-specific observability): KEEP — the 4 metrics (per-call cost, faithfulness, drift, hallucination rate) are the only net-new content in this lesson
 
 ### End-of-Lesson Quiz
 
