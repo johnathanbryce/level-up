@@ -250,7 +250,7 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-24 (D3 Security cram started Sunday — Lesson 1 of 8 complete at B+/A-. Remitly Phase 2 PAUSED during D3 cram window through 2026-05-27. Lesson 2 next in fresh window.)
+**Last Updated:** 2026-05-25 (D3 Security cram Day 1 of 2 — Lesson 2 of 8 complete at B+/A-. Mid-session chunk audit locked Tier markers (T1/T2/T3) + Trim notes across Lessons 3-8 in lesson-tracker.md. Remitly Phase 2 PAUSED through 2026-05-27. Lesson 3 (Agents + Tool Use, Morpheus-core, 10 chunks) next in fresh window.)
 
 ---
 
@@ -260,17 +260,30 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 **Cram plan:** Sun 2026-05-24 head-start (running ahead) + Mon-Tue full days + Wed 1h review. 8 lessons total, lesson-tracker is source of truth: [interviews/d3-security/lesson-tracker.md](interviews/d3-security/lesson-tracker.md). **Read [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) at session start before doing anything else** — that's where the granular state lives.
 
-**Lesson 1 — AI Engineering Foundations: COMPLETE 2026-05-24 (Sunday).** All 8 chunks taught + cold quiz + end-of-lesson written exercise. **B+/A- (~78%), passed 75% bar.** First written exercise filed at [interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md](interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md). Established `exercises/` directory pattern + locked the lesson-end protocol (cold quiz + written exercise) in lesson-tracker.
+**Lesson 1 — AI Engineering Foundations: COMPLETE 2026-05-24 (Sunday).** All 8 chunks + cold quiz + written exercise. **B+/A- (~78%), passed 75% bar.** Exercise: [interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md](interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md). Established `exercises/` directory + locked the lesson-end protocol.
+
+**Lesson 2 — RAG Deep: COMPLETE 2026-05-25 (Monday).** All 9 chunks + cold quiz (B/B+, 7 Qs) + written exercise (**B+/A- ~82-85%, passed**). Exercise: [interviews/d3-security/study-plan/exercises/lesson-02-rag-deep.md](interviews/d3-security/study-plan/exercises/lesson-02-rag-deep.md). **MID-SESSION CHUNK AUDIT** triggered by John's Chunk-6-too-granular pushback: plan-mode → trimmed L2 Chunks 6-9 in lesson-tracker + added **Tier markers (T1/T2/T3) + per-lesson Trim notes** to all of Lessons 3-8. Brevity rules in [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) extended from 3 to 4 (added "when in doubt, trim"). Audit-plan archived at `/Users/johnbryce/.claude/plans/stopping-here-is-this-buzzing-wind.md`.
 
 **At session start** (when D3 is active), Claude should announce: *"D3 Security cram is active (hard date Wed 2026-05-27). Defaulting to D3 today. Say the word if you want Remitly Phase 2 or regular pipeline instead."*
 
-**D3 open weak spots carried into Lesson 2+ (must surface during mock test):**
-- **Structured outputs as a FIX, not just a concept.** On written exercise Problem 2 ("JSON parse failures downstream"), John reached for eval-agent + retry-loop instead of the structural fix (structured outputs / function calling + Pydantic schema). Owns the concept cold (Chunk 3 + cold quiz). Classic "knows-rule-doesn't-apply" pattern from sysdesign carrying into D3 prep. Drill: any scenario about "JSON parse failures" or "downstream needs structured data" → first answer is structured outputs.
-- **System-prompt placement reasoning** missed the prompt-caching half **twice in one session** (chunk 1 check + cold quiz Q1). Force BOTH reasons (trust boundary + caching) on any system-vs-user-prompt question.
-- **`max_tokens` cap** named in cold quiz, missed in exercise. Add to cost-control reflex.
+**D3 open weak spots carried into Lesson 3+ (must surface during mock test):**
 
-**D3 strengths locked this session:**
-- **Tier-3 scoping pushback excellent — three correct trims in one session.** John trimmed (1) the 7-part prompt-structure list memorization, (2) the 2-pattern structured-output split, (3) the router-speed + tooling section. All three correct calls. This is now ~6th+ occurrence of senior-flavor scope discipline across recent sessions — locked habit.
+*From Lesson 1 (still open):*
+- **Structured outputs as a FIX, not just a concept.** Drill: any scenario about "JSON parse failures" or "downstream needs structured data" → first answer is structured outputs / function calling + Pydantic schema, NOT eval-and-retry.
+- **System-prompt placement reasoning** must include BOTH reasons (trust boundary + prompt caching).
+- **`max_tokens` cap** as a cost-control reflex.
+
+*From Lesson 2 (new 2026-05-25):*
+- **Vocabulary precision under cold pressure (PRIMARY GAP).** Mechanism is locked across all 9 RAG chunks; SPECIFIC NAMES slip — 4 canonical-name misses in one session: "recursive character splitter" (Q2 + Symptom B), **RRF / Reciprocal Rank Fusion** (Q4 + Symptom A), **atomic index swap** (Q3 + Symptom C), RAGAS spelled "RAGA" (Q6). Drill: in mock test, force vocabulary recall on every chunk's canonical names.
+- **73% retrieval-failures anchor stat** missed twice in one session (Chunk 1 check + Q1 cold recall). Lock the number.
+- **Content-in-wrong-slot pattern (NEW).** Symptom C (a) said "not entirely sure" while answering it fully in (b). On D3 written tests with labeled (a)/(b)/(c) slots, the grader scores per-slot. Always write SOMETHING in every labeled slot, even hedged.
+- **Narrowing "retrieval" to embedding only.** Q1 misframed retrieval failures as embedding-only when retrieval is the whole upstream stack (chunking + embedding + vector store + retrieval algorithm + reranking).
+
+**D3 strengths locked across sessions:**
+- **Tier-3 scoping pushback now a documented stable pattern — 5+ correct trims this cram.** Lesson 1 (3 sections) + Lesson 2 (reranking Chunk 6, RAGAS Chunk 8 trimmed twice). The Chunk 6 pushback today triggered the mid-session audit that locked Tier markers across Lessons 3-8. Senior-flavor interview triage. Going forward: when John flags content as overbuilt, RESEARCH + AGREE + ADJUST scope.
+- **Cross-chunk transfer holding** — re-embed cost named unprompted **4 times in one session** (Q3 + Q4 cold quiz, Symptom B + Symptom C written). Not pattern-matching — applying mechanism understanding.
+- **Real-knowledge senior signal on pgvector hybrid gotcha** (Symptom A of Lesson 2 written exercise). Knew pgvector lacks native hybrid/RRF (unlike ES/Qdrant/Weaviate), would need manual implementation with Postgres FTS. Caseway-anchored real knowledge, not memorized.
+- **Honest "I don't know" pattern stable** across sessions (Symptom C-a today + Q2 cold quiz "couldn't name it but described it" + 2026-04-27 TTL calibration). Conversationally senior. Add the "but I'll try anyway" companion on written tests.
 
 **Pedagogy reminder for fresh windows:** John explicitly does NOT want to be over-taught on Tier-3 textbook depth. When teaching D3 lessons, default leaner — flag any concept as Tier 1 (must know cold) / Tier 2 (reason about) / Tier 3 (recognize, don't recite). John pushes back if anything drifts toward textbook trivia. Honor that instinct.
 
