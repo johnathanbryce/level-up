@@ -229,8 +229,7 @@
 ### Trim notes (apply at teach-time)
 
 - Chunk 3: keep the 5-7 field list as bullets, don't elaborate per field — list IS the test
-- Chunk 4: drop "30 min low-risk / 5 min emergency" specifics → qualitative "time-boxed by risk tier"
-- **Chunk 4 OVERLAP with L3 Chunk 9 (tiered autonomy) — assume L3 Chunk 9 already taught (2026-05-25 sequencing)**: compress L4 Chunk 4 to the governance-specific angle (RBAC, time-boxed approval windows, escalation policy as a *written policy artifact*) — skip re-teaching the tier mapping itself
+- **Chunk 4 SKIPPED ENTIRELY 2026-05-25 (John's call — 9th Tier-3 scoping call this cram):** tier mapping covered in L3 Chunk 9; RBAC + time-boxed approval covered in L3 Chunk 9 AND L4 Chunk 2; "policy as written artifact" is org/process flavor, not test mechanism. Skip on subsequent re-runs too.
 
 ### End-of-Lesson Quiz
 
