@@ -274,10 +274,9 @@
 
 ## Lesson 6 — SOC Domain Primer
 
-**Time:** ~45m (Tue Block 3)
-**Status:** Not started
-**Notes file:** [study-plan/soc-domain-primer.md](study-plan/soc-domain-primer.md)
-**Goal:** Engage credibly about Morpheus + the SOC space. Not deep — enough to discuss intelligently.
+**Time:** ~3-5m (Tue Block 3 — heavily skipped)
+**Status:** SKIPPED 2026-05-25 (John's call — security vocab not relevant for AI engineer written test). Notes file deleted.
+**Goal (residual):** Carry forward "ASOC = AI generates playbooks autonomously vs SOAR = AI runs static playbooks you wrote." Everything else dropped.
 
 ### Chunks
 
@@ -291,12 +290,12 @@
 
 ### Trim notes (apply at teach-time)
 
-- **HEAVIER TRIM 2026-05-25 v2 (puzzles-are-50%-of-test intel from D3 engineer):** compress to **~15-20 min total**.
+- **NEARLY SKIPPED 2026-05-25 v3 (John's 10th Tier-3 scoping call — security vocab not relevant for AI engineer written test):** compress to **~3-5 min total**.
   - Chunk 1 (ASOC definition): 1 sentence — "agentic AI doing T1-T3 SOC work"
-  - Chunk 2 (T1/T2/T3 SOC tiers): KEEP — useful framing for any agent-tier discussion
-  - Chunk 3 (Morpheus positioning): **1 line only** — "no per-alert / no token billing, L2-depth, 800+ integrations." Skip product trivia.
-  - Chunk 4 (competitive landscape): **SKIP** — won't appear on test; the "agentic vs workflow" distinction can come up naturally from agent-loop knowledge
-  - Chunk 5 (SIEM/SOAR/EDR/MDR/XDR vocab): KEEP FULL — vocab IS the test, highest yield in this lesson
+  - Chunk 2 (T1/T2/T3 SOC tiers): 1 sentence — "T1 triage, T2 investigate+respond, T3 hunt+optimize"
+  - Chunk 3 (Morpheus positioning): **1 line only** — "no per-alert / no token billing, L2-depth, 800+ integrations"
+  - Chunk 4 (competitive landscape): **SKIP**
+  - Chunk 5 (SIEM/SOAR/EDR/MDR/XDR vocab): **SKIP** — only carryover is "**ASOC vs SOAR** = agentic vs static playbooks." That's already covered by L3 agent material.
 
 ### End-of-Lesson Quiz
 

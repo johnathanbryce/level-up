@@ -99,7 +99,6 @@ Deferred entirely: Round 2 (Hiring Manager) prep — only built out if Round 1 p
 - [study-plan/agents-and-tool-use.md](study-plan/agents-and-tool-use.md) — John's hand-notes scaffold
 - [study-plan/multi-agent-governance-light.md](study-plan/multi-agent-governance-light.md) — John's hand-notes scaffold
 - [study-plan/prompt-safety-essentials.md](study-plan/prompt-safety-essentials.md) — John's hand-notes scaffold
-- [study-plan/soc-domain-primer.md](study-plan/soc-domain-primer.md) — John's hand-notes scaffold
 - [study-plan/mongodb-essentials.md](study-plan/mongodb-essentials.md) — John's hand-notes scaffold
 - [study-plan/system-integration-llm.md](study-plan/system-integration-llm.md) — John's hand-notes scaffold
 

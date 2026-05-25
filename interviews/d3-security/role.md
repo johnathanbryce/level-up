@@ -122,10 +122,9 @@ Ordered for the 2-day window (Mon + Tue):
 4. **`logic-puzzles.md`** — 18-puzzle bank across 10 categories; drill 6/day
 5. **`multi-agent-governance-light.md`** — concept-level governance
 6. **`prompt-safety-essentials.md`** — 4-5 concepts (not OWASP cram)
-7. **`soc-domain-primer.md`** — D3 / Morpheus / ASOC context
-8. **`mongodb-essentials.md`** — vocab pass (30-45 min)
-9. **`system-integration-llm.md`** — reference architectures (leverages existing sysdesign notes)
-10. **Mock test** Tuesday afternoon
+7. **`mongodb-essentials.md`** — high-level NoSQL primer
+8. **`system-integration-llm.md`** — reference architectures (leverages existing sysdesign notes)
+9. **Mock test** Tuesday afternoon
 
 ---
 
