@@ -6,13 +6,34 @@
 
 ## Current Position
 
-> **Last completed:** Lesson 2 — RAG Deep (all 9 chunks + cold quiz + written exercise). Cold quiz B/B+; written exercise B+/A- (~82-85%). Passed.
-> **Up next:** Lesson 3 — Agents + Tool Use (1.5h, 10 chunks). **Morpheus-core, highest-leverage lesson.** Fresh context window recommended.
-> **Last session date:** 2026-05-25 (Monday).
+> **All teaching content COMPLETE for the cram. Mon 2026-05-25.** Sessions wrapped ~2:53 PM (heavy fatigue, John taking break).
 >
-> **Mid-session chunk audit applied 2026-05-25:** Lessons 3-8 now have **Tier markers (T1/T2/T3)** + **per-lesson Trim notes** subsections. Lesson 2 Chunks 6-9 trimmed. Honor those at teach-time.
+> **Lessons taught (notes in `study-plan/*.md`):**
+> - L1 AI Engineering Foundations — Sun 2026-05-24 — quiz + exercise PASSED B+/A-
+> - L2 RAG Deep — Mon AM — quiz + exercise PASSED B+/A-
+> - L3 Agents + Tool Use — Mon afternoon — **all 10 chunks taught, notes audited + format-standardized. Cold quiz + written exercise DEFERRED to Tuesday Mock #1 review.**
+> - L4 Multi-Agent Governance — Mon afternoon — **3 of 4 chunks taught (Chunk 4 SKIPPED entirely, overlap with L3 Chunk 9 + 9th Tier-3 scoping call). No quiz/exercise.**
+> - L5 Prompt Safety Essentials — Mon afternoon — **all 4 chunks taught. No quiz/exercise.**
+> - L6 SOC Primer — **SKIPPED ENTIRELY (10th Tier-3 scoping call). Notes file deleted; references removed from CLAUDE.md / README / role.md / this file.** Carryover: 1 line ("ASOC vs SOAR = agentic vs static").
+> - L7 MongoDB Essentials — **REWRITTEN as general high-level NoSQL primer.** Vocab + 2 rules ($match first, ESR) + when-each-wins. No quiz needed.
+> - L8 System Integration LLM — **All 3 chunks in notes file** (Chunk 1 reference architecture written into notes; Chunks 2+3 already had content).
 >
-> **Update this section at the END of every teaching session.** Format: `Lesson N — <name>, Chunk K` for last completed; same for next up. Update the session log at bottom too.
+> **Tuesday plan (pure drill + assessment day):**
+> 1. **Logic puzzles 1-6** (Rope Burning, Two Guards/Doors, Zebra, Candy Weight, Fruit Basket, Egg Drop) — engineer-verified bank in `study-plan/logic-puzzles.md`. ~50% of test per LinkedIn intel.
+> 2. **Mock Test #1** — 90 min closed-book paper (`study-plan/mock-test.md`).
+> 3. Patch weakest 2 areas from Mock #1.
+> 4. Vocab reflex pass.
+>
+> **Wed AM (~1h):** Vocab reflex + Mock #2 + final polish + travel buffer for 3pm interview.
+>
+> **Notes-file audit complete 2026-05-25:** L1, L2, L3 audited for bloat + format standardized. Mongo rewritten. SOC deleted. All lean to test surface only.
+>
+> **Major intel update locked 2026-05-25:** D3 engineer via LinkedIn said logic puzzles were ~50% of the entire test (~18 months ago). Engineer's 6 puzzles installed as PRIMARY drill bank. Puzzle priority sharply elevated for Tuesday.
+>
+> **Pedagogy patterns locked this cram:**
+> - **10 correct Tier-3 scoping calls** — John's instinct is iron-locked. When he flags content as not test-relevant, agree + adjust scope.
+> - **"Teach what works, not what doesn't"** memory created at `/Users/johnbryce/.claude/projects/-Users-johnbryce-dev-level-up/memory/feedback_teach_what_works.md`. No comparison tables enumerating legacy options to dunk on.
+> - **Brevity-first by default:** bullets not paragraphs, ~10-15 lines per chunk max, drop benchmark percentages unless they're industry anchors.
 
 ---
 
@@ -407,3 +428,4 @@ Update after every teaching session. Format: date | lessons covered | chunks com
 |---|---|---|---|---|
 | 2026-05-24 | Lesson 1 (AI Engineering Foundations) | 8/8 + cold quiz + written exercise. B+/A- (~78%) | (1) **Structured outputs as a FIX missed under applied pressure** — owns the concept (Chunk 3), reached for eval/retry instead of structured outputs+Pydantic on JSON-parse exercise problem. Classic "knows-rule-doesn't-apply" pattern from sysdesign carrying into D3 prep. (2) **Prompt caching as 2nd reason for system-prompt placement** — missed twice in one session (chunk 1 check + cold quiz Q1). (3) `max_tokens` cap — named in quiz, forgot in exercise. **Strength to name:** Tier-3 scoping pushback excellent — trimmed 7-part prompt list, 2-pattern structured-output split, router-speed details. Three correct calls in one session. | Lesson 2 (RAG Deep, 2h, 9 chunks) in fresh window. Confirm structured-outputs-as-fix reflex when revisiting Lesson 1 material. |
 | 2026-05-25 | Lesson 2 (RAG Deep) | 9/9 + cold quiz (B/B+, 7 Qs) + written exercise (B+/A-, ~82-85%). MID-SESSION AUDIT: trimmed L2 Chunks 6-9, added Tier markers + Trim notes to L3-L8 in lesson-tracker, extended brevity rules in D3 CLAUDE.md. | (1) **Vocabulary precision under cold pressure (PRIMARY)** — mechanism locked across all 9 chunks; specific names slip: recursive character splitter (Q2 + Symptom B), RRF (Q4 + Symptom A), atomic index swap (Q3 + Symptom C), RAGAS spelling "RAGA" (Q6). 4 vocab misses, all canonical names. (2) **73% retrieval-failures stat** missed twice (Chunk 1 check + Q1 cold). (3) **NEW: content-in-wrong-slot** — Symptom C (a) said "not sure" while answering it fully in (b). Test-format mechanical: write SOMETHING in every labeled slot. (4) **Narrowing "retrieval" to embedding only** — Q1 misframed retrieval failures as embedding-only when retrieval is the whole upstream stack. STRENGTHS: real-knowledge senior signal on pgvector hybrid gotcha (Symptom A — knew pgvector lacks native RRF, Caseway-anchored), cross-chunk transfer holding (re-embed cost named 4× unprompted), Tier-3 scoping pattern now stable (5+ correct trims). | Lesson 3 (Agents + Tool Use, 1.5h, 10 chunks) in fresh window. Morpheus-core. Confirm vocab reflex: name canonical chunk concepts cold before teaching new material. |
+| 2026-05-25 (PM) | Lessons 3-8 marathon | L3 (10 chunks, taught + audited + format-standardized; cold quiz + written exercise deferred to Tuesday Mock #1 review block). L4 Chunks 1-3 (Chunk 4 SKIPPED, 9th Tier-3 call). L5 all 4 chunks. L6 SKIPPED entirely (10th Tier-3 call, file deleted). L7 rewritten as general NoSQL primer. L8 Chunk 1 reference architecture written into notes. Major audit: trimmed + format-standardized L1, L2, L3 (~50 lines bloat removed). NEW logic puzzle bank installed (engineer-verified 6) replacing 18-puzzle bank. | (1) **D3 engineer LinkedIn intel — puzzles were ~50% of test 18 months ago**; sharply elevates Tuesday puzzle priority. (2) **10 documented Tier-3 scoping calls this cram** — pattern iron-locked. (3) **"Teach what works, not what doesn't"** general-purpose feedback memory created (`feedback_teach_what_works.md` in memory dir). (4) Cold quizzes + written exercises for L3/L4/L5 deferred — batched into Tuesday Mock #1 review block per fatigue. Strengths-locked: senior reframes ("not restriction → control + accountability" on governance Q1), cross-chunk transfer ("isolation of damages from prompt injection AND hallucinated tools" + L3→L4→L5 RBAC threading), composable patterns insight on multi-agent topologies. | **Tuesday 2026-05-26 = pure drill day.** Engineer's 6 puzzles AM+midday (Rope, Guards, Candy first; then Zebra, Fruit, Egg Drop). Mock #1 (90m closed-book) afternoon. Patch weak spots. Wed AM = vocab reflex + Mock #2 + travel buffer. |

@@ -250,7 +250,7 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-25 (D3 Security cram Day 1 of 2 — Lesson 2 of 8 complete at B+/A-. Mid-session chunk audit locked Tier markers (T1/T2/T3) + Trim notes across Lessons 3-8 in lesson-tracker.md. Remitly Phase 2 PAUSED through 2026-05-27. Lesson 3 (Agents + Tool Use, Morpheus-core, 10 chunks) next in fresh window.)
+**Last Updated:** 2026-05-25 PM (D3 Security cram — **ALL TEACHING CONTENT COMPLETE.** L1-L5 + L7-L8 taught + notes audited (L6 SKIPPED entirely). L3/L4/L5 cold quizzes + written exercises DEFERRED to Tuesday Mock #1 review block per fatigue. John signed off at 2:53 PM Monday for heavy break. **Tuesday 2026-05-26 = pure drill day:** 6 engineer-verified logic puzzles + Mock #1 + patching weakest. Wed AM = vocab reflex + Mock #2 + travel buffer for 3pm interview. Remitly Phase 2 still PAUSED through 2026-05-27. **If fresh window asked to "continue D3":** read [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) Current Position block + [interviews/d3-security/lesson-tracker.md](interviews/d3-security/lesson-tracker.md) Current Position block. Do NOT re-teach — content is complete. Confirm drill block (puzzles vs Mock #1) and jump directly into that.)
 
 ---
 
@@ -264,7 +264,9 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 **Lesson 2 — RAG Deep: COMPLETE 2026-05-25 (Monday).** All 9 chunks + cold quiz (B/B+, 7 Qs) + written exercise (**B+/A- ~82-85%, passed**). Exercise: [interviews/d3-security/study-plan/exercises/lesson-02-rag-deep.md](interviews/d3-security/study-plan/exercises/lesson-02-rag-deep.md). **MID-SESSION CHUNK AUDIT** triggered by John's Chunk-6-too-granular pushback: plan-mode → trimmed L2 Chunks 6-9 in lesson-tracker + added **Tier markers (T1/T2/T3) + per-lesson Trim notes** to all of Lessons 3-8. Brevity rules in [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) extended from 3 to 4 (added "when in doubt, trim"). Audit-plan archived at `/Users/johnbryce/.claude/plans/stopping-here-is-this-buzzing-wind.md`.
 
-**At session start** (when D3 is active), Claude should announce: *"D3 Security cram is active (hard date Wed 2026-05-27). Defaulting to D3 today. Say the word if you want Remitly Phase 2 or regular pipeline instead."*
+**At session start** (when D3 is active), Claude should announce: *"D3 Security cram is active (hard date Wed 2026-05-27). All teaching content COMPLETE as of Mon 2026-05-25 PM. Tuesday is pure drill day — 6 engineer-verified logic puzzles + Mock #1 + patching. Where do you want to start: puzzles, Mock #1, or vocab reflex pass? Say 'regular pipeline' or 'Remitly Phase 2' if you want something else."*
+
+**Critical reminder for fresh windows:** Do NOT re-teach any lesson content. Everything taught Sun-Mon. New focus is drill + assess. Trying to re-teach material would burn John's bandwidth right before the test.
 
 **D3 open weak spots carried into Lesson 3+ (must surface during mock test):**
 

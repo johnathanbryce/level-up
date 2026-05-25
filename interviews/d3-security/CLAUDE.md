@@ -30,11 +30,32 @@
 
 ## Current Position — READ THIS FIRST
 
-> **Last completed:** Lesson 2 — RAG Deep (all 9 chunks + cold quiz + written exercise). Cold quiz B/B+, written exercise B+/A- (~82-85%). Monday 2026-05-25. Mid-session chunk audit ran: Lessons 3-8 now have Tier markers (T1/T2/T3) + per-lesson Trim notes embedded in [lesson-tracker.md](lesson-tracker.md). Honor those at teach-time.
-> **Up next:** Lesson 3 — Agents + Tool Use (1.5h, 10 chunks). **Morpheus-core, highest-leverage D3 lesson.** Fresh context window recommended.
-> **Lesson plan source of truth:** [lesson-tracker.md](lesson-tracker.md) — read it before teaching anything.
+> **ALL TEACHING CONTENT COMPLETE FOR THE CRAM.** Mon 2026-05-25 ~2:53 PM. John taking heavy break — heavy fatigue. May resume Mon evening if he prompts, otherwise Tuesday morning fresh.
+>
+> **Tuesday 2026-05-26 = pure drill + assessment day. No new teaching content.**
+>
+> **What's done:**
+> - L1, L2, L3 — taught + notes audited + format-standardized. L1+L2 quizzed & passed B+/A-. L3 cold quiz + written exercise DEFERRED to Tuesday Mock #1 review block.
+> - L4 — Chunks 1-3 taught (Chunk 4 SKIPPED, 9th Tier-3 call). No quiz/exercise.
+> - L5 — All 4 chunks taught. No quiz/exercise.
+> - L6 — **SKIPPED ENTIRELY** (10th Tier-3 call — security vocab not relevant for AI engineer test). File deleted; references purged from CLAUDE.md / lesson-tracker / README / role.md.
+> - L7 — Rewritten as general high-level NoSQL primer (vocab + 2 rules + when-each-wins).
+> - L8 — All 3 chunks in notes file including reference architecture in Chunk 1.
+>
+> **What's planned for Tuesday:**
+> 1. **Logic puzzles 1-6** from `study-plan/logic-puzzles.md` — **engineer-verified bank** (D3 engineer via LinkedIn said puzzles were ~50% of test 18 months ago). Rope Burning, Two Guards/Doors, Zebra, Candy Weight, Fruit Basket, Egg Drop.
+> 2. **Mock Test #1** — 90 min closed-book paper (`study-plan/mock-test.md`).
+> 3. Patch weakest 2 areas from Mock #1.
+> 4. Vocab reflex pass on all 8 lessons.
+>
+> **Wed AM (~1h):** Vocab reflex + Mock #2 (75 min compressed) + final polish + travel buffer for 3pm interview at 300-1075 W Georgia St.
+>
+> **Lesson plan source of truth:** [lesson-tracker.md](lesson-tracker.md) — has full Current Position block at top with everything described above.
 
-Any context window asked to "continue with D3" → read this section + the Current Position in [lesson-tracker.md](lesson-tracker.md) → pick up from the next chunk. Don't re-teach unless John flags it.
+**If John prompts "continue with D3" / "let's drill puzzles" / "let's do Mock #1":**
+1. Read this section + the Current Position in [lesson-tracker.md](lesson-tracker.md).
+2. Confirm he's resuming — don't re-teach material. Jump straight to whatever drill block he names (puzzles → walk Puzzle 1, or Mock #1 → present the mock as paper-grade closed-book exercise).
+3. No new teaching content. The cram is content-complete.
 
 **TEACHING BREVITY RULE (D3 cram only — locked 2026-05-24 Lesson 2 Chunk 1):**
 - 8 lessons × multiple chunks each × hand-written notes = brevity is non-negotiable.
@@ -111,3 +132,4 @@ Deferred entirely: Round 2 (Hiring Manager) prep — only built out if Round 1 p
 | 2026-05-22 | Intake + full scaffolding | Directory + 4 base files + study-plan README + interview-format + all 8 topic-note scaffolds + logic-puzzles drill bank + mock-test drill bank + **lesson-tracker.md (teaching content + progress tracker)** created. Plan mode → execution. Cram window: Mon+Tue full days, Wed 1h review. Skip C#, defer Round 2 prep, all content in this dir. Initially I wrote 3 topic notes with full content — corrected to scaffolds + lesson-tracker per John's "you teach, I take notes" model. |
 | 2026-05-24 | Lesson 1 — AI Engineering Foundations (running ahead of plan, Sunday before Mon+Tue cram) | All 8 chunks taught + cold quiz + first end-of-lesson written exercise. **B+/A- (~78%), PASSED 75% bar.** Cold quiz: A-/B+ (4 of 5 correct cleanly, 1 partial on system-prompt-placement). Written exercise (D3-format 3-symptom diagnostic): B+/A-. Exercise filed at [study-plan/exercises/lesson-01-ai-engineering-foundations.md](study-plan/exercises/lesson-01-ai-engineering-foundations.md). Established `exercises/` directory pattern + locked the lesson-end protocol (cold quiz + written exercise) in lesson-tracker. Trimmed three Tier-3 sections by John's pushback (7-part prompt structure list memorization, 2-pattern structured-output split, router-speed-and-tooling). All three trims correct calls. **Two retrieval-under-pressure misses surfaced** (structured-outputs-as-fix, system-prompt caching reason) — both flagged in Open Weak Spots above. Tracking files updated, ready for fresh-window Lesson 2. |
 | 2026-05-25 | Lesson 2 — RAG Deep (Mon Block 2, on schedule) | All 9 chunks taught + cold quiz (B/B+, 7 questions) + written exercise (D3-format 3-symptom diagnostic — **B+/A- ~82-85%, PASSED**). Exercise filed at [study-plan/exercises/lesson-02-rag-deep.md](study-plan/exercises/lesson-02-rag-deep.md). **MID-SESSION CHUNK AUDIT** triggered by John's "is Chunk 6 too granular?" pushback: ran plan-mode audit, trimmed Lesson 2 Chunks 6-9, added **Tier markers (T1/T2/T3) + per-lesson Trim notes** to all of Lessons 3-8 in lesson-tracker.md, extended brevity rules in this file (3 → 4 rules including "when in doubt, trim"). **Two stubborn patterns surfaced (1+1=2 across cold quiz + written exercise):** (1) **vocabulary precision under cold pressure** — mechanism locked, specific names slip (recursive character splitter, RRF, atomic index swap, RAGAS spelling — 4 names missed across the session); (2) **NEW content-in-wrong-slot** on labeled (a)/(b)/(c) written-test format. **Strong wins:** real-knowledge senior signal on pgvector hybrid gotcha (knew it lacks native RRF — Caseway-anchored), cross-chunk transfer holding across cold quiz + written (re-embed cost named 4× unprompted), Tier-3 scoping instinct now a documented stable pattern (5+ correct trims this cram). Tracking files updated, fresh window recommended for Lesson 3. |
+| 2026-05-25 (PM) | Lessons 3-8 marathon + full notes audit + intel-driven re-plan | **All remaining teaching content done in one long session.** L3 (10 chunks) taught + notes audited + format-standardized; cold quiz + written exercise deferred to Tuesday Mock #1 review block per fatigue. L4 Chunks 1-3 taught (Chunk 4 SKIPPED — 9th Tier-3 scoping call, overlap with L3 Chunk 9 + L4 Chunks 1-2). L5 all 4 chunks taught. **L6 SKIPPED ENTIRELY** (10th Tier-3 call — security vocab not relevant for AI engineer written test; `soc-domain-primer.md` deleted + references purged from 4 files). L7 rewritten as general high-level NoSQL primer (vocab + 2 rules + when-each-wins). L8 all 3 chunks including reference architecture in Chunk 1. **Major audit work:** L1, L2, L3 notes files audited for bloat + format-standardized (~50 lines bloat removed across the 3). **NEW logic puzzle bank** installed from D3 engineer LinkedIn intel (engineer said puzzles were ~50% of test 18 months ago) — 6 verified puzzles replacing 18-puzzle bank. **"Teach what works, not what doesn't" general-purpose feedback memory created** at `feedback_teach_what_works.md`. **Patterns locked this session:** 10 documented Tier-3 scoping calls this cram → instinct iron-locked; senior reframes on governance Q1 + Q2; clean cross-chunk transfer L3→L4→L5 (prompt injection + hallucinated tools + RBAC + agent scope); composable-patterns insight on multi-agent topologies. **John signed off at 2:53 PM** for heavy break — Tuesday is pure drill day (6 puzzles + Mock #1 + patching). |
