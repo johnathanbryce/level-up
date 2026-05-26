@@ -232,7 +232,31 @@ Update after each drill session. Helps you see which categories need more reps.
 
 | Date | Puzzle | Category | Result (cold W / cold L / look-up) | Notes |
 |---|---|---|---|---|
-| _ | _ | _ | _ | _ |
+| 2026-05-26 | Engineer #1 Rope Burning | Time / parallel | **Partial (C+/B-)** | Got move 1 (both ends rope-2 + one end rope-1) and the burn-both-ends insight. Stopped at 30 min, didn't chain — missed move 2 (light rope-1's other end at t=30 → halves remaining 30 to 15 → 45 total). **Lock:** burn-both-ends is a CHAINABLE halving operator, not one-shot. |
+| 2026-05-26 | Engineer #2 Two Guards/Doors | Knights & knaves | **Partial (C+)** | Right instinct (route through OTHER guard) but neither formulation worked. Attempt 1 ("ask if they always tell truth") = uninformative. Attempt 2 ("opposite door") = no meta-routing. **Also flagged interviewer-prompt inconsistency: I said "yes/no question" but canonical needs "which door."** Gave yes/no-compatible version: *"If I asked the other guard whether THIS door leads to freedom, would they say YES?"* → invert. |
+| 2026-05-26 | Engineer #3 Zebra | Deduction grid | **Method-only (per drill rule)** | Didn't cold-solve. John proposed "hash map per nationality" — reasonable but inferior to 5×5 grid because cross-attribute deductions matter. Walked canonical method: 5×5 grid, start with absolute clues (middle=milk, Norwegian=1), propagate eliminations. Test answer = describe the method, don't solve. |
+| 2026-05-26 | Engineer #4 Candy Weight | Weighing / encoding | **Partial-to-locked (B-)** | Tried "iterative add and watch for doubling" first — wrong (multi-read + math off). One nudge → "take 1 from each pile" → still couldn't disambiguate. Second nudge → landed on **take-i-from-pile-i encoding**. Trick locked after 2 nudges. Encoding instinct in place. |
+| 2026-05-26 | Engineer #5 Fruit Basket | Chain-of-implication | **Solid (B+)** | Got killer move (pick from "mixed") and right reasoning ("100% know it's apples or oranges"). Stopped at first basket — missed the all-labels-wrong cascade onto remaining 2. Walked cascade. Trick understood. |
+| 2026-05-26 | Engineer #6 Egg Drop | Minimax | **Partial (C+/B-)** | Right SHAPE (dual-egg: explorer + confirmer) but **labeled them backwards** (started egg 1 at floor 1 — wastes a drop). Picked fixed-jump strategy (every 30 floors) giving ~30 worst case. Missed canonical: **decreasing-gap (14, 27, 39, 50, ...) for 14 worst case.** Math: 14×15/2 = 105 ≥ 100. Also math slip on his own strategy (said 23 min, actually 24). |
+| 2026-05-26 | Supp #1 Avg Speed (P2.1) | Harmonic mean | **Blank → walked (D)** | "Lol no fucking idea." Walked: 50 mph wrong (instinct trap). Fixed distance → harmonic mean `2xy/(x+y) = 48`. Lock: **distance fixed = harmonic; time fixed = arithmetic.** Generalizes to work rate, throughput. |
+| 2026-05-26 | Supp #2 Bridge Crossing (P3.1) | Shuttle / overlap | **Partial (C+/B-)** | Picked C as the shuttle escort — charged C's 5 min THREE times. Wrong intuition ("get slowest over first"). Math slip too (23 vs actual 24). Walked canonical: **pair two slowest together so their slow times overlap once; two fastest shuttle.** 17 min answer. |
+| 2026-05-26 | Supp #3 Monty Hall (P5.1) | Conditional prob / sample space | **Wrong (C-)** | Said "stay" with wrong reasoning ("host would open car door" — that's NOT the rule; host KNOWS and ALWAYS opens a goat). Walked: **switch, 2/3 win rate.** Host's knowledge transfers 2/3 probability from non-picked doors onto the single remaining unopened door. 100-door variant explained the intuition. |
+| 2026-05-26 | Supp #4 Sock Drawer (P6.1) | Pigeonhole | **Correct (A-)** | Got 3 socks right with right reasoning (worst case = 1 of each, 3rd must match). Minor wobble: introduced probability framing ("50% chance") which is irrelevant to "guarantee" puzzles. Skip probability framing on guarantee puzzles. Lock: **N categories → pull N+1 to guarantee match.** |
+| 2026-05-26 | Supp #5 100 Prisoners (P7.1) | Parity encoding | **Partial structural (B-)** | Got structural insight: "first prisoner sacrifices to send info." ✓ Wrong encoding choice: picked MAJORITY (probabilistic, doesn't guarantee). Walked canonical: **PARITY (even/odd count of one color)**. First prisoner says color matching even/odd parity → 99 saved with certainty, first 50/50. Hardest puzzle, structural reach is the senior signal. |
+| 2026-05-26 | Supp #6 Sub-sequence (P8.1) | Sequence pattern | **Half-right (C+/B-)** | Used difference-projection (+3, -2, +6, -5, +9, -8, +9 → 4, 13). Got 4 right, missed 16 (his +9 should've been +12 to stay consistent). Method was fragile. Canonical: **decompose into odd-position + even-position sub-sequences**. Odd: 1,2,3,4. Even: 4,8,12,16. Both trivially obvious once split. Lock: erratic-looking sequence → try odd/even sub-sequences FIRST. |
+
+### 2026-05-26 Tuesday Drill Summary
+
+**12 puzzles attempted in one block (~2hr). Pattern of results:**
+- **Structural instincts strong** on most (right neighborhood / right opening move): Rope ✓, Guards ✓, Fruit Basket ✓, Egg Drop ✓ (shape), 100 Prisoners ✓ (first speaker sacrifices)
+- **Encoding / chaining the trick = the consistent gap.** John reaches for the right family, then either (a) stops short of chaining/cascading (Rope, Fruit Basket), or (b) picks the wrong encoding within the family (100 Prisoners: majority instead of parity; Candy: didn't disambiguate per pile until nudged)
+- **Counter-intuitive probability is a known gap.** Monty Hall miss + 50% framing leaking into Sock Drawer guarantee puzzle. Sample-space-changing-from-information needs reps.
+- **Math precision under puzzle pressure.** Two arithmetic slips on his own strategies (Egg Drop, Bridge Crossing — both off by 1 in final addition). Consistent with the existing "arithmetic-under-pressure" tracking from the regular pipeline.
+- **Senior signals:** clarifying-question instincts (Candy "what does ONE use mean?", Guards "you said yes/no!"), structural-pattern reach even when answer was wrong.
+
+**For Mock #1 (Tuesday PM):** force trick-name + category before answering. Reflex sequence: "this smells like X family → trick is Y → applies here as Z." Don't go straight to attempting a solution — pattern-match first.
+
+**For Wed AM reflex pass:** speed-drill the 12 puzzle tricks in <5 min total. Just name the trick per category, not full solve. If any blank > 30 sec, the trick isn't locked.
 
 ---
 
