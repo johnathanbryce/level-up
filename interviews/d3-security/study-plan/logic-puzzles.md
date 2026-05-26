@@ -1,25 +1,92 @@
 # Logic Puzzles — Practice Bank
 
-D3's universal test pattern (per 5 Glassdoor reviews across roles) includes a **~90-minute logical-reasoning section** — multi-select, no coding. This is the **LONGEST chunk** of the test. Pattern recognition is the win, NOT memorizing specific problems.
+**2026-05-25 UPDATE: Intel from current D3 engineer** (via LinkedIn) — logic puzzles were ~**50% of the entire test** during his hiring (~18 months ago). He shared the exact 6 puzzles he studied from. Those 6 are now the PRIMARY drill bank. The 18-puzzle category bank below is SUPPLEMENTARY.
 
 ---
 
-## How to Drill
+## Primary Drill — The Engineer's 6 (verified-correct for D3 test format)
 
-**6 puzzles per day Mon + Tue** (~30-40 min total per day).
+**Goal:** lock the *trick* for each. By Tue PM, name the trick for any of these 6 in <30 sec.
+
+**Drill schedule (max 6 total — no burnout):**
+- **Mon PM (post-gym, ~30 min):** Puzzles 1, 2, 4 — fastest "aha-moment" pattern unlocks
+- **Tue AM (~30 min):** Puzzles 3, 5, 6 — more deductive / optimization
+- **Wed AM reflex pass (~5 min):** name the trick for each, 30 sec per puzzle
+
+### Engineer-Verified Puzzle 1 — Rope Burning (Time / parallel processes)
+
+**Problem:** Two ropes each take 1 hour to burn, burn rates inconsistent (half a rope might burn in 20 min while the other half takes 40). Measure exactly 45 minutes.
+
+**Trick:** **Burning from BOTH ends halves the total time** regardless of rate inconsistency. Light rope-2 from both ends + rope-1 from one end at t=0. When rope-2 finishes (30 min), light rope-1's other end — its remaining 30 min of burn now finishes in 15 min. **Total: 30 + 15 = 45 min.**
+
+**Generalizes to:** any "measure X minutes from two rate-inconsistent timers" — burn-both-ends collapses a rate-unknown duration to a known fraction.
+
+---
+
+### Engineer-Verified Puzzle 2 — Two Guards / Two Doors (Meta-question / liar-truth)
+
+**Problem:** Two doors, two guards. One door = freedom, other = execution. One guard always lies, one always tells truth. You don't know which is which. One question to one guard.
+
+**Trick:** Ask EITHER guard: *"If I asked the OTHER guard which door leads to freedom, what would they say?"* — Then pick the **OPPOSITE** door of what they say. Compound lie/truth cancels: truth-teller relays the liar's wrong answer; liar lies about the truth-teller's right answer. Both paths point at the wrong door, so the opposite is freedom.
+
+**Generalizes to:** any "one liar one truth-teller" puzzle — route the question THROUGH the other one.
+
+---
+
+### Engineer-Verified Puzzle 3 — Zebra Puzzle / Einstein's (Deduction grid)
+
+**Problem:** 5 houses, 5 colors, 5 nationalities, 5 drinks, 5 cigarettes, 5 pets. Given ~15 clues ("the Brit lives in the red house", "the Swede keeps dogs", etc.). Who owns the zebra?
+
+**Trick:** **Build a 5×5 grid, eliminate systematically using clues.** Start with the most-constraining clues (those that fix a value absolutely), propagate eliminations row-by-row. Track "definitely yes" and "definitely no" cells.
+
+**Drill strategy:** DON'T cold-solve a fresh Zebra variant — wastes 30+ min. **Learn the METHOD** + walk through one example. If a variant appears on the test, follow the method mechanically.
+
+---
+
+### Engineer-Verified Puzzle 4 — Candy Weight (Information encoding)
+
+**Problem:** 10 piles of candy. 9 piles weigh 1g/candy, 1 pile weighs 2g/candy. Digital scale, **one use only.** Find the 2g pile.
+
+**Trick:** **Encode pile identity by how many candies you take.** Take 1 from pile 1, 2 from pile 2, ..., 10 from pile 10. Expected total = 55g (sum 1-10). Actual − 55 = pile number. (56g → pile 1, 57g → pile 2, etc.)
+
+**Generalizes to:** any "find the odd one in N groups with K uses of measurement" — the take-N-from-group-N encoding turns one measurement into log₂N or more bits of info.
+
+---
+
+### Engineer-Verified Puzzle 5 — Fruit Basket Labels (Chain-of-implication)
+
+**Problem:** 3 baskets — apples / oranges / mixed. ALL labels are wrong. Pick ONE fruit from ONE basket. Identify all 3 contents.
+
+**Trick:** **Pick from the basket labeled "mixed".** Since all labels are wrong, that basket can't be mixed — it's purely apples OR purely oranges. Whatever fruit you pull → that's what's in that basket. Then the basket labeled with the OTHER pure fruit must be the mixed one (it can't be the pure fruit since label is wrong). The remaining basket is the other pure type.
+
+**Generalizes to:** any "all labels wrong" puzzle — the "MIXED" label is the highest-information starting point because it's the most constrained-by-wrongness.
+
+---
+
+### Engineer-Verified Puzzle 6 — Egg Drop (Optimization / minimax)
+
+**Problem:** 2 identical eggs, 100-story building. Eggs break at some threshold floor (same threshold for both). Find the highest "safe" floor in the **fewest worst-case drops.**
+
+**Trick:** **Decreasing-gap strategy.** Drop from floor 14, then 27 (14+13), then 39 (27+12), 50 (39+11)... gap shrinks by 1 each time. If egg breaks at floor X, linear-search floors below using the second egg. **Worst case: 14 drops total.** The math: 14 + 13 + 12 + ... + 1 = 105 ≥ 100, so 14 is the minimum starting jump that covers the building.
+
+**Generalizes to:** any "minimize worst-case with limited tries" — minimax optimization via balanced jump-then-linear-search.
+
+---
+
+## How to Drill (General)
 
 1. **Cold attempt FIRST** — max 5 min per puzzle. No hints, no lookup.
 2. If stuck: name the **CATEGORY** you think it is + the **TRICK** you'd reach for. Then look up.
 3. Re-attempt cold next session if you blanked.
 4. Track wins/misses per category at the bottom of this file.
 
-**Goal:** by Tuesday night, recognize ANY puzzle's category in <30 seconds. The solution follows from the category's trick.
+**Goal:** by Tuesday night, recognize ANY puzzle's trick in <30 seconds.
 
-**Suggested drill ordering:**
-- **Mon AM (3):** Weighing, Harmonic mean, Bridge crossing
-- **Mon PM (3):** Knights/knaves, Probability, Pigeonhole
-- **Tue AM (3):** Hat/prisoner, Sequence, Clock
-- **Tue PM (3):** Geometry + replay 2 weakest categories
+---
+
+## Supplementary Bank (18 puzzles, 10 categories)
+
+The original web-research-derived bank — useful for variant exposure but NOT the primary drill. Practice these only if time permits AFTER the engineer's 6 are locked.
 
 ---
 

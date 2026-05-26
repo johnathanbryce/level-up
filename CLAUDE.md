@@ -250,11 +250,50 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
-**Last Updated:** 2026-05-20 (Remitly recruiter screen PASSED — Phase 2 technical cram active, awaiting hiring manager decision; first Phase 2 LC drills delivered, Kadane's needs cold retry next session)
+**Last Updated:** 2026-05-25 PM (D3 Security cram — **ALL TEACHING CONTENT COMPLETE.** L1-L5 + L7-L8 taught + notes audited (L6 SKIPPED entirely). L3/L4/L5 cold quizzes + written exercises DEFERRED to Tuesday Mock #1 review block per fatigue. John signed off at 2:53 PM Monday for heavy break. **Tuesday 2026-05-26 = pure drill day:** 6 engineer-verified logic puzzles + Mock #1 + patching weakest. Wed AM = vocab reflex + Mock #2 + travel buffer for 3pm interview. Remitly Phase 2 still PAUSED through 2026-05-27. **If fresh window asked to "continue D3":** read [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) Current Position block + [interviews/d3-security/lesson-tracker.md](interviews/d3-security/lesson-tracker.md) Current Position block. Do NOT re-teach — content is complete. Confirm drill block (puzzles vs Mock #1) and jump directly into that.)
 
 ---
 
-### Active Interview Cycle — PHASE 2 (Awaiting Hiring Manager)
+### Active Interview Cycle — D3 SECURITY (hard date Wed 2026-05-27) — TOP PRIORITY
+
+**D3 Security written test — Wednesday 2026-05-27, 3pm PT. In-person, 2hr, closed-book.** Multi-select + short structured answers across AI Engineering, Multi-Agent Governance, Prompt/Trust Controls + a large logical-reasoning section. Full intel: [interviews/d3-security/study-plan/interview-format.md](interviews/d3-security/study-plan/interview-format.md).
+
+**Cram plan:** Sun 2026-05-24 head-start (running ahead) + Mon-Tue full days + Wed 1h review. 8 lessons total, lesson-tracker is source of truth: [interviews/d3-security/lesson-tracker.md](interviews/d3-security/lesson-tracker.md). **Read [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) at session start before doing anything else** — that's where the granular state lives.
+
+**Lesson 1 — AI Engineering Foundations: COMPLETE 2026-05-24 (Sunday).** All 8 chunks + cold quiz + written exercise. **B+/A- (~78%), passed 75% bar.** Exercise: [interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md](interviews/d3-security/study-plan/exercises/lesson-01-ai-engineering-foundations.md). Established `exercises/` directory + locked the lesson-end protocol.
+
+**Lesson 2 — RAG Deep: COMPLETE 2026-05-25 (Monday).** All 9 chunks + cold quiz (B/B+, 7 Qs) + written exercise (**B+/A- ~82-85%, passed**). Exercise: [interviews/d3-security/study-plan/exercises/lesson-02-rag-deep.md](interviews/d3-security/study-plan/exercises/lesson-02-rag-deep.md). **MID-SESSION CHUNK AUDIT** triggered by John's Chunk-6-too-granular pushback: plan-mode → trimmed L2 Chunks 6-9 in lesson-tracker + added **Tier markers (T1/T2/T3) + per-lesson Trim notes** to all of Lessons 3-8. Brevity rules in [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) extended from 3 to 4 (added "when in doubt, trim"). Audit-plan archived at `/Users/johnbryce/.claude/plans/stopping-here-is-this-buzzing-wind.md`.
+
+**At session start** (when D3 is active), Claude should announce: *"D3 Security cram is active (hard date Wed 2026-05-27). All teaching content COMPLETE as of Mon 2026-05-25 PM. Tuesday is pure drill day — 6 engineer-verified logic puzzles + Mock #1 + patching. Where do you want to start: puzzles, Mock #1, or vocab reflex pass? Say 'regular pipeline' or 'Remitly Phase 2' if you want something else."*
+
+**Critical reminder for fresh windows:** Do NOT re-teach any lesson content. Everything taught Sun-Mon. New focus is drill + assess. Trying to re-teach material would burn John's bandwidth right before the test.
+
+**D3 open weak spots carried into Lesson 3+ (must surface during mock test):**
+
+*From Lesson 1 (still open):*
+- **Structured outputs as a FIX, not just a concept.** Drill: any scenario about "JSON parse failures" or "downstream needs structured data" → first answer is structured outputs / function calling + Pydantic schema, NOT eval-and-retry.
+- **System-prompt placement reasoning** must include BOTH reasons (trust boundary + prompt caching).
+- **`max_tokens` cap** as a cost-control reflex.
+
+*From Lesson 2 (new 2026-05-25):*
+- **Vocabulary precision under cold pressure (PRIMARY GAP).** Mechanism is locked across all 9 RAG chunks; SPECIFIC NAMES slip — 4 canonical-name misses in one session: "recursive character splitter" (Q2 + Symptom B), **RRF / Reciprocal Rank Fusion** (Q4 + Symptom A), **atomic index swap** (Q3 + Symptom C), RAGAS spelled "RAGA" (Q6). Drill: in mock test, force vocabulary recall on every chunk's canonical names.
+- **73% retrieval-failures anchor stat** missed twice in one session (Chunk 1 check + Q1 cold recall). Lock the number.
+- **Content-in-wrong-slot pattern (NEW).** Symptom C (a) said "not entirely sure" while answering it fully in (b). On D3 written tests with labeled (a)/(b)/(c) slots, the grader scores per-slot. Always write SOMETHING in every labeled slot, even hedged.
+- **Narrowing "retrieval" to embedding only.** Q1 misframed retrieval failures as embedding-only when retrieval is the whole upstream stack (chunking + embedding + vector store + retrieval algorithm + reranking).
+
+**D3 strengths locked across sessions:**
+- **Tier-3 scoping pushback now a documented stable pattern — 5+ correct trims this cram.** Lesson 1 (3 sections) + Lesson 2 (reranking Chunk 6, RAGAS Chunk 8 trimmed twice). The Chunk 6 pushback today triggered the mid-session audit that locked Tier markers across Lessons 3-8. Senior-flavor interview triage. Going forward: when John flags content as overbuilt, RESEARCH + AGREE + ADJUST scope.
+- **Cross-chunk transfer holding** — re-embed cost named unprompted **4 times in one session** (Q3 + Q4 cold quiz, Symptom B + Symptom C written). Not pattern-matching — applying mechanism understanding.
+- **Real-knowledge senior signal on pgvector hybrid gotcha** (Symptom A of Lesson 2 written exercise). Knew pgvector lacks native hybrid/RRF (unlike ES/Qdrant/Weaviate), would need manual implementation with Postgres FTS. Caseway-anchored real knowledge, not memorized.
+- **Honest "I don't know" pattern stable** across sessions (Symptom C-a today + Q2 cold quiz "couldn't name it but described it" + 2026-04-27 TTL calibration). Conversationally senior. Add the "but I'll try anyway" companion on written tests.
+
+**Pedagogy reminder for fresh windows:** John explicitly does NOT want to be over-taught on Tier-3 textbook depth. When teaching D3 lessons, default leaner — flag any concept as Tier 1 (must know cold) / Tier 2 (reason about) / Tier 3 (recognize, don't recite). John pushes back if anything drifts toward textbook trivia. Honor that instinct.
+
+---
+
+### Paused — Remitly Phase 2 (resume Thu 2026-05-28+ post-D3)
+
+**Remitly Phase 2 paused through 2026-05-27 during D3 cram window.** Top priorities still outstanding for Thursday onwards: (1) cold retry of `max_segment.py` (Kadane's running-state) — confirm mental model at session start; (2) scaffold `12-testing/` directory + `pytest-basics.md`; (3) STAR story drafts (Caseway scope-jump, AI/RAG ship, failure/learning, cross-functional — 2 of 4 minimum needed).
 
 **Remitly recruiter screen — Wednesday 2026-05-20: PASSED.** 20-min casual chat, no technical questions, positive vibe. Annie referral landed. "Why Remitly" V3 (Annie-first + AI hook + Caseway bridge) delivered cleanly. TMAY V2 had origin-block bloat → flagged + trimmed pre-call. Recruiter shared the tech-screen + 4-round loop process — captured in [interviews/remitly/study-plan/phase-2-technical-cram.md](interviews/remitly/study-plan/phase-2-technical-cram.md). Awaiting hiring manager to advance.
 

@@ -58,8 +58,7 @@ By Tuesday 2026-05-26 evening, John can:
 | Warmup | 30 min | 3 logic puzzles (hat/prisoner + sequence + clock) |
 | Block 1 | 1h | Read + study `multi-agent-governance-light.md` (concept-level, not framework cram) |
 | Block 2 | 1h | Read + study `prompt-safety-essentials.md` (4-5 concepts) |
-| Block 3 | 45 min | Read + study `soc-domain-primer.md` (D3 / Morpheus / ASOC) |
-| Block 4 | 30 min | Skim `mongodb-essentials.md` (vocab pass) + skim `system-integration-llm.md` |
+| Block 3 | 30 min | Skim `mongodb-essentials.md` (NoSQL primer) + skim `system-integration-llm.md` |
 | Break | 30 min | |
 | **MOCK** | 90 min | **Mock test, paper, closed-book, no laptop.** Mix of multi-select + structured answers. See `mock-test.md` |
 | Grade | 45 min | Grade + identify top 3 weak areas |
@@ -92,8 +91,7 @@ By Tuesday 2026-05-26 evening, John can:
 | S | `mock-test.md` | **Drill bank** | Mock #1 (Tue) + Mock #2 (Wed) with answer keys |
 | A | `multi-agent-governance-light.md` | Scaffold | Concept-level — HITL, role boundaries, audit trails, escalation |
 | A | `prompt-safety-essentials.md` | Scaffold | 4 concepts: prompt injection, jailbreak/system prompt leakage, output validation, defense-in-depth |
-| A | `soc-domain-primer.md` | Scaffold | SOC tiers T1/T2/T3, ASOC, Morpheus, competitors, SIEM/SOAR/EDR vocab |
-| B | `mongodb-essentials.md` | Scaffold | Aggregation pipeline, indexes + ESR rule, sharding/replicas, when-vs-Postgres |
+| B | `mongodb-essentials.md` | Scaffold | High-level NoSQL primer — Mongo vocab + when NoSQL vs SQL |
 | B | `system-integration-llm.md` | Scaffold | Reference architecture (leverages existing `02-system-design/` notes) |
 
 **Reuse — no new file needed:**
