@@ -250,6 +250,24 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
+### SECTION 2 CLOSE — PATHWAY UPDATE 2026-06-01
+
+**Section 2 (System Design) closing path has been restructured.** Mid-CS-#2 (real-time chat), John flagged hard case-study fatigue and asked for an honest mentor assessment. Outcome:
+
+- **Case Studies #3-5 (rate limiter, social feed, notification system) — DEFERRED.** Diminishing-returns argument + engagement cost outweighs interview-prep value of more reps. Two case studies done = enough first-pass exposure. Can return if a real interview surfaces a gap.
+- **Failure Analysis (structured post-mortem reading) — DEFERRED.** Can be done organically if curious. Not a section-close gate.
+- **Dedicated Capstone Prep Phase — SKIPPED.** Gap list is well-tracked in [02-system-design/CLAUDE.md](02-system-design/CLAUDE.md) Surfaced Gaps already; no need for a dedicated compilation session.
+- **End-of-Section Capstone is now the gate.** Three parts as defined in [02-system-design/CLAUDE.md](02-system-design/CLAUDE.md) — Part 1 written quiz, Part 2 cold case study (fresh prompt, no notes), Part 3 rapid-fire defense. Cold-interview-mode case-study practice happens once, here, with stakes.
+- **CS #2 finishing scope:** Phases 3 + 4 (API design + Architecture) today via live-discussion mode. Skip Phases 5-6 (deep dives + trade-offs) as pattern repetition.
+
+**Why this is the right call (not capitulation):** John's pushback track record in this roadmap is ~100% accurate (Tier 3 trims, payments-domain scope, port memorization, observability depth, case-study format itself). Bored grinding produces no retention. The Capstone IS the cold-mode test; case studies were always meant to be practice for it. Section 2's conceptual mastery is genuinely solid (per Pre-Case-Study Review Phase results) — what remains is gate-testing it.
+
+**Post-Section-2:** Move to Section 3 (AI Foundations — already started in parallel window with Embeddings chunks 1-2 + `embeddings_demo.py`). Sections 3-5 (AI Foundations + Backend + AI Production) are hands-on coding-heavy — the engagement reset John needs after a long stretch of conceptual work.
+
+**Live discussion mode active:** for the rest of CS #2 (and any future case-study work), John verbalizes orally per phase, Claude writes the notes into the artifact. See [[feedback-case-study-format]] memory for the pattern.
+
+---
+
 **Last Updated:** 2026-05-25 PM (D3 Security cram — **ALL TEACHING CONTENT COMPLETE.** L1-L5 + L7-L8 taught + notes audited (L6 SKIPPED entirely). L3/L4/L5 cold quizzes + written exercises DEFERRED to Tuesday Mock #1 review block per fatigue. John signed off at 2:53 PM Monday for heavy break. **Tuesday 2026-05-26 = pure drill day:** 6 engineer-verified logic puzzles + Mock #1 + patching weakest. Wed AM = vocab reflex + Mock #2 + travel buffer for 3pm interview. Remitly Phase 2 still PAUSED through 2026-05-27. **If fresh window asked to "continue D3":** read [interviews/d3-security/CLAUDE.md](interviews/d3-security/CLAUDE.md) Current Position block + [interviews/d3-security/lesson-tracker.md](interviews/d3-security/lesson-tracker.md) Current Position block. Do NOT re-teach — content is complete. Confirm drill block (puzzles vs Mock #1) and jump directly into that.)
 
 ---
