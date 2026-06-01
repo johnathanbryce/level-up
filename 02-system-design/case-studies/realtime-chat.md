@@ -128,26 +128,235 @@
 
 ## Phase 3 — API Design
 
+### HTTP Endpoints (REST)
+
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| `GET` | `/conversations` | Inbox / sidebar — list user's conversations, paginated. |
+| `GET` | `/conversations/:id/messages?before=<msg_id>&limit=50` | Message history fetch (paginated, scrolling backward). Hits Redis cache first → DB on miss. |
+| `POST` | `/conversations` | Create new conversation (body: member user_ids, optional name). |
+| `POST` | `/conversations/:id/messages` | **HTTP fallback** for sending — used when the WebSocket isn't connected. Primary send path is the WebSocket (see below). |
+| `DELETE` | `/conversations/:id` | Leave or delete conversation. (Individual message unsend = v2 — correctly flagged as too granular for first pass.) |
+| `POST` | `/auth/login` | Issues JWT. |
+| `GET` (upgrade) | `/ws` | WebSocket upgrade endpoint — opens the persistent connection. |
+
+### WebSocket Events
+
+The WebSocket is the **primary channel** for live messaging. Once the client connects, events flow bidirectionally over the open socket — no HTTP overhead per message.
+
+**Client → Server:**
+- `message.send` — `{ conversation_id, text, client_msg_id }` where `client_msg_id` is a UUID the client generates for idempotency (if the client retries on network blip, server dedupes by this key).
+- `presence.update` — `{ status: "typing" | "online" }` (optional in v1; typical v2 feature).
+- `ack` — acknowledges receipt of a server-pushed event (for delivery confirmations).
+
+**Server → Client:**
+- `message.received` — `{ conversation_id, message_id, sender_id, text, timestamp }` — the live-pushed new message arriving from someone else in the conversation.
+- `message.sent` — `{ client_msg_id, server_msg_id, timestamp }` — confirms the client's send was persisted and echoes the server-assigned `message_id`.
+- `presence.update` — `{ user_id, status }` (optional v1).
+
+### Authentication
+
+- **HTTP requests:** JWT bearer token in `Authorization: Bearer <token>` header (standard pattern).
+- **WebSocket:** token passed during the connection upgrade — either as a query parameter (`/ws?token=...`) or as the first message after the upgrade handshake. The chat server validates the token, looks up the user_id, and binds the WebSocket connection to that user for its lifetime.
+- **Refresh tokens:** short-lived JWT (15-60 min) + refresh token for renewal — standard pattern, scoped out of v1 design discussion.
+
+### Sticky sessions — refinement on initial instinct
+
+John's instinct in the live discussion was to add sticky sessions to HTTP requests too. Small clarification:
+
+- **WebSocket connections are inherently sticky.** A WebSocket is a long-lived TCP connection to ONE chat server — the LB hands the client off and the connection stays pinned for its lifetime. No special "sticky session" config needed at the LB; it's a property of the protocol.
+- **HTTP requests do NOT need sticky sessions.** They're stateless — any chat server can serve any HTTP request as long as it can read the DB / Redis. Round-robin or least-connections LB is fine.
+- Sticky sessions as a config flag matter for OLD-style server-stores-session-on-local-disk apps. Modern chat = stateless HTTP + stateful WebSocket-on-its-own-server.
+
+### Why messages flow over WebSocket, not HTTP POST
+
+Mid- to senior-flavor trade-off worth knowing:
+
+- **WebSocket bidirectional** (send + receive over WS): primary path for Slack/Discord/web chat. Lower latency, reuses the open connection, no HTTP handshake overhead per message.
+- **HTTP POST + WebSocket receive** (send via POST, receive via WS): some mobile apps, and the fallback path when WS isn't connected. HTTP overhead per send but resilient to dropped WS connections.
+
+**For our design:** WebSocket bidirectional is the primary path. HTTP POST `/conversations/:id/messages` is the fallback for clients without an active WS (e.g., reconnecting, mobile background).
+
 ---
 
 ## Phase 4 — Architecture
 
-### Components
+### Components (edge → persistence)
 
-### Data model
+1. **Clients** (browser / mobile) — hold 1 persistent WebSocket + HTTP for non-real-time ops (history fetch, inbox, conversation creation).
+2. **Load Balancer** (separate component from API Gateway):
+   - **WebSocket connections: least-connections algorithm.** NOT round-robin — round-robin distributes new connection counts equally but ignores that WS connections are LONG-LIVED, so a server accumulates disproportionate active connections over time. Least-connections accounts for current load.
+   - **HTTP requests: round-robin or least-connections both fine** (requests are short-lived, stateless).
+3. **API Gateway** (separate from LB) — handles JWT auth validation, rate limiting, HTTP request routing. Sits behind the LB. WebSocket connections typically auth at the upgrade handshake and then bypass the gateway for subsequent WS frames (one less hop per message — important at chat scale).
+4. **Chat Server Pool (~50-100 instances)** — the workhorse layer. Each server:
+   - Holds ~20K concurrent WebSocket connections.
+   - Subscribes to pub/sub channels for the conversations of its connected users.
+   - Validates inbound messages, writes to DB, publishes to pub/sub, pushes outbound messages to its connected clients.
+5. **Pub/Sub Broker** (Redis Pub/Sub for v1; Kafka for production-scale) — the **fanout middleware**. This is the load-bearing piece that lets servers talk to each other. Without it, every chat server would need a direct connection to every other chat server (full mesh = doesn't scale).
+6. **Redis Cache Cluster (5-8 nodes)** — recent messages per `conversation_id`, user inbox lists. Sharded by `conversation_id` (consistent hashing).
+7. **Persistence — polyglot (senior call):**
+   - **Postgres** (1 primary + 2 read replicas): `users`, `conversations`, `conversation_members`. Relational metadata, low write volume, JOIN-friendly.
+   - **Cassandra cluster (5-8 nodes, RF=3)**: `messages`. Write-heavy, time-series, sharded by `conversation_id`.
 
-### Data flow
+### Architecture Diagram
+
+```
+                    Clients (browser / mobile)
+                              │
+                              │  HTTP + WSS
+                              ▼
+                       ┌─────────────┐
+                       │     LB      │   least-conn for WS,
+                       │             │   round-robin for HTTP
+                       └──────┬──────┘
+                              │
+                ┌─────────────┴─────────────┐
+                │                           │
+              (HTTP)                  (WS upgrade)
+                │                           │
+                ▼                           │
+         ┌─────────────┐                    │
+         │ API Gateway │                    │
+         │ (auth, rate │                    │
+         │  limit,     │                    │
+         │  routing)   │                    │
+         └──────┬──────┘                    │
+                │                           │
+                └────────────┬──────────────┘
+                             ▼
+                  ┌──────────────────────┐
+                  │  Chat Server Pool    │ ◄──────┐
+                  │  (50-100 instances)  │        │
+                  │  - holds WS conns    │        │
+                  │  - publishes/subs    │        │
+                  │    to fanout broker  │        │
+                  └──┬───┬───┬───┬───────┘        │
+                     │   │   │   │                │
+                     │   │   │   └──► Pub/Sub Broker ──┐
+                     │   │   │       (Redis / Kafka)   │ (notifies
+                     │   │   │                          │  other
+                     │   │   │                          │  chat
+                     │   │   └──► Redis Cache           │  servers)
+                     │   │       (recent msgs,          │
+                     │   │        inbox)                │
+                     │   │                              │
+                     │   └────► Cassandra ◄─────────────┘
+                     │         (messages,
+                     │          sharded by
+                     │          conversation_id,
+                     │          RF=3)
+                     │
+                     └────► Postgres
+                           (users, convos,
+                            members,
+                            primary + 2 replicas)
+```
+
+### Data Model
+
+**Postgres (relational metadata):**
+
+```sql
+-- users
+user_id        BIGINT PRIMARY KEY
+display_name   TEXT
+avatar_url     TEXT
+created_at     TIMESTAMP
+
+-- conversations
+conversation_id BIGINT PRIMARY KEY
+type            VARCHAR(10)    -- 'direct' | 'group'
+name            TEXT           -- nullable for direct chats
+created_at      TIMESTAMP
+
+-- conversation_members (composite key)
+conversation_id  BIGINT
+user_id          BIGINT
+joined_at        TIMESTAMP
+last_read_msg_id BIGINT        -- for unread counts
+PRIMARY KEY (conversation_id, user_id)
+INDEX ON (user_id, conversation_id)  -- supports "all my conversations" query
+```
+
+**Cassandra (messages — write-heavy, time-series):**
+
+```cql
+CREATE TABLE messages (
+    conversation_id BIGINT,     -- partition (shard) key
+    message_id      TIMEUUID,   -- clustering key (sort order)
+    sender_id       BIGINT,
+    text            TEXT,
+    client_msg_id   UUID,       -- idempotency key for retry dedup
+    created_at      TIMESTAMP,
+    PRIMARY KEY (conversation_id, message_id)
+) WITH CLUSTERING ORDER BY (message_id DESC);
+```
+
+**Key design decisions:**
+- **`conversation_id` as Cassandra partition key**: all messages in a conversation land on the same shard. "Last 50 messages in conversation X" = single-shard scan, no scatter-gather.
+- **`message_id` as TIMEUUID clustering key**: messages auto-sort by time within a partition. Latest-first scroll = sequential read.
+- **`client_msg_id`** is the **idempotency key** — if the client retries a send (network blip), server dedupes by this UUID. Same pattern locked from Resilience review, applied to chat-specific surfaces.
+- **Polyglot persistence** is a senior decision: Cassandra excels at write-heavy time-series (messages) but is overkill for low-volume relational data (users, conversations, members). Postgres handles those better with cleaner JOINs.
+
+### Live-Message Flow — Alice sends "hello" to a group chat with Bob and Carol
+
+The canonical end-to-end walkthrough. Memorize the steps:
+
+1. **Alice's client** emits `message.send` over her WebSocket to **ChatServer-7** (her pinned server from connect-time).
+2. **ChatServer-7** processes:
+   - **(a) Validate** Alice's membership in the conversation (Redis lookup → Postgres fallback on miss).
+   - **(b) Idempotency check** — query for `client_msg_id` in recent messages. If found, return the existing `message_id` without rewriting.
+   - **(c) Write to Cassandra** — persist the message, get back the server-assigned `message_id` (TIMEUUID). **This must complete before fanout — messages must be durable BEFORE we tell anyone they exist.**
+   - **(d) Publish to pub/sub** — emit event to channel `conversation:{conversation_id}` carrying the full message payload.
+   - **(e) Update Redis cache** — append to the cached recent-messages list for this conversation.
+   - **(f) Send `message.sent` ack** back to Alice's WebSocket with the assigned `message_id`.
+3. **Pub/sub broker** fans out the event to ALL chat servers subscribed to that conversation's channel.
+4. **ChatServer-3** (Bob's pinned server) and **ChatServer-12** (Carol's pinned server) receive the published event.
+5. Each looks up the WebSockets for the conversation's members it has connected and pushes `message.received` down those sockets.
+6. **Bob and Carol see "hello"** appear in their UI in real time.
+
+**Latency budget:** WebSocket hop (~10ms) + Cassandra write (~5-20ms) + pub/sub fanout (~5ms) + WebSocket push to recipients (~10ms) ≈ **30-50ms end-to-end** under normal conditions. p99 SLA target: < 500ms.
+
+### Consistency model (final)
+
+- **Within a single conversation:** strong ordering required. Server-assigned TIMEUUID `message_id` enforces global per-conversation order; all members see messages in the same sequence.
+- **Globally across conversations:** eventual consistency is fine. Sidebar/inbox reordering 200ms late is not a bug.
+- **CAP positioning:** AP (availability + partition tolerance). For chat, sub-500ms delivery matters more than strict global consistency — the right trade-off.
 
 ---
 
 ## Phase 5 — Deep Dives (pick 2)
 
+**OMITTED 2026-06-01** per section close restructure. Cold-case-study practice happens at the End-of-Section Capstone Part 2 with a fresh prompt — pattern repetition here would have low marginal value.
+
 ---
 
 ## Phase 6 — Trade-offs & Failure Modes
+
+**OMITTED 2026-06-01** per section close restructure. Trade-off articulation and failure-mode analysis is part of Capstone Part 3 rapid-fire defense.
 
 ---
 
 ## Debrief
 
-*(populated at end of session)*
+### What went well
+
+- **Polyglot persistence + shard-key instincts.** `conversation_id` as Cassandra partition key called correctly without prompting (2nd consecutive correct shard-key call across surfaces, carrying over from DB Architecture review). Four required tables (users, conversations, conversation_members, messages) named cleanly.
+- **TTL + jitter on Redis cache** reached for at the right moment for the right reason (synchronized expiration → thundering herd).
+- **Honest "I don't know" on WebSocket events** (Phase 3). Senior move, named explicitly — beats confident-wrong.
+- **Honest mid-session fatigue call** at the Phase 4 mark. Asked for honest mentor assessment rather than grinding, leading to the restructured section close. Pushback track record stays at ~100%.
+- **Senior-flavor pruning instinct** on individual message unsend ("too granular for v1") — correctly scoped to conversation-level only.
+
+### What fumbled (logged to Section 2 Surfaced Gaps)
+
+1. **Webhooks vs WebSockets vocab confusion** (NEW gap). Phase 1. Corrected; retest at Capstone Part 3 rapid-fire to confirm locked.
+2. **Gateway vs LB conflation — 2nd occurrence within this single case study** (Phase 1 + Phase 4 verbal). Phase 1 corrected; Phase 4 verbal still merged them. Joins the recurring "layer conflation" pattern from the section log (also: auth ≠ method, CDN ≠ app, consistent hashing ≠ session stickiness). **Tier 1 Capstone Prep.**
+3. **Write-pattern drift.** Phase 1 corrected "write-behind" to "DB-first → publish → cache"; Phase 4 verbal collapsed it back to "write-through updates Redis AND DB simultaneously." The DB-first-for-durability reflex isn't locked. Same family as the 2026-04-14 + 2026-05-07 stampede/write-pattern gaps. **Tier 1 Capstone Prep.**
+4. **Node counts from vibes.** "At least 3" both times for Postgres and Redis. Corrected to 5-8 derived from footprint math. **Drill at Capstone: defend every node count with the math.**
+5. **Consistency framing too loose.** "Eventual everywhere" instead of "strong within a conversation + eventual globally." Refined twice in this artifact; lock at Capstone.
+6. **Live-message flow walkthrough not produced under verbal pressure** (Phase 4). I asked for the end-to-end walkthrough; John talked components instead. This is the #1 chat-system interview deliverable. **Cold-retest at Capstone Part 2.**
+7. **Pub/sub layer omitted in Phase 4 verbal recall** despite being taught in Phase 1. Architecture-retrieval-under-pressure pattern — same shape as Stage 5 diagnostics 2026-04-27 (material in notes, doesn't surface verbally).
+
+### Carries to Capstone
+
+Capstone Part 2 (cold case study) and Part 3 (rapid-fire) are where these fumbles get retested. No dedicated Capstone Prep session per restructured close — the gate IS the test.
