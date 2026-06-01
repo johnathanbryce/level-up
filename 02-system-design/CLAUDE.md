@@ -325,18 +325,28 @@ Deep, targeted drilling on gaps surfaced during Pre-Case-Study Review AND Case S
 
 ## End-of-Section Capstone
 
-Run in its own dedicated session after all sub-topics and warm-down quizzes are complete. Three parts, all required.
+Run in its own dedicated session after all sub-topics and warm-down quizzes are complete. Three parts, all required. **Format locked 2026-06-01 per John's preferences (written + MC for Part 1, oral + handwritten notes for Parts 2-3); full tracking artifact at [capstone-exam.md](./capstone-exam.md).**
 
-### Part 1 — Written Quiz (20-30 min)
-15 questions, mixed format: recall, "explain why," trade-off reasoning, and 2-3 applied scenarios spanning the full section. Scored. Any topic scoring below 70% triggers a targeted re-teach before the section closes — not "we'll revisit it later."
+### Part 1 — Written Quiz (~25-35 min)
+**Decently heavy + dense — John uses it to warm his brain up for the cold case study.** ~15 questions, mix of:
+- ~6-7 multiple choice (recall, brain warmup, low-stakes lock-in)
+- ~6-7 short-answer written (explain-why, trade-off reasoning, definition+implications)
+- ~2-3 applied written scenarios (1-paragraph design vignettes)
 
-### Part 2 — System Design Challenge (45-60 min)
-Fresh prompt John hasn't seen — not one of the practiced case studies. Design the full system cold: components, data flow, trade-offs, failure modes, scaling decisions. Claude pokes holes with "why not X?" and "what breaks first?" follow-ups. John must defend decisions or revise and explain why.
+Drawn primarily from existing [interview-questions.md](./interview-questions.md) bank with 3-5 fresh questions to prevent pure pattern-matching. John types answers directly into [capstone-exam.md](./capstone-exam.md). Claude grades after submission (not question-by-question). **Pass:** ≥70% with no catastrophic miss on core topics (CAP, caching, DB scaling, load balancing).
 
-### Part 3 — Rapid-Fire Defense (10-15 min)
-5-7 follow-up questions on the Part 2 design, interview-style. No notes. Tests whether understanding is real or pattern-matched to the prompt.
+### Part 2 — Cold Case Study (~45-60 min)
+**Oral + interview-style.** Fresh prompt John hasn't seen — NOT URL shortener, real-time chat, rate limiter, social feed, or notifications. Menu of fresh prompts: Twitter feed, Uber dispatch, Dropbox/file sync, Tinder swipe, ride-sharing, ticketing.
 
-**Pass criteria:** Part 1 ≥ 70% with no catastrophic misses on core topics (CAP, caching, DB scaling), Part 2 design has no major conceptual errors and trade-offs are articulated, Part 3 ≥ 4/7 answered confidently. Section only closes when all three pass. Log result in Session Log below.
+**John drives the design verbally + on paper.** Claude plays the interviewer — clarifying questions, probing, hole-poking. Claude takes lightweight notes in [capstone-exam.md](./capstone-exam.md) (key decisions + critiques, not a transcript). John works through Requirements → Estimation → API → Architecture → Live-flow walkthrough at his own pace; Claude probes throughout.
+
+**Pass:** No major conceptual errors. Trade-offs articulated. Live-message-flow walkthrough produced under pressure (this was a CS #2 gap — must surface here).
+
+### Part 3 — Rapid-Fire Defense (~10-15 min)
+**Oral.** 5-7 interview-style follow-up questions on the Part 2 design. John responds verbally; Claude tracks question + per-Q grade in [capstone-exam.md](./capstone-exam.md). **Pass:** ≥4/7 confident.
+
+### Overall Pass / Fail
+ALL THREE parts must pass for the section to close. Failing any single part → targeted re-teach + retry of THAT part only (not the whole Capstone). The gate surfaces real gaps; it's not one-shot pass-or-fail. Log result in [capstone-exam.md](./capstone-exam.md) Overall Result section + below.
 
 **Capstone result:** NOT YET RUN
 
