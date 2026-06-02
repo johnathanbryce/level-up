@@ -4,7 +4,7 @@ Per-round debriefs. Mock rounds use `(Mock)` prefix in the Round column.
 
 | Date | Round | Interviewer | Format | Questions | Performance | Gaps surfaced | Follow-ups |
 |------|-------|-------------|--------|-----------|-------------|---------------|------------|
-| — | — | — | — | — | — | — | — |
+| 2026-05-27 | Round 1 — Written Test | (proctored, in-person) | 2hr closed-book, D3 laptop | Multi-select + short structured answers. **AI-forward; heavy MCP focus.** Logic-reasoning section per Glassdoor pattern. | **PASSED** — advanced to behavioral | (TBD — fill from memory before Round 2 if useful) | Advanced to 45-min behavioral 2026-06-02 3:30 PM |
 
 ---
 
