@@ -137,3 +137,32 @@ They are **separate model categories** with different jobs.
     - **Latency**: typically 50-300ms per call. **Batching** multiple inputs in one API call is the big speedup
     - **Token limit:** every embedding model has a max input length, typically in the low thousands of tokens. Long docs must be chunked first (which is why "chunking strategies" is a whole sub-topic in RAG architecture).
         - *Reference (Tier 3): text-embedding-3-small caps at 8191 tokens (~6000 words). Look up your model's specific limit when you actually need it.*
+
+### Cosine similarity 
+
+- **Cosine similarity** = the metric that scores how close two embeddings are in meaning. 
+  - Output is a single number
+  - Higher number = more similar 
+- It measures **direction alignment** between two vectors, which is why a one-word query and a long document about the same topic still score as similar
+- It is what powers **top-k retrieval:** embed the query, score it against every stored vector, return the highest-scoring docs
+
+### Dimensionality
+
+- **Dimensionality** = how many numbers are in each vector (text-embedding-3-small = 1536, large = 3072)
+- The one mental model that matters:
+  - **More dimensions = more capacity to capture nuance, but more storage + slower search + higher cost**
+  - Fewer dimensions = cheaper and faster, but coarser meaning
+  - It's a **knob**: bigger isn't automatically better - you pick based on whether your task needs fine semantic distinctions or just rough topical matching 
+
+- **Interview takeaway:** more dimensions cost more to store and search; you match the model to the precision the task actually needs 
+
+### Common embedding models & trade-offs
+
+- **Hosted API** (OpenAI) vs, **open-source self-hosted** (sentence-transformers, BGE, E5)
+  - Hosted = simple, pay per token, data leaves your network
+  - Self-hosted = free per call + data stays in-house, but you run the infra
+- **Axes you trade on:** quality / cost / latency/ dimensions / max input tokens / data privacy
+- Switching models = **Re-embedding your entire corpus**
+
+- **Interview takeaway:** *"Start hosted (OpenAI) for simplicity; move to self-hosted open-source when cost at scale, latency, or data-privacy requirements justify running your own*
+
