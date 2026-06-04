@@ -4,9 +4,9 @@
 
 - [x] Chunk 1: What an embedding is
 - [x] Chunk 2: How embedding models work (high level)
-- [ ] Chunk 3: Cosine similarity and distance metrics
-- [ ] Chunk 4: Dimensionality and its impact on performance/quality
-- [ ] Chunk 5: Common embedding models and trade-offs
+- [x] Chunk 3: Cosine similarity and distance metrics
+- [x] Chunk 4: Dimensionality and its impact on performance/quality
+- [x] Chunk 5: Common embedding models and trade-offs
 
 ---
 
@@ -138,7 +138,7 @@ They are **separate model categories** with different jobs.
     - **Token limit:** every embedding model has a max input length, typically in the low thousands of tokens. Long docs must be chunked first (which is why "chunking strategies" is a whole sub-topic in RAG architecture).
         - *Reference (Tier 3): text-embedding-3-small caps at 8191 tokens (~6000 words). Look up your model's specific limit when you actually need it.*
 
-### Cosine similarity 
+## Cosine Similarity and Distance Metrics
 
 - **Cosine similarity** = the metric that scores how close two embeddings are in meaning. 
   - Output is a single number
@@ -146,7 +146,7 @@ They are **separate model categories** with different jobs.
 - It measures **direction alignment** between two vectors, which is why a one-word query and a long document about the same topic still score as similar
 - It is what powers **top-k retrieval:** embed the query, score it against every stored vector, return the highest-scoring docs
 
-### Dimensionality
+## Dimensionality
 
 - **Dimensionality** = how many numbers are in each vector (text-embedding-3-small = 1536, large = 3072)
 - The one mental model that matters:
@@ -156,7 +156,7 @@ They are **separate model categories** with different jobs.
 
 - **Interview takeaway:** more dimensions cost more to store and search; you match the model to the precision the task actually needs 
 
-### Common embedding models & trade-offs
+## Common Embedding Models & Trade-offs
 
 - **Hosted API** (OpenAI) vs, **open-source self-hosted** (sentence-transformers, BGE, E5)
   - Hosted = simple, pay per token, data leaves your network

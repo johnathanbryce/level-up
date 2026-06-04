@@ -250,6 +250,22 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
+### INTERVIEW CYCLES CLOSED — REGULAR PIPELINE IS DEFAULT (2026-06-03)
+
+**All active interview cycles are DONE.** D3 Security and Remitly are no longer active — do NOT announce either as an active cram at session start. The D3/Remitly blocks further down are kept as historical record only. **Default session shape is back to the regular pipeline:** algo warmup + applied-recall bridge + roadmap topic.
+
+**Two live tracks right now:**
+
+1. **Section 2 (System Design) — ONE gate left: the End-of-Section Capstone.** All teaching + case studies are done; only the 3-part Capstone remains (Part 1 written quiz, Part 2 cold case study, Part 3 rapid-fire defense — see [02-system-design/CLAUDE.md](02-system-design/CLAUDE.md) and the SECTION 2 CLOSE block below). **John plans to do this 2026-06-04 (tomorrow)** to close Section 2 — he deferred it on 2026-06-03 due to low energy. If John says "let's do the sys design capstone," run that.
+
+2. **Section 3 (AI Foundations) — IN PROGRESS. Group 1 (Embeddings & Vector Concepts) COMPLETE as of 2026-06-03.** All 5 chunks done + `embeddings_demo.py` + `cosine_similarity.py`. **Next up: RAG Architecture group** — new notes file `03-ai-foundations/notes/02-rag-architecture.md`; end-to-end pipeline + chunking strategies/trade-offs + retrieval (top-K, thresholds, re-ranking) + citation/grounding + hallucination mitigation; includes a pipeline-flow diagram + `chunking_demo.py` micro-script. See [03-ai-foundations/CLAUDE.md](03-ai-foundations/CLAUDE.md) Session Log (2026-06-03 row) for full detail + carried-forward weak spots.
+
+**At session start, ask which track:** AI Foundations RAG group, or the Section 2 Capstone. Algo warmup + bridge first either way (John can skip the algo on a low-energy day — he did 2026-06-03).
+
+**Carry-forward from 2026-06-03 (re-test at RAG group start):** (1) "what is an embedding, and is an LLM involved in producing one?" — John has twice re-coupled embeddings to RAG/LLM (answer: an embedding is the output vector; no LLM involved). (2) Keep drilling "name the cost/trade-off" → force the concrete thing given up, not a restatement of the decision.
+
+---
+
 ### SECTION 2 CLOSE — PATHWAY UPDATE 2026-06-01
 
 **Section 2 (System Design) closing path has been restructured.** Mid-CS-#2 (real-time chat), John flagged hard case-study fatigue and asked for an honest mentor assessment. Outcome:
