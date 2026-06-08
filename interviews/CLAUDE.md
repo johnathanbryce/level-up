@@ -12,8 +12,9 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Role | Date | Status | Next Action |
 |---------|------|------|--------|-------------|
-| [D3 Security](d3-security/) | AI Engineer | 2026-05-27 3pm PT (in-person written test, 2hr) | **Active — hard date** | Lesson 1 (AI Engineering) COMPLETE Sun 2026-05-24 at B+/A-. Lesson 2 (RAG Deep) next in fresh window. Mon-Tue full days remaining + Wed 1h review. |
-| [Remitly](remitly/) | TBD (SDE II — 1 of 3 in Burnaby BC) | 2026-05-20 recruiter screen PASSED; tech screen TBD | Active — awaiting HM | Phase 2 LC drills + STAR story drafts (paused during D3 cram) |
+| [Deep Core](deep-core/) | Founding Engineer (employee #1) | 2026-06-10 8:15am PT (remote, 45-min technical discussion/opinions, no coding) | **Active — hard date** | Round 1 (intro) PASSED. Cram: Mon L1 Agentic + L2 Claude Code; Tue L3-L7 + mock; Wed AM review. |
+| [D3 Security](d3-security/) | AI Engineer | 2026-05-27 3pm PT (in-person written test, 2hr) | Past — log/close | Round 1 written test taken 2026-05-27. Backfill debrief + close. |
+| [Remitly](remitly/) | TBD (SDE II — 1 of 3 in Burnaby BC) | 2026-05-20 recruiter screen PASSED; tech screen TBD | Active — awaiting HM | Phase 2 LC drills + STAR story drafts (paused) |
 
 ---
 
@@ -21,7 +22,8 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Folder | Status |
 |---------|--------|--------|
-| D3 Security | [d3-security/](d3-security/) | Active — hard date 2026-05-27 |
+| Deep Core | [deep-core/](deep-core/) | Active — hard date 2026-06-10 |
+| D3 Security | [d3-security/](d3-security/) | Past — log/close |
 | Remitly | [remitly/](remitly/) | Active — awaiting HM |
 
 ---
