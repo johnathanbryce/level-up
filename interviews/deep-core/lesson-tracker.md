@@ -6,11 +6,29 @@
 
 ## Current Position
 
-> **Scaffolding built 2026-06-08 (Mon). Teaching not yet started.**
+> **SCOPE RESHAPED 2026-06-08 (Mon) mid-session — read this.** John pushed back (correctly) that the original plan over-indexed on *teaching concepts he already owns*. He builds agentic systems daily. This is **NOT a concept-learning cram — it's an articulation + opinion-readiness cram**: drill tight, honest, spoken answers to the questions Jeff will actually ask. Kill the lecturing on anything self-evident; the deliverable is a crisp spoken line + an honest anchor, not a textbook definition.
 >
-> **Next:** Lesson 1 — Agentic Orchestration, Chunk 1. Teach chunk-by-chunk; John takes notes in `study-plan/agentic-orchestration.md`; quiz at lesson end.
+> **Two-day split (locked):**
+> - **Mon PM/eve (today): NOTE-TAKING + quizzes mixed in.** Build solid, lean notes across the 5 areas below. One chunk → check question → confirm → next.
+> - **Tue: depth + mock drilling** on Monday's notes (robust questions, Caseway stories tightened, opinions rapid-fire, full mock Q&A).
+> - **Wed AM:** light reflex pass + re-read questions-for-Jeff. No new content.
 >
-> **Day plan:** Mon = L1 + L2 (screened-for, fresh-brain). Tue = L3-L6 + full mock. Wed AM = light reflex.
+> **5 study areas, ordered hardest/most-screened first:**
+> 1. **Agentic systems must-knows** (THE screen) — ReAct vs planner-executor, the trust stack (grounding + structured outputs + validation gates + HITL), the six-beat Deep Core design-out-loud, Claude Code internals as a *power user*.
+> 2. **AI foundations refresh** — only what supports agentic talk: context/compaction, RAG, structured outputs, evals.
+> 3. **System design / technical**, framed to *their* product — long-running 3D-model build → async/queues, LLM caching, cost rate-limiting, monitoring.
+> 4. **Database / backend** — Postgres/Supabase, schema + indexing basics, the likely architecture (below).
+> 5. **React / Next.js** — high level only: rendering model, server vs client components, when to use which.
+>
+> **Cuts locked (do NOT lecture — one spoken line each):** planner+deterministic-tools (John flagged self-evident → one line + Caseway anchor only); structured outputs & validation gates folded INTO the "trust stack" answer; Supabase = "managed Postgres + RLS"; Cesium = "web 3D engine, large-mesh perf is the hard part"; geology = product context only.
+>
+> **CI/CD + monitoring bumped skip → LIGHT PASS** — explicitly in the JD ("ownership of the codebase, and the systems that support the software — project management, CI/CD, monitoring").
+>
+> **Likely backend architecture (John's peer-level inference, confirm w/ Jeff):** Next.js (Node) app layer via route handlers/server actions (NOT a separate Express server) + standalone **Python** geostat/agent services (geostats ecosystem = PyKrige/GeostatsPy/GemPy + NumPy/SciPy) + Supabase Postgres. Smart Q for Jeff: *"Next.js app layer talking to Supabase, geostat compute as separate Python services — is that the shape, or more consolidated?"*
+>
+> **Grading bar (spoken round):** fluency, honesty, brevity. John's #1 risk = overclaiming or rambling. Target every answer ~15-25 sec: name the trade-off, take a position, give the honest caveat, STOP.
+>
+> **Progress so far (Mon):** Area 1 in progress — ReAct vs planner-executor taught (John **B-**: concept right, rambled, missed "plan inspectable before execution" as the load-bearing trust point). Trust-stack chunk taught; awaiting John's spoken answer. Note files realigned + 2 new scaffolds created (`backend-databases.md`, `react-nextjs.md`).
 
 ---
 
@@ -193,6 +211,48 @@ Ask for the next step explicitly: **"What does your process look like from here?
 
 ---
 
+## Lesson 7 — AI Foundations Refresh (Area 2, lean)
+
+**Notes file:** [study-plan/agentic-orchestration.md](study-plan/agentic-orchestration.md) (or fold into claude-code-internals notes)
+**Goal:** Only the foundations that support agentic talk — no definitions-for-definitions'-sake. John just finished AI Foundations; this is reactivation.
+
+| # | Chunk | Tier | Teach |
+|---|---|---|---|
+| 1 | Context window + compaction | T1 | Finite context; long agent runs get compacted/summarized; power-user habit = externalize durable state to files (CLAUDE.md). |
+| 2 | RAG in one breath | T1 | Embed corpus → retrieve top-K by similarity → stuff into prompt as grounded context. Hybrid = vector + keyword (BM25). Caseway = ES retrieval. |
+| 3 | Structured outputs | T1 | Typed JSON contract between steps (Pydantic / function-calling). Covered in Area 1 trust stack — don't re-teach. |
+| 4 | Evals | T2 | Offline (test set + LLM-as-judge) + online (monitoring, regression). Deep Core eval is HARD + interesting → expert-validated reference models + geologist acceptance/edit rate. Raising the question = senior signal. |
+
+---
+
+## Lesson 8 — Database / Backend (Area 4)
+
+**Notes file:** [study-plan/backend-databases.md](study-plan/backend-databases.md)
+**Goal:** Speak to the data + backend layer of *their* stack as the owner the JD describes ("ownership through the entire stack from the database").
+
+| # | Chunk | Tier | Teach |
+|---|---|---|---|
+| 1 | Likely architecture | T1 | Next.js (Node) app layer + Python geostat/agent services + Supabase Postgres. Why split: geostats ecosystem is Python. |
+| 2 | Supabase = Postgres+ | T1 | Managed Postgres + auth + RLS + storage + realtime. **RLS** = row-level tenant isolation in the DB vs app layer → maps to John's JWT/per-user scoping at Caseway. One smart Q: "RLS or app-layer for tenant isolation?" |
+| 3 | Schema + indexing basics | T2 | Normalize sensibly; index the columns you filter/join on; EXPLAIN ANALYZE to find slow queries; B-tree default. pgvector for vectors when already on Postgres. |
+| 4 | Long-job persistence | T2 | A 3D model build = a job row (status, params, result ref) + async worker; store large model artifacts in object storage, reference by URL. |
+
+---
+
+## Lesson 9 — React / Next.js (Area 5, HIGH LEVEL ONLY)
+
+**Notes file:** [study-plan/react-nextjs.md](study-plan/react-nextjs.md)
+**Goal:** Speak fluently at a high level — John is strong here, this is reflex-refresh, NOT teaching. Do not go deep.
+
+| # | Chunk | Tier | Teach |
+|---|---|---|---|
+| 1 | Rendering model | T1 | React re-renders on state/prop change; reconciliation/diffing; memoization (useMemo/useCallback/React.memo) only when there's a measured cost. |
+| 2 | Server vs Client Components (Next App Router) | T1 | Server Components render on the server (no JS shipped, can fetch directly); Client Components for interactivity/hooks/browser APIs. Default to server; `"use client"` at the leaf. |
+| 3 | Data fetching + rendering strategies | T2 | SSR / SSG / ISR / streaming; route handlers + server actions as the backend. When to use which (one line each). |
+| 4 | Cesium-in-Next reality | T3 | Cesium is a heavy client-side WebGL engine → must be a Client Component, dynamic-import with `ssr: false`. One-liner only. |
+
+---
+
 ## Mock Q&A (Tue, end)
 
 Rapid-fire across all lessons. Grade every answer for **honesty, brevity, energy**. Likely questions: walk me through Caseway's architecture; how do your agents fail + how do you catch it; the cost-optimization story; why founding + why mining; what would you build first here; comp/equity expectations; availability.
@@ -204,3 +264,4 @@ Rapid-fire across all lessons. Grade every answer for **honesty, brevity, energy
 | Date | Lessons | Weak spots | Next |
 |---|---|---|---|
 | 2026-06-08 | Scaffolding only | — | Teach L1 (Agentic Orchestration) Chunk 1 |
+| 2026-06-08 PM | SCOPE RESHAPE + Area 1 start | Rambling on ReAct vs planner-executor (B-); missed "plan inspectable before execution" trust point | Continue Area 1: trust-stack answer → failure modes → six-beat design → Claude Code internals |

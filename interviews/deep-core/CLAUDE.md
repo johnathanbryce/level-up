@@ -40,18 +40,22 @@ NOT on the list: Supabase trivia, Cesium API surface, geology facts. Those are t
 
 ## Current Position — READ THIS FIRST
 
-> **Scaffolding built 2026-06-08 (Mon). Teaching not yet started.**
+> **SCOPE RESHAPED 2026-06-08 (Mon) mid-session.** This is NOT a concept-learning cram — John builds agentic systems daily. It's an **articulation + opinion-readiness cram**: drill tight, honest, spoken answers to what Jeff will actually ask. Kill lecturing on self-evident concepts; deliverable = crisp spoken line + honest anchor. Full reshape detail (5 areas, cuts, backend inference) lives in the [lesson-tracker.md](lesson-tracker.md) Current Position block — read it.
 >
-> **Cram window:** Mon 2026-06-08 afternoon (2-4h, fresh — front-load hard stuff) + Tue 2026-06-09 (full day, breadth + reinforcement + mock) + Wed AM light review before 8:15 AM.
->
-> **Day plan:**
-> - **Mon (today):** Lesson 1 (Agentic Orchestration) + Lesson 2 (Claude Code Internals). Highest-leverage + highest-interest + explicitly screened. End each with a quiz.
-> - **Tue:** Lesson 3 (Caseway stories, spoken + tightened) + Lesson 4 (System Design — reactivation + AI framing) + Lesson 5 (Opinions rapid-fire) + Lesson 6 (Questions for Jeff + close). Full mock Q&A at the end.
->
-> **⏱ ONE DAY of real study time — NO weeds.** Bar = speak intelligently about SWE trade-offs + AI. Stack focus = Next.js / TypeScript / Python. Supabase/Cesium NOT studied (one-line fallback only). Geology NOT studied (product context only). System design IS in scope (Jeff may probe). See TIME REALITY block in [lesson-tracker.md](lesson-tracker.md).
+> **Two-day split (locked):**
+> - **Mon PM/eve (today): NOTE-TAKING + quizzes mixed in** across 5 areas: (1) Agentic must-knows [screen], (2) AI foundations refresh, (3) System design framed to their product, (4) Database/backend, (5) React/Next high-level.
+> - **Tue:** depth + mock drilling — Caseway stories tightened, opinions rapid-fire, full mock Q&A.
 > - **Wed AM:** light reflex pass + re-read questions-for-Jeff. No new content.
 >
-> **Teaching source of truth:** [lesson-tracker.md](lesson-tracker.md). Teach from it chunk-by-chunk; John takes notes in `study-plan/<topic>.md`; quiz at end of each lesson.
+> **CI/CD + monitoring = LIGHT PASS** (explicitly in JD). **Supabase = "managed Postgres + RLS" one-liner; Cesium = "web 3D engine, large-mesh perf is the hard part"; geology = product context only.** Stack focus = Next.js / TypeScript / Python.
+>
+> **Likely backend (peer-level inference, confirm w/ Jeff):** Next.js (Node) app layer via route handlers/server actions (NOT separate Express) + standalone **Python** geostat/agent services + Supabase Postgres.
+>
+> **Progress (Mon):** Area 1 in progress — ReAct vs planner-executor taught (John B-: right concept, rambled, missed "plan inspectable before execution"). Trust-stack chunk taught. 2 new note scaffolds created (`backend-databases.md`, `react-nextjs.md`); `agentic-orchestration.md` realigned to reshaped structure.
+>
+> **Grading bar (spoken round):** fluency, honesty, brevity. #1 risk = overclaiming/rambling. Every answer ~15-25 sec: name trade-off, take a position, honest caveat, STOP.
+>
+> **Teaching source of truth:** [lesson-tracker.md](lesson-tracker.md). John takes notes in `study-plan/<topic>.md`; quiz at end of each area.
 
 **If a fresh window is asked to "continue Deep Core":** read this block + the Current Position in [lesson-tracker.md](lesson-tracker.md). Confirm which lesson to resume; do NOT re-teach completed lessons.
 
@@ -93,6 +97,9 @@ NOT on the list: Supabase trivia, Cesium API surface, geology facts. Those are t
 - `study-plan/system-design.md` — John's notes (Lesson 4)
 - `study-plan/opinions-tradeoffs.md` — John's notes (Lesson 5)
 - `study-plan/questions-and-close.md` — John's notes (Lesson 6)
+- `study-plan/ai-foundations.md` — John's notes (Area 2 — AI foundations refresh / RAG; created 2026-06-08)
+- `study-plan/backend-databases.md` — John's notes (Area 4 — DB/backend; created 2026-06-08)
+- `study-plan/react-nextjs.md` — John's notes (Area 5 — React/Next high-level; created 2026-06-08)
 
 ---
 
@@ -101,3 +108,4 @@ NOT on the list: Supabase trivia, Cesium API surface, geology facts. Those are t
 | Date | Focus | Outcome / Notes |
 |------|-------|-----------------|
 | 2026-06-08 | Intake + scaffolding | Folder + 4 base files + study-plan README + 7 topic-note scaffolds + lesson-tracker (7 lessons) created. Round 1 already passed (casual intro). Round 2 = 45-min technical discussion/opinions, no coding, Wed 2026-06-10 8:15 AM. Day plan: Mon (L1 Agentic + L2 Claude Code), Tue (L3-L7 + mock), Wed AM light review. |
+| 2026-06-08 PM | SCOPE RESHAPE + Area 1 start | John (correctly) flagged plan over-indexed on teaching concepts he already owns → reshaped to articulation/opinion-readiness cram. Mon = notes+quizzes across 5 areas; Tue = depth+mock. Backend inferred (Next.js + Python geostat services + Supabase). Area 1 started: ReAct vs planner-executor (B-, rambled), trust stack taught. 2 new note scaffolds created + agentic notes realigned. |
