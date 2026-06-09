@@ -28,7 +28,8 @@
 >
 > **Grading bar (spoken round):** fluency, honesty, brevity. John's #1 risk = overclaiming or rambling. Target every answer ~15-25 sec: name the trade-off, take a position, give the honest caveat, STOP.
 >
-> **Progress so far (Mon):** Area 1 in progress — ReAct vs planner-executor taught (John **B-**: concept right, rambled, missed "plan inspectable before execution" as the load-bearing trust point). Trust-stack chunk taught; awaiting John's spoken answer. Note files realigned + 2 new scaffolds created (`backend-databases.md`, `react-nextjs.md`).
+> **Progress (Mon eve):** Notes DONE for **Area 1** (agentic: planner+deterministic, ReAct vs planner-executor, trust stack, failure modes, evals, six-beat design, tool-calling mechanism; Claude Code: MCP/hooks/subagents/compaction w/ code+diagrams in `claude-code-internals.md`), **Area 2** (`ai-foundations.md` — RAG/hybrid/embeddings-vs-response-caching), **Area 3** (`system-design.md` — all 11 concepts). **Area 5 (React/Next, MEDIUM)** chunks 1-5 done; **6-8 left**. **Area 4 (backend-databases) NOT started.**
+> **ALL quizzes + interview Qs deferred to Tue.** Tue warm-up: write a `useDebounce` hook (hands-on). Carry-forward weak spot: Caseway-mapping reflex + tighten spoken delivery (rambling = #1 risk).
 
 ---
 
@@ -265,3 +266,4 @@ Rapid-fire across all lessons. Grade every answer for **honesty, brevity, energy
 |---|---|---|---|
 | 2026-06-08 | Scaffolding only | — | Teach L1 (Agentic Orchestration) Chunk 1 |
 | 2026-06-08 PM | SCOPE RESHAPE + Area 1 start | Rambling on ReAct vs planner-executor (B-); missed "plan inspectable before execution" trust point | Continue Area 1: trust-stack answer → failure modes → six-beat design → Claude Code internals |
+| 2026-06-08 eve | Notes-build: Areas 1,2,3 done + React/Next 1-5 | Caseway-mapping reflex weak; rambling = #1 risk; both → Tue drill | Finish React/Next 6-8 → Area 4 (backend-databases) → Tue: `useDebounce` warm-up + ALL quizzes/mocks |

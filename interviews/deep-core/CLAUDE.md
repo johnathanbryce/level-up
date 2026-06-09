@@ -51,7 +51,13 @@ NOT on the list: Supabase trivia, Cesium API surface, geology facts. Those are t
 >
 > **Likely backend (peer-level inference, confirm w/ Jeff):** Next.js (Node) app layer via route handlers/server actions (NOT separate Express) + standalone **Python** geostat/agent services + Supabase Postgres.
 >
-> **Progress (Mon):** Area 1 in progress — ReAct vs planner-executor taught (John B-: right concept, rambled, missed "plan inspectable before execution"). Trust-stack chunk taught. 2 new note scaffolds created (`backend-databases.md`, `react-nextjs.md`); `agentic-orchestration.md` realigned to reshaped structure.
+> **Progress (Mon eve):** Notes DONE for **Area 1** (agentic + Claude Code internals — incl. tool-calling mechanism, MCP/hooks with code+diagrams), **Area 2** (AI foundations — RAG + hybrid + embeddings-vs-response caching nuance), **Area 3** (System Design — all 11 concepts: scaling/statelessness, LB, caching [3-way LLM-cache split], async/queues [pipeline-framed], idempotency, rate-limiting, DB+indexing, replication/sharding, CAP, monolith-vs-services, observability/reliability). **Area 5 (React/Next, MEDIUM level)** in progress — chunks 1-5 done (rendering model, hooks+rules, useEffect deep, state mgmt, performance); **chunks 6-8 left** (Server vs Client Components, data-fetching/rendering strategies, Cesium-in-Next). **Area 4 (backend-databases) NOT started.**
+>
+> **ALL quizzes + interview-style Qs deferred to Tue** (John's call — Mon = notes-building, Tue = drill/mock at home, focused).
+>
+> **Tue warm-up (John's request):** write a custom **`useDebounce` hook** as a hands-on coding warm-up before drilling.
+>
+> **Weak spot to drill Tue (carry-forward):** Caseway-mapping habit — John designs well abstractly but doesn't reflexively anchor beats to his own Caseway work; that's the differentiator for this role. Also: tighten spoken delivery (rambling is the #1 risk).
 >
 > **Grading bar (spoken round):** fluency, honesty, brevity. #1 risk = overclaiming/rambling. Every answer ~15-25 sec: name trade-off, take a position, honest caveat, STOP.
 >
