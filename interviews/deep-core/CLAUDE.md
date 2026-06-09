@@ -60,9 +60,10 @@ NOT on the list: Supabase trivia, Cesium API surface, geology facts. Those are t
 > **TUE PLAN (rebalanced — John's read: this is a conversational/experience round, likely lighter than prepped; Round 3 = paired programming):**
 > - **HIGH:** Caseway stories (tight/honest/spoken) + agentic talking points reflexive + **Caseway-mapping reflex** (the one real weak spot — designs well abstractly, doesn't anchor to his own work).
 > - **MEDIUM:** opinions/trade-off rapid-fire + questions for Jeff.
-> - **LOW (insurance only, few reps):** system-design + React quizzes.
-> - **Warm-up:** write a `useDebounce` hook (hands-on).
+> - **THEN, if time permits → pivot to HANDS-ON CODING PRACTICE** to get ahead for Round 3 (paired programming). See R3 prep note below.
 > - **Throughout:** tighten spoken delivery — rambling is the #1 risk.
+>
+> **ROUND 3 PREP (paired programming) — flesh out together, noted 2026-06-08:** John has NEVER done a paired-programming interview (only live-coding assessments) — so prep BOTH (a) the **format** (collaborative, think-out-loud, ask clarifying Qs, communicate trade-offs; it's about how you work *with* someone, not just landing the answer) AND (b) **real-world reps** on their stack (Next.js/TS/Python), NOT LeetCode. Candidate exercises to detail later: (i) build a small backend API + wire it up + consume it on a pre-built Next.js frontend; (ii) find-and-fix bugs in a faux mini-codebase. May need a small scaffolded repo to practice in.
 >
 > **Grading bar (spoken round):** fluency, honesty, brevity. #1 risk = overclaiming/rambling. Every answer ~15-25 sec: name trade-off, take a position, honest caveat, STOP.
 >
