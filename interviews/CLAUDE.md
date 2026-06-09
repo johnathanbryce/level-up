@@ -12,7 +12,7 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Role | Date | Status | Next Action |
 |---------|------|------|--------|-------------|
-| [Diligent](diligent/) | Software Engineer II (Vancouver, hybrid) | 2026-06-09 recruiter screen (~15 min phone) | **Active — TODAY** | Recruiter screen today. Light fit prep done. After call: log process + scope Phase 1. |
+| [Diligent](diligent/) | **AI Solutions Architect** (Vancouver, hybrid) | HM call Thu 2026-06-11 10:30am | **Active** | Recruiter screen PASSED, role clarified (was SE II → AI Solutions Architect). Wed: Cathy coffee intel. Thu: HM call. Then business use-case presentation round. |
 | [Deep Core](deep-core/) | Founding Engineer (employee #1) | 2026-06-10 8:15am PT (remote, 45-min technical discussion/opinions, no coding) | **Active — hard date** | Round 1 (intro) PASSED. Cram: Mon L1 Agentic + L2 Claude Code; Tue L3-L7 + mock; Wed AM review. |
 | [D3 Security](d3-security/) | AI Engineer | 2026-05-27 3pm PT (in-person written test, 2hr) | Past — log/close | Round 1 written test taken 2026-05-27. Backfill debrief + close. |
 | [Remitly](remitly/) | TBD (SDE II — 1 of 3 in Burnaby BC) | 2026-05-20 recruiter screen PASSED; tech screen TBD | Active — awaiting HM | Phase 2 LC drills + STAR story drafts (paused) |
@@ -23,7 +23,7 @@ Distinct from [10-interview-prep/](../10-interview-prep/), which is the by-techn
 
 | Company | Folder | Status |
 |---------|--------|--------|
-| Diligent | [diligent/](diligent/) | Active — recruiter screen 2026-06-09 |
+| Diligent | [diligent/](diligent/) | Active — HM call 2026-06-11 (AI Solutions Architect) |
 | Deep Core | [deep-core/](deep-core/) | Active — hard date 2026-06-10 |
 | D3 Security | [d3-security/](d3-security/) | Past — log/close |
 | Remitly | [remitly/](remitly/) | Active — awaiting HM |

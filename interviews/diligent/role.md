@@ -1,47 +1,78 @@
 # Diligent — Role
 
-## Software Engineer II — Vancouver, BC (hybrid, ~50% onsite)
+## AI Solutions Architect — Vancouver, BC (hybrid ~50% onsite)
 
-- **Level:** Mid-level (SE II)
-- **Salary:** $86,320 – $107,900 CAD base
-- **Stack:** TypeScript on AWS Serverless. Event-driven, highly observable, infrastructure as code (CDK/Terraform). Node.js/TS REST APIs. React or Angular frontend. SQL/PostgreSQL.
-- **Team model:** Squads own services end-to-end — architecture → implementation → monitoring → continuous improvement. Pairing, Agile, continuous deployment to prod.
-- **AI expectation:** Use AI tools to accelerate coding/debugging/testing/research/review — and validate outputs with judgment. Must know core AI concepts (tokens, context length, embeddings, hallucinations), high-level LLM behavior, and safe-vs-unsafe use cases (privacy, security, fairness).
+> **CRITICAL:** This is the ACTUAL role (confirmed on recruiter screen 2026-06-09). The original posting John applied to was *Software Engineer II* — that was a mismatch. The recruiter redirected him to this one.
 
-### Required experience (verbatim, condensed)
+- **Public title:** AI Solutions Architect
+- **Internal title (current):** **Senior Business Analyst** — they're actively renaming AI titles; "AI Solutions Architect" becomes the official internal title early next year. John can use "AI Solutions Architect" externally.
+- **Team:** Business Applications and Analytics (manages enterprise apps — ERP, CRM, BI). This is an **internal-facing** team, not the product engineering org.
+- **Salary:** $114,000 – $142,000 CAD (notably higher than the SE II band — this is a more senior/strategic role)
+- **Hybrid:** ~50% onsite, Vancouver.
 
-- 3–5 yrs professional SWE, agile/fast-paced
-- AI tooling & responsible evaluation (bias, cost, ethics); prompt engineering
-- Core AI concepts: tokens, context length, embeddings, hallucinations
-- AWS hands-on; IaC familiarity (CDK, Terraform)
-- CI/CD mindset (interest is acceptable)
-- Backend: RESTful APIs in Node.js/TypeScript, Git, SQL (PostgreSQL)
-- Frontend familiarity: React or Angular
-- Communication: discuss architecture, document designs, present clearly
+### What the role actually is (one paragraph)
+
+Diligent is "all-in on AI." This role sits on the internal **Business Applications & Analytics** team and exists to **accelerate Diligent's *internal* AI capabilities** across business functions — Marketing, GTM/Sales, Customer Success & Support, Finance, HR, Legal, and Product/Engineering. You **identify AI opportunities by partnering with business leaders, then prototype → deploy → scale** AI/GenAI/agentic solutions that drive operational efficiency. It is a hybrid **technical + business-translator** role: you build working prototypes AND you sell, present, and drive adoption + measurable ROI. Think "internal AI solutions consultant," not "product feature engineer."
 
 ---
 
-## Fit assessment (honest)
+## Tech / capability stack named in the JD
 
-**Strong fit:**
-- TypeScript / Node / React — John's strongest area (~3 yrs).
-- Core AI concepts (embeddings, hallucinations, tokens, context) — recent deep study + Caseway AI product. This is a standout, not a gap.
-- AI-tooling / responsible use — actively practiced.
-- Mid-level (3–5 yr) maps to John's ~3 yrs — he's at the floor; lead depth from Caseway offsets.
-
-**Growth areas (be honest, don't oversell):**
-- **AWS depth + IaC (CDK/Terraform)** — some exposure, not deep. Frame as "hands-on with AWS, IaC is where I want to grow." JD says "familiarity," not expert.
-- **Serverless architecture** specifically (Lambda, event-driven) — conceptual understanding, less production reps.
-- **PostgreSQL** — actively strengthening; comfortable but not expert.
-- **CI/CD** — some GitHub Actions; JD accepts "interest."
-
-**Bridge line:** "My core is TypeScript full-stack with real production AI experience. The serverless/IaC depth is exactly the direction I want to grow, and it's a familiarity ask, not an expert ask."
+- **GenAI tooling:** GPTs, Hugging Face, open-source LLMs, **LangChain**, Scikit-learn
+- **AI techniques:** prompt engineering, fine-tuning, **RAG pipelines**, API integrations
+- **Data wrangling:** source/clean/transform raw data (spreadsheets, logs, APIs, CRM exports) into structured inputs
+- **Code:** scripts / small apps to connect models, cloud services, data sources. **Python preferred.**
+- **ML frameworks (beneficial, not required):** TensorFlow, PyTorch
+- **Cloud:** AWS, GCP, or Azure (any; "willingness to learn equally important")
+- **Preferred depth:** LLMs, RAG architectures, **MLOps / LLMOps**, GenAI app deployment, NLP, predictive modeling, data engineering
 
 ---
 
-## Company context (for fit framing)
+## Stack / capability coverage (honest)
 
-- AI leader in GRC (governance, risk, compliance) SaaS. Diligent One Platform = unified GRC + board management.
-- 1M+ users, 700K board members. Gartner/Forrester Leader 2026.
-- Big strategic bet: **agentic AI** — "AI Board Member" + embedded AI agents automating GRC workflows (launched April 2026).
-- Vancouver = engineering center of excellence; serverless TS/Node on AWS; next-gen Reporting Platform.
+| JD capability | John's coverage | Notes / framing |
+|---|---|---|
+| Hands-on GenAI prototyping (end-to-end) | **Strong** | Caseway AI search engine — built + shipped a public RAG/search product |
+| RAG pipelines | **Strong-ish** | Recent deep study (Section 3 AI Foundations) + Caseway hybrid search |
+| Prompt engineering | **Solid** | Practiced; LLM integration patterns from Caseway |
+| API integrations | **Strong** | Core skill — connecting models/services |
+| Python | **Moderate** | Reading strong, writing rebuilding (the explicit growth area). JD says "Python preferred" but "willingness to learn equally important" |
+| Data wrangling (CRM exports, logs, spreadsheets) | **Moderate** | Can do it; not a named past focus. Framable |
+| Responsible AI (privacy/security/bias/ethics) | **Solid awareness** | Studied; ties directly to Diligent's GRC DNA — lean in here |
+| Cloud (AWS/GCP/Azure) | **Surface** | Some AWS. JD is lenient ("beneficial") |
+| MLOps / LLMOps | **Gap** | Preferred, not required. Be honest — it's a growth area |
+| Fine-tuning | **Gap** | Conceptual only. JD frames as "hands-on approach to learning," not mastery |
+| **Business translator / solutions consultant / sales engineer** | **Gap (the real one)** | Never held the title. Bridge: Caseway cross-functional work (PMs, business stakeholders), leading the public search-engine ship after CTO/lead left |
+| 5+ years technical | **~3 years** | Real gap. Frame depth + ownership + AI-specificity over raw years |
+
+---
+
+## Gap Inventory
+
+| Gap | Severity | Framing / mitigation |
+|---|---|---|
+| Never been a sales engineer / solutions consultant | **High** — it's core to the role | Lead with cross-functional Caseway work; AI-product-to-stakeholder translation; show you can do the *function* even without the *title* |
+| Public-speaking / presentation confidence | **High** — the use-case round tests exactly this | Coachable with reps. This is the #1 prep investment. Practice out loud, record, iterate |
+| 5+ years vs ~3 | Medium | Depth + ownership + recency of AI focus. Don't apologize for it |
+| MLOps/LLMOps, fine-tuning | Low-Med | "Preferred," not required. Honest "growth area, here's how I'd learn it fast" |
+| Cloud depth (AWS/GCP/Azure) | Low | JD lenient. Name what you've touched, show willingness |
+
+---
+
+## Must Speak Intelligently On (5-7 non-negotiables)
+
+1. **A concrete AI opportunity inside a business function** (e.g. "AI to triage Customer Success tickets" / "RAG over Legal's contract repository") — the role IS spotting these. *Why: this is the literal job.*
+2. **End-to-end GenAI prototype story** — your Caseway build, framed as problem → prototype → deploy → impact. *Why: the "Practical Tinkerer" proof.*
+3. **Responsible AI in a GRC context** — privacy, security, bias, data protection. *Why: Diligent's whole brand is governance; this is non-negotiable for them.*
+4. **ROI / KPI framing for an AI project** — how you'd measure success, not just build it. *Why: the JD repeats "measurable ROI" and "KPIs."*
+5. **RAG architecture, plainly** — what it is, when it fails, why it beats fine-tuning for most internal use cases. *Why: named explicitly; your strength.*
+6. **Translating tech → business value for non-technical stakeholders.** *Why: the "Business Translator" requirement and the core of the presentation round.*
+7. **Diligent's AI strategy** — "all-in on AI," agentic GRC workforce, AI Board Member. *Why: shows you see how internal AI enablement connects to their public AI bet.*
+
+---
+
+## Why-fit pitch (one paragraph)
+
+> "I'm a hands-on builder who's spent the last stretch deep in exactly the GenAI stack this role runs on — RAG, prompt engineering, API integrations, responsible AI. At Caseway I took an AI search product from prototype to a shipped, rate-limited public engine, and did it while working across PMs and business stakeholders, not just heads-down in code. What excites me about this role is that it's the intersection of building real AI prototypes AND connecting them to business value — and doing it at a company whose entire identity is governance and responsible operation, which is exactly the lens AI needs right now."
+
+**Seniority signal to project:** ownership, judgment on when to adopt vs. wait, ability to translate, and genuine hands-on credibility (architects who can't ship code lose the engineers; architects who can't present lose the business — you need to signal both).

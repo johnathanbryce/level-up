@@ -1,6 +1,8 @@
 # Diligent — Talking Points
 
-Everything John will *say in the room* for the **recruiter screen (15 min, TODAY 2026-06-09)**. This is a fit/logistics call, not technical. Read top-to-bottom once, glance at the bold lines before the call.
+> **ROLE CHANGED:** Recruiter screen (2026-06-09) clarified the real role is **AI Solutions Architect** (internal AI enablement), NOT Software Engineer II. The role-specific talking points now live in [study-plan/hiring-manager-call.md](study-plan/hiring-manager-call.md) (TMAY, why-role, why-Diligent, gap framing). This file keeps the **company research** (Part 1) — still accurate and reusable across all rounds.
+
+Company knowledge to say in any round. The role-fit / behavioral lines moved to the study-plan files per round.
 
 ---
 

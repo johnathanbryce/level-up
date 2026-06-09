@@ -1,32 +1,43 @@
 # Diligent — Interview Prep (Active)
 
-**Role:** Software Engineer II — Vancouver, BC (hybrid ~50% onsite). Mid-level. $86,320–$107,900 CAD.
-**Stack:** TypeScript serverless on AWS, event-driven, IaC (CDK/Terraform), Node/TS REST APIs, React/Angular, PostgreSQL. + responsible AI tooling and core AI concepts.
-**Company:** AI leader in GRC (governance, risk, compliance) SaaS. Diligent One Platform. Pushing agentic AI (AI Board Member, embedded AI agents, April 2026). Vancouver = engineering center of excellence.
+**Role:** **AI Solutions Architect** (internal title currently *Senior Business Analyst*) — Vancouver, BC, hybrid ~50% onsite. $114K–$142K CAD.
+**NOT** the Software Engineer II posting John applied to — recruiter redirected him on the 2026-06-09 screen. This is an **internal AI-enablement / solutions-consulting** role: partner with business functions (Marketing, Sales, CS, Finance, HR, Legal, Product/Eng) → identify AI opportunities → prototype → deploy → scale → prove ROI. Half technical builder, half business translator.
+**Company:** AI leader in GRC SaaS. Diligent One Platform. "All-in on AI" — agentic GRC workforce + AI Board Member (April 2026). Vancouver is an eng hub.
 
 ## Files
 
-- [role.md](role.md) — JD breakdown + honest fit assessment (strengths + growth areas)
-- [talking-points.md](talking-points.md) — **primary prep artifact**: elevator pitch, TMAY, why-Diligent, what-I'm-looking-for, salary/logistics, questions to ask
-- [interview-log.md](interview-log.md) — per-round debriefs (fill after each round)
+- [role.md](role.md) — full JD analysis, stack coverage, gap inventory, must-speak-on, why-fit
+- [talking-points.md](talking-points.md) — **company research** (reusable across rounds)
+- [study-plan/README.md](study-plan/README.md) — interview pathway + cram priority
+- [study-plan/hiring-manager-call.md](study-plan/hiring-manager-call.md) — **Thursday HM call prep** (TMAY, why-role, why-Diligent, gap framing, questions)
+- [study-plan/business-use-case-round.md](study-plan/business-use-case-round.md) — **deep dive on the presentation round** + public-speaking rep plan
+- [study-plan/cathy-coffee-questions.md](study-plan/cathy-coffee-questions.md) — Wed-night intel questions
+- [interview-log.md](interview-log.md) — per-round debriefs
+
+## Interview Pathway
+
+| # | Round | When | Status |
+|---|-------|------|--------|
+| 0 | Recruiter screen | 2026-06-09 | ✅ Passed; role clarified |
+| ☕ | Coffee w/ Cathy (insider intel) | Wed 2026-06-10 night | Upcoming |
+| 1 | HM call (30 min, Q&A + 360) | **Thu 2026-06-11, 10:30am** | Upcoming — top priority |
+| 2 | Business use-case presentation | TBD | Future — highest stakes/fear |
+| 3 | VP final chat (15-20 min) | TBD | Future |
 
 ## Current Position
 
-**Phase 0 — Recruiter screen TODAY 2026-06-09 (~15 min phone).** Light prep only — fit + logistics, not technical. John had <1hr notice. Prep = read `talking-points.md` once, glance at the pre-call checklist.
+**Recruiter screen passed 2026-06-09.** Full prep directory rebuilt for the AI Solutions Architect role (was scaffolded for SE II earlier same day). Web research done on the role type + the business-use-case presentation round.
 
-**Fit summary:** Strong on TS/Node/React + core AI concepts (embeddings, hallucinations, tokens — recent deep study + Caseway AI product). Growth areas (be honest): AWS depth, IaC/CDK/Terraform, serverless production reps, PostgreSQL depth. JD asks "familiarity" on the growth areas, not expert — frame accordingly.
+**Honest fit read:** Strong on hands-on GenAI (Caseway RAG/search product, prompt engineering, API integration, responsible-AI awareness — fits "Practical Tinkerer / Code Crafter / Curious Explorer"). **Real gaps:** (1) never held a sales-engineer/solutions-consultant title — the core "Business Translator" requirement; (2) public-speaking confidence — and the use-case round tests exactly that; (3) ~3 yrs vs 5+. All framable; the presentation round is the #1 prep investment because it's coachable with reps and it's John's stated fear.
 
-## Next Steps (after the recruiter screen)
+## Immediate next actions (in order)
 
-1. **Log the call** in `interview-log.md` — especially the **interview process they outline** (this scopes the next prep phase) + salary/logistics/team.
-2. **Scope Phase 1** based on what the recruiter says the next round is:
-   - If **live coding / tech screen** → algo + TS/Node API reps + test cases.
-   - If **system design** → AWS serverless / event-driven design (Lambda, SQS/SNS, DynamoDB/Postgres, observability).
-   - If **AI-focused screen** → lean into embeddings/RAG/hallucinations/responsible AI (John's strength — already studied in Section 3 AI Foundations).
-3. **Build `study-plan/` directory** mirroring remitly/d3 conventions once the format is known.
+1. **Wed night:** coffee with Cathy — run [cathy-coffee-questions.md](study-plan/cathy-coffee-questions.md); log answers in interview-log.
+2. **Thu 10:30am:** HM call — rehearse the 3 anchor answers + questions in [hiring-manager-call.md](study-plan/hiring-manager-call.md). **Ask the HM what the use-case round involves.**
+3. **Ongoing:** start scoping the business use-case deck early; plan live mock presentations with Claude (John wants reps to beat public-speaking fear).
 
 ## Session Log
 
 | Date | What | Outcome |
 |------|------|---------|
-| 2026-06-09 | Recruiter call landed <1hr notice. Scaffolded directory: role.md, talking-points.md, interview-log.md, CLAUDE.md. Web research on Diligent (GRC, Diligent One, agentic AI push, Vancouver eng hub). Light fit prep. | TODO — log after screen |
+| 2026-06-09 | Scaffolded dir for SE II (pre-call). Then recruiter screen flipped role → AI Solutions Architect. Rebuilt role.md, talking-points, interview-log, study-plan (README + HM-call + use-case-round + cathy-questions). Web research on AI Solutions Architect day-to-day + business-use-case presentation round. | Advanced to HM round (Thu). Prep pathway set. |
