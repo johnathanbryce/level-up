@@ -28,8 +28,8 @@
 >
 > **Grading bar (spoken round):** fluency, honesty, brevity. John's #1 risk = overclaiming or rambling. Target every answer ~15-25 sec: name the trade-off, take a position, give the honest caveat, STOP.
 >
-> **Progress (Mon eve):** Notes DONE for **Area 1** (agentic: planner+deterministic, ReAct vs planner-executor, trust stack, failure modes, evals, six-beat design, tool-calling mechanism; Claude Code: MCP/hooks/subagents/compaction w/ code+diagrams in `claude-code-internals.md`), **Area 2** (`ai-foundations.md` — RAG/hybrid/embeddings-vs-response-caching), **Area 3** (`system-design.md` — all 11 concepts). **Area 5 (React/Next, MEDIUM)** chunks 1-5 done; **6-8 left**. **Area 4 (backend-databases) NOT started.**
-> **ALL quizzes + interview Qs deferred to Tue.** Tue warm-up: write a `useDebounce` hook (hands-on). Carry-forward weak spot: Caseway-mapping reflex + tighten spoken delivery (rambling = #1 risk).
+> **ALL 5 notes areas DONE (Mon eve):** Area 1 (agentic full + Claude Code internals w/ code+diagrams), Area 2 (`ai-foundations.md`), Area 3 (`system-design.md`, 11 concepts), Area 4 (`backend-databases.md`), Area 5 (`react-nextjs.md`, MEDIUM, 8 chunks). Notes audited (headings fixed). **3 accuracy patches John owes in `react-nextjs.md`:** add ISR to ch.7 strategies; fix controlled/uncontrolled one-liner; "user server" → "use server".
+> **ALL quizzes + interview Qs deferred to Tue.** Tue rebalanced (conversational/experience round, lighter than prepped; R3=paired prog): HIGH = Caseway stories + agentic talking points + Caseway-mapping reflex; MED = opinions + Qs for Jeff; LOW = SD/React quiz reps. Warm-up: `useDebounce` hook. Throughout: tighten spoken delivery (rambling = #1 risk).
 
 ---
 

@@ -1,22 +1,22 @@
 # Claude Code Internals + Agent-Assisted Dev (Lesson 2)
 
-### MCP - Model COntext Protocol
+## MCP - Model Context Protocol
 - Open standard for connecting LLMs to external tools / data sources / services through one uniform interfact
 - **Problem it solves:** without it, every integration is a bespoke one-off. MCP standardizes **tool discovery + call format + response format** - any MCP client can talk to any MCP server
 - "USB-C of AI integrations"
 - **Deep core tie:** their data is hetergenous (drillhole DBs, geophysics, PDFs, etc.). MCP servers expose each source to the agent cleanly + auditably instead of custom glue per source. 
 
-### Hooks
+## Hooks
 - Runs automatically on lifecycle events - pre/post tool use, on-stop, etc.
 - **Stronger than a prompt:** a prompt is a *request* a model can ignore or forget; a hook is *guaranteed* code that runs every time
 - **Examples:** lint/list after every edit; block a tool call touching protected files; log every action
 
-### Subagents
+## Subagents
 - Spawn focused child agents for scoped/independent work, each with its **own context window**
 - Parallel fan out for independent tasks
 - Keeps main context clean
 
-### Context / Compaction
+## Context / Compaction
 - Context window is finite; long sessions fill it. **Compaction** = auto-summarizing earlier conversations so work continues without losing the thread
 - Don't trust the window, externalize durable state to files (CLAUDE.md)
 - This mentor service does exactly this - CLAUDE.md state survives across windows

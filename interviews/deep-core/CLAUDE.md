@@ -51,13 +51,18 @@ NOT on the list: Supabase trivia, Cesium API surface, geology facts. Those are t
 >
 > **Likely backend (peer-level inference, confirm w/ Jeff):** Next.js (Node) app layer via route handlers/server actions (NOT separate Express) + standalone **Python** geostat/agent services + Supabase Postgres.
 >
-> **Progress (Mon eve):** Notes DONE for **Area 1** (agentic + Claude Code internals — incl. tool-calling mechanism, MCP/hooks with code+diagrams), **Area 2** (AI foundations — RAG + hybrid + embeddings-vs-response caching nuance), **Area 3** (System Design — all 11 concepts: scaling/statelessness, LB, caching [3-way LLM-cache split], async/queues [pipeline-framed], idempotency, rate-limiting, DB+indexing, replication/sharding, CAP, monolith-vs-services, observability/reliability). **Area 5 (React/Next, MEDIUM level)** in progress — chunks 1-5 done (rendering model, hooks+rules, useEffect deep, state mgmt, performance); **chunks 6-8 left** (Server vs Client Components, data-fetching/rendering strategies, Cesium-in-Next). **Area 4 (backend-databases) NOT started.**
+> **ALL 5 notes areas DONE (Mon eve):** Area 1 (agentic + Claude Code internals — tool-calling mechanism, MCP/hooks w/ code+diagrams), Area 2 (`ai-foundations.md` — RAG/hybrid/embeddings-vs-response caching nuance), Area 3 (`system-design.md` — all 11 concepts), Area 4 (`backend-databases.md` — architecture, Supabase/RLS, long-job persistence), Area 5 (`react-nextjs.md` — MEDIUM level, all 8 chunks). Notes audited (heading consistency fixed).
 >
-> **ALL quizzes + interview-style Qs deferred to Tue** (John's call — Mon = notes-building, Tue = drill/mock at home, focused).
+> **3 accuracy flags John still needs to patch in `react-nextjs.md`:** (1) ch.7 — **ISR is missing** from the rendering-strategies list (he listed SSG/SSR/CSR only; add ISR = SSG + revalidate timer); (2) ch.4 controlled/uncontrolled one-liner overweights re-renders — better framing: "controlled when I need to validate/react to every keystroke; uncontrolled when I just need the value on submit"; (3) ch.7 Server Actions directive typo "user server" → **"use server"**.
 >
-> **Tue warm-up (John's request):** write a custom **`useDebounce` hook** as a hands-on coding warm-up before drilling.
+> **ALL quizzes + interview-style Qs deferred to Tue** (John's call — Mon = notes-building, Tue = drill/mock at home).
 >
-> **Weak spot to drill Tue (carry-forward):** Caseway-mapping habit — John designs well abstractly but doesn't reflexively anchor beats to his own Caseway work; that's the differentiator for this role. Also: tighten spoken delivery (rambling is the #1 risk).
+> **TUE PLAN (rebalanced — John's read: this is a conversational/experience round, likely lighter than prepped; Round 3 = paired programming):**
+> - **HIGH:** Caseway stories (tight/honest/spoken) + agentic talking points reflexive + **Caseway-mapping reflex** (the one real weak spot — designs well abstractly, doesn't anchor to his own work).
+> - **MEDIUM:** opinions/trade-off rapid-fire + questions for Jeff.
+> - **LOW (insurance only, few reps):** system-design + React quizzes.
+> - **Warm-up:** write a `useDebounce` hook (hands-on).
+> - **Throughout:** tighten spoken delivery — rambling is the #1 risk.
 >
 > **Grading bar (spoken round):** fluency, honesty, brevity. #1 risk = overclaiming/rambling. Every answer ~15-25 sec: name trade-off, take a position, honest caveat, STOP.
 >
