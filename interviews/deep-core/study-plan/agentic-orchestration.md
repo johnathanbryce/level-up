@@ -8,15 +8,20 @@ _Target line:_ "The model decides which operation and with what params; determin
 
 ## ReAct vs planner-executor
 
-- **ReAct** = think -> act -> observe (looping). Modal decides the next step based n the last result
-    - **Adaptive** to surprises, but can **loop or drift** and cost more 
-    - Casey retrieval agent is ReAct 
+**The axis that separates them = WHEN the planning happens.** (NOT whether there's a human gate — that's a consequence, see below.)
 
-- **Planner-executor** = produce the **full plan first** and then execute it. 
-    - The plan is **inspectable before anything runs** -> a natural **HITL** gate and **cheaper**
-    - Trade-off: **less-adaptive** mid-run if reality differs from the plan
-    - **When to pick planner-executor:** when you want the plan *reviewed before execution* (trust/regulated/expensive operations) and cost/latency matters
-    - **Deep-core tie-in:** a 3D model build is expensive and expert-reviewed -> planner-executor lets the geologist see the plan before the geostat compute runs ReAct fits the cheaper, exploratory retrieval loops 
+- **ReAct** = plans **one step at a time**. think -> act -> observe, looping. The model decides the *next step based on the last result*, repeats until done.
+    - **Adaptive** to surprises, but can **loop or drift** and cost more (more LLM calls)
+    - Guard it: **max-step / max-token caps**
+    - Casey retrieval agent is ReAct
+
+- **Planner-executor** = plans the **whole thing up front**, then the executor runs the steps.
+    - Trade-off: **less adaptive** mid-run if reality diverges from the plan
+
+- **HITL is a CONSEQUENCE of planner-executor, not its definition.** Because the full plan exists before anything runs, you *can optionally* drop a review gate in front of it. Either pattern can run automated or gated — don't bake "human approval" into the definition.
+
+- **When to pick planner-executor:** when the work is **expensive / computationally heavy / expert-reviewed**, the step space is known, and cost/latency predictability matters → you want the plan inspectable before you spend.
+- **Deep Core tie-in:** a 3D model build is expensive + expert-reviewed → planner-executor lets the geologist review the plan before the geostat compute fires. ReAct fits the cheaper, exploratory retrieval loops.
 
 ## The trust stack (how an expert accepts agent output)
 - **Grounding** - the agent reasons over real data (RAG / your data layer), doesn't free-associate (Casey ES retrieval)
