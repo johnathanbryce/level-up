@@ -17,6 +17,7 @@
 - [business-use-case-round.md](business-use-case-round.md) — **deep dive on the presentation round** (what it is, how to prep, structure, public-speaking plan)
 - [hiring-manager-call.md](hiring-manager-call.md) — prep for Thursday's 30-min HM call + questions to ask
 - [cathy-coffee-questions.md](cathy-coffee-questions.md) — what to ask Cathy on Wednesday night
+- [swe-ii-pathway.md](swe-ii-pathway.md) — **the SWE II role John originally applied to** — interview pathway + AS-vs-SWE fit comparison (fit under evaluation)
 
 (Company research + why-fit live in [../talking-points.md](../talking-points.md); JD analysis in [../role.md](../role.md).)
 
