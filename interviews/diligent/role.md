@@ -14,6 +14,18 @@
 
 Diligent is "all-in on AI." This role sits on the internal **Business Applications & Analytics** team and exists to **accelerate Diligent's *internal* AI capabilities** across business functions — Marketing, GTM/Sales, Customer Success & Support, Finance, HR, Legal, and Product/Engineering. You **identify AI opportunities by partnering with business leaders, then prototype → deploy → scale** AI/GenAI/agentic solutions that drive operational efficiency. It is a hybrid **technical + business-translator** role: you build working prototypes AND you sell, present, and drive adoption + measurable ROI. Think "internal AI solutions consultant," not "product feature engineer."
 
+### Insider framing from Cathy (2026-06-09) — THE key positioning unlock
+
+Cathy (insider) described the team and role directly:
+- **"Internal AI team"** — works with internal stakeholders (Legal, Finance, CSM, etc.), building internal solutions that automate workflows.
+- **"Communication, strategic thinking, and the ability to lead projects are MORE important than technical skills."** ← This is the hiring hierarchy. Technical skill is the entry ticket, not the differentiator.
+- **"Quite similar to a forward deployed engineer (FDE)"** — a blend of **consulting** (identifying business pain points) + **project/product management** + **software engineering**. Most of the team has a technical background but the job is the blend, not pure code.
+- **"Much bigger scope and more demanding than a traditional SWE."** Ambiguity tolerance + ownership are being tested.
+
+**Position yourself as an internal FDE.** The FDE archetype: embed with a stakeholder, learn their problem deeply, build a custom solution fast, iterate in the room, communicate value. John's Caseway scope-jump (stepped up to lead an AI product after CTO + lead dev left, owned it end-to-end through ambiguity, shipped, worked cross-functionally) is almost the FDE story verbatim. This is the headline narrative for every round.
+
+**Audience-size note (John's fit concern):** day-to-day is predominantly *small* — stakeholder working sessions, team demos, project syncs (well within John's comfort). BUT the JD's "drive AI literacy through training/workshops" line can mean larger rooms, and the use-case round is a presentation. Open fit question — being resolved via Cathy follow-up (asked 2026-06-09). Not a blocker, but worth a real answer before going deep.
+
 ---
 
 ## Tech / capability stack named in the JD

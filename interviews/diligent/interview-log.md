@@ -17,10 +17,16 @@ Per-round debriefs. Mock rounds use `(Mock)` prefix in the Round column.
   2. **Business use-case round** — presentation format. Details TBD ("more when we get there").
   3. **Final** — 15-20 min chat with a VP.
 
-### Intel touchpoint: Coffee with Cathy — Wed 2026-06-10 night (TODO after)
+### Intel touchpoint: Cathy (insider)
 
-- Questions prepped in [study-plan/cathy-coffee-questions.md](study-plan/cathy-coffee-questions.md).
-- **Dump her answers here after coffee** — especially anything on the business use-case round format + audience.
+**LinkedIn message (2026-06-09):** Cathy described the role directly:
+> "My team is the internal AI team — we work with internal stakeholders like Legal, Finance, CSM, etc. We build internal solutions that automate workflows, which means qualifications like **communication, strategic thinking, and the ability to lead projects are more important than technical skills.** Most of us come from a technical background but our role is **quite similar to a forward deployed engineer** — a blend of consulting (identifying business pain points), project/product management, and software engineering. It's a **much bigger scope and more demanding than a traditional SWE.**"
+
+**Implications captured in [role.md](role.md):** position as internal FDE; reweight prep toward communication/leadership/STAR; Caseway scope-jump = headline story. Reweighted cram priority in [study-plan/README.md](study-plan/README.md).
+
+**Strategic follow-up sent 2026-06-09** (still open): asked (1) typical week — heads-down build vs. stakeholder sessions; (2) presentation settings — small working sessions vs. larger group formats (resolves John's audience-size fit question); (3) thrive-vs-survive differentiator. **Log her answers here.**
+
+**Coffee — Wed 2026-06-10 night:** more questions in [study-plan/cathy-coffee-questions.md](study-plan/cathy-coffee-questions.md). Dump answers here, especially use-case round format + audience.
 
 ---
 

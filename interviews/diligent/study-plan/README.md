@@ -20,9 +20,16 @@
 
 (Company research + why-fit live in [../talking-points.md](../talking-points.md); JD analysis in [../role.md](../role.md).)
 
-## Cram priority (ordered)
+## Reweighted priority (after Cathy intel 2026-06-09)
 
-1. **HM call prep (Thursday)** — highest urgency. Tighten TMAY for THIS role (AI builder + translator), why-Diligent, why-this-role, and 3-4 sharp questions. See `hiring-manager-call.md`.
-2. **Cathy intel (Wednesday)** — use her to de-risk the use-case round. See `cathy-coffee-questions.md`.
-3. **Business use-case round** — start scoping NOW even though it's later; it's the highest-stakes + highest-fear round. Reps beat cramming. See `business-use-case-round.md`.
-4. **AI fundamentals polish** — RAG, prompt engineering, responsible AI, ROI framing. Mostly already covered in Section 3 AI Foundations; just sharpen the business-translation angle.
+Cathy confirmed: **communication + strategic thinking + project leadership > technical skills**, and the role is **like a forward deployed engineer (FDE)** — consulting + PM + engineering blend. This reweights prep AWAY from technical drilling, TOWARD storytelling, structured problem-solving, and project-leadership narratives. See [../role.md](../role.md) "Insider framing from Cathy."
+
+1. **STAR / behavioral stories — NOW THE #1 ARTIFACT.** Need 3-4 sharp stories proving FDE traits:
+   - (a) **Identified a business problem and drove a solution** — the consulting muscle.
+   - (b) **Led a project end-to-end through ambiguity** — Caseway scope-jump (CTO + lead left, John led, shipped). The headline story.
+   - (c) **Worked across non-technical stakeholders** to land something.
+   - (d) **Fast iteration / failed-fast-and-learned** — JD explicitly values "rapid failure, iteration, sharing findings."
+   - *(Stories file to be created when we draft them.)*
+2. **HM call (Thursday)** — light. Tighten TMAY around the FDE framing + why-role + 3-4 questions. John is comfortable here; not over-preparing. See `hiring-manager-call.md`.
+3. **Business use-case round** — the FDE loop on display (identify pain → propose solution → communicate value). Highest stakes + John's public-speaking growth edge. Scope once format is confirmed; reps + live mocks with Claude. See `business-use-case-round.md`.
+4. **AI fundamentals — MAINTENANCE ONLY.** Plain-language RAG + responsible AI + ROI framing beats deep MLOps trivia for this audience. Already mostly covered in Section 3. Don't over-invest.
