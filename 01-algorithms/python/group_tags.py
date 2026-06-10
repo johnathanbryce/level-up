@@ -24,8 +24,6 @@ Constraints:
 """
 
 
-
-
 def group_tags(tags):
 
     buckets = {}
