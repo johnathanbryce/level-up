@@ -132,6 +132,23 @@ Each section ends with a dedicated capstone session. Format varies by section ty
 
 ---
 
+## Build Reps Track (hands-on coding practice — cross-cutting, pull-based)
+
+A fluid, **pull-based** track of short runnable build reps that rebuild production coding fluency
+(LLM-offload atrophied the *writing* muscle; comprehension is intact). Lives at top-level `reps/`,
+a peer to `interviews/` and `sandbox/`. **Prioritized for live / paired-programming interviews** —
+John found these reps more valuable for interview readiness than algo drills alone (2026-06-11).
+
+- **Trigger:** John says **"let's do a rep"** (or "build-rep"). Opt-in, ~weekly, **never
+  auto-scheduled**. On a rep day, read [reps/CLAUDE.md](reps/CLAUDE.md), surface the Backlog menu,
+  and propose a rep (or invent fresh) from John's energy / time / category mood; confirm scope +
+  **scaffold dial** (Heavy / Medium / Light) before coding.
+- **Division of labor:** Claude scaffolds boilerplate + frontend markup/CSS + stubs; **John writes
+  the business logic** (API routes, CORS, SQL, React hooks/forms). Dial drifts toward Light over time.
+- **Source of truth:** [reps/CLAUDE.md](reps/CLAUDE.md) — protocol, Backlog, In Progress, Completed log.
+
+---
+
 ## The Roadmap
 
 ### Section 1: Algorithms (ONGOING — runs alongside all other sections)
@@ -249,6 +266,23 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 ---
 
 ## CURRENT STATE
+
+### DEEP CORE R3 (PAIRED PROGRAMMING) ACTIVE + BUILD REPS TRACK CREATED (2026-06-11)
+
+**Deep Core is an ACTIVE interview cycle again** — Round 2 passed (~70% to advance); now prepping
+**Round 3 = paired programming** (John's first ever). See [interviews/deep-core/CLAUDE.md](interviews/deep-core/CLAUDE.md)
++ [interviews/deep-core/study-plan/round-3-paired-programming.md](interviews/deep-core/study-plan/round-3-paired-programming.md).
+**A1 (Samples Explorer full-stack CRUD) is COMPLETE** (2026-06-11) — FastAPI + Pydantic + SQLite +
+Next.js consumer (debounced filter, `useDebounce`, AbortController, loading/error/empty states) + CORS.
+
+**NEW: Build Reps track created** at [reps/](reps/) — fluid, pull-based hands-on coding practice
+(trigger: "let's do a rep"). See the Build Reps Track section above + [reps/CLAUDE.md](reps/CLAUDE.md).
+**Rep 001 (Postgres + Docker Compose full-stack CRUD, frontend-heavy) is queued for Fri 2026-06-12.**
+
+*(Diligent is also active — HM call 2026-06-11. The 2026-06-03 banner below is older regular-pipeline
+state — AI Foundations RAG group + Section 2 Capstone remain valid when no interview is active.)*
+
+---
 
 ### INTERVIEW CYCLES CLOSED — REGULAR PIPELINE IS DEFAULT (2026-06-03)
 

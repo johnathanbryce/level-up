@@ -49,7 +49,7 @@ that's deliberate.
 
 ## Progress
 
-- **A1 — BACKEND COMPLETE (2026-06-10), committed.** `samples-app/backend/` — full CRUD FastAPI
+- **A1 — COMPLETE (backend 2026-06-10, frontend + SQLite 2026-06-11).** `samples-app/backend/` — full CRUD FastAPI
   service, all endpoints smoke-tested green: `GET /samples` (+ `?rock_type=` filter), `GET /samples/{id}`
   (404), `POST /samples` (201, two-model design `SampleCreate` vs `Sample`), `DELETE /samples/{id}`
   (204, no body). Pydantic validation via `Literal` rock_type → 422 on bad input. Seed data in
@@ -61,8 +61,22 @@ that's deliberate.
   never in the 200 body) — but rich domain payloads (warnings/tool-calls in agentic routes) DO belong in a
   typed response model; in-memory store = process RAM, resets on `--reload`/restart, invisible across
   workers → *why databases exist*; `**model_dump()` is Python's dict-spread; `async`/try-except only at the
-  real I/O boundary. **Remaining for A1:** CORS (deferred — only matters once frontend calls it), then
-  **frontend (Next.js consumer + `useDebounce`)** and **SQLite persistence** on Day 2.
+  real I/O boundary.
+- **A1 Day 2 (2026-06-11) — CORS + frontend + SQLite, all DONE.** **CORS:** added `CORSMiddleware`
+  (taught SOP vs CORS — browser-enforced, *relaxes* not protects; origin = scheme+host+port; curl
+  ignores it; `*` + credentials is forbidden; config-based vs custom `BaseHTTPMiddleware` like Caseway's
+  JWT). **Frontend (Next.js 16 / React 19, App Router):** John wrote the client — `useEffect` fetch w/
+  **AbortController** (generic cancellation token; vs the `ignore`-flag race fix = discard-vs-cancel),
+  loading/error/empty states, debounced `rock_type` filter, **extracted `useDebounce` hook** (setTimeout
+  + clearTimeout *is* the debounce; canonical generic `<T>` + delay shape). Reviewed/fixed: debounce was
+  inert (effect keyed on `input` not `debouncedInput`), inverted loading condition (recurring bug-type),
+  loading-never-reset, error-on-abort, non-exclusive render states. Discussed React Query vs raw fetch
+  (build raw to learn the lifecycle; name RQ for prod). **SQLite (Part 3):** swapped in-memory for
+  `sqlite3` behind the same routes — **DB-API (connect→cursor→execute→fetch→commit→close), `?`
+  placeholders (injection), `lastrowid` (POST), `rowcount` (DELETE 404), `sqlite3.Row`→dict, FastAPI
+  lifespan, `Depends(get_db)`, connection pooling rationale, and the cross-tool transfer (sqlite3 →
+  psycopg: same DB-API, `%s` + DSN)**. John wrote all routes incl. the 3 SQLite conversions; Claude
+  wrote `list_samples` as the template + scaffolded `db.py`. **A1 done — John wrote every line of logic.**
 - A2 — not started.
 - A3 — not started.
 - A4 — not started (stretch).
@@ -70,5 +84,7 @@ that's deliberate.
 ## Day plan
 
 - **Day 1 (2026-06-10):** algo warm-up (done: group_tags.py, merge_bookings.ts) → A1 backend.
-- **Day 2 (2026-06-11):** algo warm-up → A1 frontend (Next.js consumer + useDebounce) + A1 SQLite
-  → if time, start A2.
+- **Day 2 (2026-06-11):** ✅ algo warm-up (top_rock_types.py, merge_drill_logs.ts) → ✅ A1 frontend
+  (Next.js consumer + useDebounce + AbortController) → ✅ A1 SQLite. **A1 fully complete.** A2 not
+  started. Spun up the standalone [reps/](../../../reps/) track; **Rep 001 (Postgres + Docker Compose
+  full-stack CRUD, frontend-heavy) queued for Fri 2026-06-12** — a parallel build rep, not strictly A2.
