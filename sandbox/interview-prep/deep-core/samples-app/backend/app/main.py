@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8000"],
+    allow_origins=["http://localhost:8000", "http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -32,8 +32,9 @@ def init():
 
 @router.get("/samples", response_model=list[Sample])
 def list_samples(rock_type: Optional[str] = None):
+    print(rock_type)
     if rock_type:
-        return [s for s in SAMPLES if s["rock_type"] == rock_type]
+        return [s for s in SAMPLES if s["rock_type"].startswith(rock_type.lower())]
     return SAMPLES
 
 
