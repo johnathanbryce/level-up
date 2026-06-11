@@ -277,7 +277,7 @@ Next.js consumer (debounced filter, `useDebounce`, AbortController, loading/erro
 
 **NEW: Build Reps track created** at [reps/](reps/) — fluid, pull-based hands-on coding practice
 (trigger: "let's do a rep"). See the Build Reps Track section above + [reps/CLAUDE.md](reps/CLAUDE.md).
-**Rep 001 (Postgres + Docker Compose full-stack CRUD, frontend-heavy) is queued for Fri 2026-06-12.**
+**Rep 001 (Postgres + Docker Compose full-stack CRUD, backend-heavy — FastAPI routes/CORS/raw psycopg + pagination; frontend light) is queued for Fri 2026-06-12.**
 
 *(Diligent is also active — HM call 2026-06-11. The 2026-06-03 banner below is older regular-pipeline
 state — AI Foundations RAG group + Section 2 Capstone remain valid when no interview is active.)*

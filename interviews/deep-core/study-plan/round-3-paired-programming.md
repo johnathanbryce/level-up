@@ -87,4 +87,5 @@ that's deliberate.
 - **Day 2 (2026-06-11):** ✅ algo warm-up (top_rock_types.py, merge_drill_logs.ts) → ✅ A1 frontend
   (Next.js consumer + useDebounce + AbortController) → ✅ A1 SQLite. **A1 fully complete.** A2 not
   started. Spun up the standalone [reps/](../../../reps/) track; **Rep 001 (Postgres + Docker Compose
-  full-stack CRUD, frontend-heavy) queued for Fri 2026-06-12** — a parallel build rep, not strictly A2.
+  full-stack CRUD, backend-heavy — FastAPI routes/CORS/raw psycopg + pagination, frontend light)
+  queued for Fri 2026-06-12** — a parallel build rep, not strictly A2.

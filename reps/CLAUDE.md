@@ -57,7 +57,7 @@ Not a sequence. A buffet to pull from on a rep day. Priority = interview/paired-
 | Category | Candidate reps | Priority |
 |---|---|---|
 | **Full-stack CRUD** | ✅ Rep 000 (samples-app, SQLite) · 🔜 Rep 001 (Postgres + Docker Compose, frontend-heavy) · CRUD + JWT auth + protected routes · CRUD w/ optimistic updates + error rollback | **HIGH** |
-| **Frontend / React** | React Query dashboard (caching / retries — ties to A1's RQ discussion) · multi-step form wizard w/ validation · virtualized + debounced multi-filter list | **HIGH** |
+| **Frontend / React** | **Frontend-heavy full-stack (rich UI over a ready-made API — the counterpart to Rep 001; forms+mutations + list-at-scale on the client)** · React Query dashboard (caching / retries — ties to A1's RQ discussion) · multi-step form wizard w/ validation · virtualized + debounced multi-filter list | **HIGH** |
 | **Backend / FastAPI** | Data-aggregation service (group-by / stats — Deep Core A3 shape) · pagination+filter+sort query params done right · file-upload + processing endpoint | MED-HIGH |
 | **Database / SQL** | Schema design + indexing + `EXPLAIN ANALYZE` on a slow query · multi-table JOINs · migrations | MED |
 | **DevOps / CI-CD** | Dockerize a full stack (multi-service compose) · GitHub Actions pipeline (lint + test + build) · deploy-strategy demo (blue-green / rolling) | MED |
@@ -72,25 +72,29 @@ Not a sequence. A buffet to pull from on a rep day. Priority = interview/paired-
 
 ### Rep 001 spec (next session)
 
-Full-stack CRUD, same shape as A1 but: **real Postgres via Docker Compose**, **frontend-heavy**,
-scaffold dial **Medium-Heavy**. Folder: `reps/001-<name>/` (name confirmed at session start).
+Full-stack CRUD, same shape as A1 but: **real Postgres via Docker Compose**, **BACKEND-heavy**
+(rep the FastAPI route + CORS muscle from A1 with more independence, against a real DB), **frontend
+light**. Scaffold dial **Medium-Heavy on the frontend** (Claude provides a near-complete consumer so
+John spends his time on the backend). Folder: `reps/001-<name>/` (name confirmed at session start).
 
 - **Proposed domain (swappable):** drillhole records — `id`, `hole_id` (name), `status`
   (`planned` | `logging` | `complete`), `rock_type`, `grade` (≥0), `depth_m` (>0), `logged_at`.
-  The status enum gives a meaningful `<select>` in the form and a filter dropdown.
-- **Claude scaffolds:** Next.js app + most frontend markup (list table, create form, edit form,
-  filter/sort/pagination controls — bare structure, minimal CSS); `db.py` (psycopg connection +
-  a simple **connection pool** so John *sees* the Postgres-vs-SQLite difference); Pydantic model
-  stubs; `requirements.txt`; dummy seed.
-- **John writes:** the `docker-compose.yml` (guided — short, doubles as a DevOps rep); **all API
-  routes** — GET list (pagination + filter + sort), GET by id, POST, **PUT/edit**, DELETE — using
-  **raw `psycopg`** (cements the DB-API pattern from A1: same `connect → cursor → execute → fetch →
-  commit → close`, just `%s` placeholders + a DSN); **CORS**; and **all React logic** — controlled
-  create/edit forms, POST/PUT mutations with refetch-or-optimistic update, and list-at-scale
-  (server-side pagination + sort + filter wired to query params).
-- **Why:** raw psycopg over an ORM (cement the transfer; ORM is a later rep) · Docker Compose
-  (local, realistic, a real DevOps skill) · forms+mutations + list-at-scale are the two big frontend
-  reps A1 didn't cover · pool is scaffolded so frontend time isn't burned on it.
+  The status enum gives a clean filter value + a meaningful `WHERE`.
+- **Claude scaffolds:** a **near-complete Next.js consumer** (list + a filter control + a minimal
+  create form, mostly wired — John just points it at his API, doesn't build it); `db.py` (psycopg
+  connection + a simple **connection pool** so John *sees* the Postgres-vs-SQLite difference);
+  Pydantic model stubs; `requirements.txt`; dummy seed.
+- **John writes (the focus):** the `docker-compose.yml` (guided — short, doubles as a DevOps rep);
+  **all API routes** — GET list (**pagination + filter + sort as query params** → `LIMIT`/`OFFSET`,
+  `ORDER BY`, `WHERE`; this is where list-at-scale lives, on the *backend*), GET by id, POST,
+  **PUT/edit** (the UPDATE A1 didn't have), DELETE — using **raw `psycopg`** (cements the DB-API
+  pattern from A1: same `connect → cursor → execute → fetch → commit → close`, just `%s` placeholders
+  + a DSN); **CORS** (recall it cold this time, less hand-holding than today).
+- **Why backend-heavy:** today's frontend was the big lift; repping the route/CORS/SQL flow while
+  it's fresh — with more independence, raw psycopg, Postgres + Docker, and `LIMIT`/`OFFSET`/`ORDER BY`
+  pagination — is the higher-value reinforcement. Frontend deliberately light here (a **frontend-heavy
+  rep is queued in the Backlog** for when he wants that focus). Raw psycopg over an ORM (cement the
+  transfer; ORM is a later rep). Docker Compose = local, realistic, a real DevOps skill.
 
 ---
 
