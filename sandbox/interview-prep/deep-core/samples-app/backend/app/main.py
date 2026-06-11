@@ -2,8 +2,15 @@ from fastapi import FastAPI, APIRouter, HTTPException
 from typing import Literal, Optional
 from pydantic import BaseModel
 from app.seed_data import SAMPLES
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8000"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 router = APIRouter()
 
 
