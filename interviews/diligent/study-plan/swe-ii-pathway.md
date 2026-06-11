@@ -24,6 +24,20 @@ Public data is thin (Diligent isn't FAANG-documented) and location/level-depende
 - Most writeups are **Senior** SWE / non-Vancouver. One **Bengaluru** report had an in-person **paper** coding test — outlier, not Vancouver. If hit, request a virtual round with a team member.
 - Diligent has been **modernizing** its loop; recent Vancouver process may differ. **Recruiter is the authoritative source** for exact Vancouver SWE II steps.
 
+## Deeper research pass (2026-06-11) — LOW-TO-MODERATE confidence
+
+Public data is thin + mixed (different teams/eras/locations; some old reports reference Ruby on Rails — not the current TS/AWS Vancouver stack). No clean "Vancouver SWE II 2026" writeup exists. Composite:
+
+- **Fast, light process:** difficulty **3/5**, ~7 days to hire for SWE, ~25 days end-to-end.
+- **EM round = behavioral + design judgment**, not leetcode-heavy (compare frameworks, defend "why X over Y").
+- **Coding exercise, when present, described as "easy-level" / practical** — reasoning + clean code over hard algorithms.
+- **Pair programming used in onboarding** → collaborative culture signal.
+
+**Cathy's hypothesis (2026-06-10):** *"Given how much they all use AI/Claude to code, I'd be surprised if it's intense on live coding."* → Directionally supported (3/5 difficulty, design-focused EM round, AI-native company, 2026 industry shift toward project-based take-homes + "AI-audit notes"). **NOT confirmed.** Formats vary by team/HM.
+
+**Action — ask the recruiter directly (normal + green-flag question):**
+> "Could you walk me through what the SWE II technical process looks like — more take-home/practical, pairing, or live algorithmic coding? I want to prepare in the format that reflects how the team actually works."
+
 ## Fit comparison (for John's decision)
 
 | | AI Solutions Architect | Software Engineer II |

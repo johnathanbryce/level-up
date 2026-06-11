@@ -26,7 +26,19 @@ Per-round debriefs. Mock rounds use `(Mock)` prefix in the Round column.
 
 **Strategic follow-up sent 2026-06-09** (still open): asked (1) typical week — heads-down build vs. stakeholder sessions; (2) presentation settings — small working sessions vs. larger group formats (resolves John's audience-size fit question); (3) thrive-vs-survive differentiator. **Log her answers here.**
 
-**Coffee — Wed 2026-06-10 night:** more questions in [study-plan/cathy-coffee-questions.md](study-plan/cathy-coffee-questions.md). Dump answers here, especially use-case round format + audience.
+**Coffee — Wed 2026-06-10 night (John's notes):**
+
+- **"Do both interviews" / dual-interview option** — Cathy indicated John can interview for BOTH the AS role AND the SWE role. ⚠️ Potentially resolves the AS-vs-SWE dilemma — pursue both pipelines, decide with offers. CONFIRM (recruiter channel). She again nudged: *"If excited about tech, the SWE role gives more space for this"* (work with product side, implement AI features). **2nd unprompted SWE nudge from an insider.**
+- **Interviewer today (HM call):** **Arthur.**
+- **AS day-to-day (concrete):** 8am standup; meeting with vendor team; **beginning of role ~50/50 dev-implementation vs PM** (drifts toward the 30/70 Cathy described for herself); all internal stakeholders; **~2-3 hrs/day of meetings**; lots of time updating + syncing people.
+- **SWE role context:** Vancouver = the company's **AI innovation pod**. Has roles like **"Applied Scientist"** (research new tech, evaluate adoption). Product team here is more AI + innovation flavored.
+- **Business presentation round = take-home case study (MAJOR de-risk):**
+  - Case study + instructions sent **48 hours before** the interview.
+  - **"Presentation is not the key — it's the thought process."** NOT graded on polish/stage presence.
+  - They look for: **technical reasoning** (why this solution, why this tech) + **business-side scenario questions.**
+  - Present with **anything — PowerPoint, Word, or VSCode** (John's comfort zone).
+  - **"No right or wrong — they want to see how you approach a business problem."**
+  - "Very similar to what I'd actually be doing in this role."
 
 ---
 

@@ -1,8 +1,34 @@
-# The Business Use-Case Presentation Round — What You're Getting Into
+# The Business Use-Case Round — CONFIRMED FORMAT (from Cathy, 2026-06-10)
 
-This is the round you're most worried about (public speaking) and the most important to nail, because **it IS the job in miniature.** The whole role is "find an AI opportunity in a business function, build it, and sell its value to non-technical leaders." This round tests exactly that. Good news: it's the single most *coachable* round — it rewards reps, not raw talent.
+**This is NOT a cold public-speaking performance. It's a take-home case study you reason through.** Cathy confirmed the real format, and it's far friendlier to John's strengths than feared:
 
-> Diligent hasn't shared the exact prompt yet ("more details when we get there"). This is the standard shape of these rounds across AI Solutions Architect / Solutions Consultant / Sales Engineer hiring. **Confirm specifics with Cathy on Wednesday and the HM on Thursday.**
+- **Case study + instructions sent 48 HOURS in advance.** You prep on your own time. No cold improv.
+- **"The presentation is NOT the key — it's the thought process."** They do NOT grade polish, slides, or stage presence.
+- **What they actually evaluate:** (1) **technical reasoning** — explain why you'd build a solution a certain way, why you chose a given tech; (2) **business-side scenario questions** — how you approach the business problem.
+- **Present with anything — PowerPoint, Word, or VSCode.** You can literally walk through it in your editor. No forced slick deck.
+- **"No right or wrong — they just want to see how you approach a business problem."**
+- It's "very similar to what you'd actually be doing in the role" — so it doubles as a real fit-test for you too.
+
+**Reframe for the anxiety:** the round shifts from "perform a polished pitch to a room" (the fear) → "walk through your reasoning on a problem you've had 48 hours to think about" (a strength, on your turf). The pressure is on *thinking*, not *performing*. That's a completely different and very winnable game.
+
+---
+
+## How to win THIS format (given the above)
+
+1. **Spend the 48 hours on the THINKING, not the slides.** Nail: what's the business problem, what's your solution, *why this approach over alternatives*, what tech and why, what are the trade-offs/risks. That reasoning chain IS the grade.
+2. **Structure your walk-through** (even in VSCode/Word): problem → your read of it → solution approach → why this vs. alternatives → tech choices + trade-offs → risks/responsible-AI → how you'd measure success. (Skeleton below still applies — just don't sweat the visual polish.)
+3. **Prepare for scenario-based business questions** — they'll poke: "what if the stakeholder wants X instead?" / "how would this scale?" / "what's the cost?" Have your reasoning ready to flex, not a memorized script.
+4. **Responsible AI still matters** (GRC company) — privacy/security/bias belongs in your reasoning.
+5. **Use VSCode if it makes you more comfortable** — presenting on home turf lowers the nerves, and they explicitly allow it.
+6. **Still do 2-3 out-loud reps** with Claude as the panel once you have the prompt — not to polish delivery, but to make sure your *reasoning* is crisp and you can defend your choices under questioning.
+
+> Original prep guidance below (slide skeleton, dual-audience, etc.) still useful as a thinking checklist — just recalibrated: **thought process > polish.**
+
+---
+
+## (Reference) Standard structure + tips
+
+This is the round most important to nail because **it IS the job in miniature** — find a business problem, design an AI solution, and reason about value. Good news: it's the single most *coachable* round, and now confirmed to reward thinking over performance.
 
 ## What it almost certainly is
 
