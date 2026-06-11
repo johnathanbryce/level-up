@@ -49,12 +49,20 @@ that's deliberate.
 
 ## Progress
 
-- **A1 — IN PROGRESS (started 2026-06-10).** `samples-app/` scaffolded. Backend: venv + FastAPI,
-  working route skeleton (learned: APIRouter + `include_router` *ordering* — include must come
-  AFTER routes; interpreter-selection for Pylance; uvicorn CLI vs `__main__`; routes fire
-  per-request not at startup; `return` not `print`). Slice 1 (`GET /samples` returning seeded
-  dicts) done. Seed data in `app/seed_data.py`. **Next: slice 2 = Pydantic models (`SampleCreate`
-  vs `Sample`), then GET-by-id (404), POST (201), DELETE (204), `?rock_type=` filter, CORS.**
+- **A1 — BACKEND COMPLETE (2026-06-10), committed.** `samples-app/backend/` — full CRUD FastAPI
+  service, all endpoints smoke-tested green: `GET /samples` (+ `?rock_type=` filter), `GET /samples/{id}`
+  (404), `POST /samples` (201, two-model design `SampleCreate` vs `Sample`), `DELETE /samples/{id}`
+  (204, no body). Pydantic validation via `Literal` rock_type → 422 on bad input. Seed data in
+  `app/seed_data.py`. **Concepts landed:** APIRouter `include_router` *ordering* (after routes);
+  Pylance interpreter selection (the "import not resolved"/no-fastapi-colors issue = editor interpreter
+  ≠ runtime venv); uvicorn CLI vs `__main__`; routes fire per-request; `return` not `print`; generators
+  are lazy (print shows the object, `list()` consumes); `response_model` is a validate+serialize contract;
+  **return the resource not a `{status,message}` envelope** (errors → status codes + `HTTPException`,
+  never in the 200 body) — but rich domain payloads (warnings/tool-calls in agentic routes) DO belong in a
+  typed response model; in-memory store = process RAM, resets on `--reload`/restart, invisible across
+  workers → *why databases exist*; `**model_dump()` is Python's dict-spread; `async`/try-except only at the
+  real I/O boundary. **Remaining for A1:** CORS (deferred — only matters once frontend calls it), then
+  **frontend (Next.js consumer + `useDebounce`)** and **SQLite persistence** on Day 2.
 - A2 — not started.
 - A3 — not started.
 - A4 — not started (stretch).
