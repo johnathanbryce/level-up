@@ -2,7 +2,7 @@
 
 **Round 3 = collaborative paired programming.** John has never done one (only solo
 live-coding). Goal over 2026-06-10 → 06-11: not-shaky on hands-on coding + comfortable
-with the *pairing* format. Coding sandbox: `sandbox/interview-prep/deep-core/`.
+with the *pairing* format. Coding reps live at `interviews/deep-core/samples-app/` (A1).
 
 This doubles as general muscle-memory rebuild — John has offloaded most coding to LLMs;
 comprehension is intact, *production* fluency is the gap. Reps with a decreasing safety net.

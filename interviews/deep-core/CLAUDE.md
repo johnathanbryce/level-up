@@ -2,7 +2,7 @@
 
 ## Status
 
-**ACTIVE** — Round 2 (technical discussion/opinions) **DONE 2026-06-10**, went well (~70% est. to advance). **Now prepping Round 3 = PAIRED PROGRAMMING** (hands-on coding). John has never done a paired-programming round before — prep format + reps. Coding sandbox: `sandbox/interview-prep/deep-core/`. Stack: Next.js / TS / Python / FastAPI (NOT Cesium; Supabase only if quick to spin up). See [interview-log.md](interview-log.md) Round 3 block + the R3 master prompt handoff.
+**ACTIVE** — Round 2 (technical discussion/opinions) **DONE 2026-06-10**, went well (~70% est. to advance). **Now prepping Round 3 = PAIRED PROGRAMMING** (hands-on coding). John has never done a paired-programming round before — prep format + reps. Coding rep: `interviews/deep-core/samples-app/` (A1, complete). Stack: Next.js / TS / Python / FastAPI (NOT Cesium; Supabase only if quick to spin up). See [interview-log.md](interview-log.md) Round 3 block + the R3 master prompt handoff.
 
 ## Interview Info
 

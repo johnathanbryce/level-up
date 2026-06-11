@@ -18,8 +18,9 @@ based on your energy / time / category mood — then confirms scope + scaffold d
 
 Each rep is its own subfolder with an **isolated env** (per-project venv / node_modules), e.g.
 `reps/001-drillhole-tracker/backend/` + `/frontend/`. Code lives in the rep folder; `CLAUDE.md`
-only tracks. Rep 000 (the Deep Core `samples-app`) lives under `sandbox/interview-prep/deep-core/`
-for historical reasons and is logged in `CLAUDE.md` by reference.
+only tracks. Rep 000 (the Deep Core `samples-app`) lives under `interviews/deep-core/samples-app/`
+(interview-specific reps live with their company prep; general reps live here) and is logged in
+`CLAUDE.md` by reference.
 
 ## Division of labor
 
