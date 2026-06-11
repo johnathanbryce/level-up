@@ -1,5 +1,6 @@
 # Hiring Manager Call — Thu 2026-06-11, 10:30am (CONFIRMED)
 
+**Interviewer:** Arthur (per Cathy).
 **Format:** 30 min, Q&A + a "360 dive" on the team and the role. This is conversational — the HM wants to (a) see if you're a fit for an internal AI-enablement team, (b) gauge your communication (it's a translator role — how you talk IS the test), and (c) let you ask smart questions. Confirm logistics by texting Linisha.
 
 ## What the HM is screening for

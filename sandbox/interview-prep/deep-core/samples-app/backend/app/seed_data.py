@@ -39,4 +39,11 @@ SAMPLES = [
         "grade": 1.2,
         "depth_m": 21.9,
     },
+    {
+        "id": 6,
+        "name": "DH-001 mid",
+        "rock_type": "basalt",
+        "grade": 2.1,
+        "depth_m": 52.0,
+    },
 ]

@@ -28,7 +28,13 @@
 
 **Recruiter screen passed 2026-06-09.** Prep directory rebuilt for AI Solutions Architect (was scaffolded for SE II earlier same day). Web research done on the AS role + business-use-case round + the SWE II pathway.
 
-**⚠️ FIT UNDER EVALUATION — John is weighing AS vs SWE II.** Insider Cathy confirmed the AS role is **~30% coding / 70% stakeholder meetings & PM**, "like a forward deployed engineer," and said directly: *"If you really enjoy hands on, I think the SWE role might be more of a fit for you."* John prefers hands-on SWE work + solo project ownership. **He's NOT committed to AS.** Strategy (mentor discussion): don't decide yet → use Thursday HM call as recon → if SWE is the fit, raise it with the RECRUITER (not the AS HM) EARLY, before any offer. Keep both doors open. SWE II pathway documented in [study-plan/swe-ii-pathway.md](study-plan/swe-ii-pathway.md). **Open question for recruiter: why was John redirected SWE II → AS?**
+**⚠️ FIT UNDER EVALUATION — John is weighing AS vs SWE II.** Insider Cathy confirmed AS is **~50/50 dev/PM at start, drifting to ~30/70**, "like a forward deployed engineer," ~2-3 hrs/day meetings, lots of stakeholder syncing. She nudged toward SWE TWICE unprompted (*"if excited about tech, the SWE role gives more space"*). John prefers hands-on SWE + solo ownership.
+
+**🔑 "DO BOTH INTERVIEWS" (Cathy, 2026-06-10):** John may be able to interview for BOTH roles in parallel — potentially dissolving the either/or. **CONFIRM via recruiter.** Vancouver = the company's "AI innovation pod" (has Applied Scientist roles); SWE here = product + AI-innovation flavored.
+
+Strategy: pursue both if confirmed; otherwise don't decide yet, raise SWE interest via the RECRUITER early. **Open question for recruiter: why redirected SWE II → AS, is SWE II still open, can I do both?** SWE II pathway in [study-plan/swe-ii-pathway.md](study-plan/swe-ii-pathway.md).
+
+**✅ Business use-case round DE-RISKED (Cathy, 2026-06-10):** It's a **take-home case study, sent 48 hrs in advance.** **"Presentation is not the key — it's the thought process."** Not graded on polish. Present with anything incl. **VSCode**. Graded on technical reasoning (why this solution/tech) + business scenario Qs. Reframes John's #1 fear from "cold performance" → "walk through reasoning on home turf." See [study-plan/business-use-case-round.md](study-plan/business-use-case-round.md).
 
 **Honest fit read (AS role):** Strong on hands-on GenAI (Caseway RAG/search, prompt engineering, API integration, responsible-AI awareness). **Real gaps:** (1) never held sales-engineer/solutions-consultant title — core "Business Translator" req; (2) public-speaking confidence (use-case round tests exactly this); (3) ~3 yrs vs 5+; (4) **structural: role is 70% non-coding vs John's stated preference.** SWE II is the stronger fit for his preferences + existing skills; AS pays more + builds the public-speaking growth edge.
 
