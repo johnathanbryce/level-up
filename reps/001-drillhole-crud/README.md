@@ -38,7 +38,9 @@ One service, `db`, using the official `postgres` image. It needs:
 - the `postgres` image (pin a version, e.g. `postgres:16`)
 - env vars: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`
 - a port mapping that publishes container `5432` to host `5432`
-- a **named volume** mapped to `/var/lib/postgresql/data` (so data survives restarts)
+- a **named volume** mapped to `/var/lib/postgresql` (so data survives restarts).
+  Note: Postgres **18+** wants the parent dir here, not `/var/lib/postgresql/data`
+  like older versions — a major-version convention change.
 - the `init.sql` in this folder mounted into `/docker-entrypoint-initdb.d/` (runs
   once on first init → creates the table + seeds rows)
 
