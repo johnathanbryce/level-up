@@ -13,18 +13,30 @@
 - [study-plan/business-use-case-round.md](study-plan/business-use-case-round.md) — **deep dive on the presentation round** + public-speaking rep plan
 - [study-plan/cathy-coffee-questions.md](study-plan/cathy-coffee-questions.md) — Wed-night intel questions
 - [interview-log.md](interview-log.md) — per-round debriefs
+- [case-study/](case-study/) — **🔴 LIVE: the final case-study round** (prompt verbatim, deliverable breakdown, tooling/approach decisions)
 
 ## Interview Pathway
 
 | # | Round | When | Status |
 |---|-------|------|--------|
 | 0 | Recruiter screen | 2026-06-09 | ✅ Passed; role clarified |
-| ☕ | Coffee w/ Cathy (insider intel) | Wed 2026-06-10 night | Upcoming |
-| 1 | HM call (30 min, Q&A + 360) | **Thu 2026-06-11, 10:30am** | Upcoming — top priority |
-| 2 | Business use-case presentation | TBD | Future — highest stakes/fear |
+| ☕ | Coffee w/ Cathy (insider intel) | Wed 2026-06-10 night | ✅ Done |
+| 1 | HM call (30 min, Q&A + 360) | Thu 2026-06-11, 10:30am | ✅ Passed → advanced (debrief TODO) |
+| 2 | **Business use-case = CASE STUDY** | **Wed 2026-06-17, 10–11am PT (Teams)** | **🔴 ACTIVE — prompt received, groundwork laid** |
 | 3 | VP final chat (15-20 min) | TBD | Future |
 
+> **Case-study panel:** Thai Bao An Phan · Arthur Miyazaki (the HM) · Morteza Jafari.
+> Prompt = "Enterprise Information Retrieval Platform For Business Proposals." Deliverable is a
+> high-level design + process flows + pseudo-code (NOT a coded PoC, NOT a polished deck).
+> All working files in [case-study/](case-study/).
+
 ## Current Position
+
+**🔴 FINAL CASE-STUDY ROUND IS LIVE — Wed 2026-06-17, 10–11am PT.** HM round (Arthur) passed;
+John advanced to the case study. Recruiter (Linisha) sent the prompt 2026-06-12 (~5 days runway).
+Groundwork laid in [case-study/](case-study/): prompt captured verbatim, deliverable parsed into a
+rubric, tooling/approach decisions queued (repo strategy, diagram tool, presentation surface).
+**Next session = make the Decision 1–4 calls in [case-study/approach-decisions.md](case-study/approach-decisions.md), then start the actual design.** Nothing designed yet (deliberate).
 
 **Recruiter screen passed 2026-06-09.** Prep directory rebuilt for AI Solutions Architect (was scaffolded for SE II earlier same day). Web research done on the AS role + business-use-case round + the SWE II pathway.
 
@@ -51,3 +63,4 @@ Strategy: pursue both if confirmed; otherwise don't decide yet, raise SWE intere
 | Date | What | Outcome |
 |------|------|---------|
 | 2026-06-09 | Scaffolded dir for SE II (pre-call). Then recruiter screen flipped role → AI Solutions Architect. Rebuilt role.md, talking-points, interview-log, study-plan (README + HM-call + use-case-round + cathy-questions). Web research on AI Solutions Architect day-to-day + business-use-case presentation round. | Advanced to HM round (Thu). Prep pathway set. |
+| 2026-06-12 | Case-study prompt received from recruiter. Drafted confirmation email. Scaffolded `case-study/` sub-dir (prompt verbatim, README rubric breakdown, approach-decisions log incl. repo-strategy honest take). Updated pathway/status. **No design started — groundwork only.** | Final round (Wed 6/17) live. Decisions queued for next session. |

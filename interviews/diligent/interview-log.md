@@ -42,21 +42,28 @@ Per-round debriefs. Mock rounds use `(Mock)` prefix in the Round column.
 
 ---
 
-## Round 1: Hiring Manager call — 2026-06-11 10:30am (TODO after)
+## Round 1: Hiring Manager call — 2026-06-11 10:30am — PASSED → advanced
 
-- **Interviewer:** TODO (HM name)
-- **Questions asked:** TODO
-- **What went well / poorly:** TODO
-- **Use-case round details learned:** TODO ← critical, ask about this
-- **Follow-ups owed:** TODO
+- **Interviewer:** Arthur (Miyazaki).
+- **Outcome:** Passed — advanced to the final case-study round.
+- **Questions asked / what went well-poorly / follow-ups:** TODO — backfill debrief from John.
+- **Use-case round details learned:** confirmed as a take-home case study (matches Cathy intel).
 
 ---
 
-## Round 2: Business use-case presentation (TODO — after format confirmed)
+## Round 2: Business use-case = CASE STUDY — Wed 2026-06-17, 10–11am PT (Teams) — ACTIVE
 
-- **Prompt / scenario:** TODO
-- **Audience + length:** TODO
-- **Debrief:** TODO
+- **Prompt / scenario:** "Enterprise Information Retrieval Platform For Business Proposals" —
+  centralized platform for a global SaaS company to retrieve cross-department info during the
+  sales cycle, auto-answering questions inside an Excel proposal, respecting access permissions.
+  Full prompt: [case-study/case-prompt.md](../case-study/case-prompt.md).
+- **Deliverable:** high-level design + pre/live/post process flows + high-level pseudo-code +
+  tech recommendations + effectiveness eval. **No coding / no PoC / no polished deck.** Tip from
+  recruiter: *"be detailed and go deep."*
+- **Panel:** Thai Bao An Phan · Arthur Miyazaki (HM) · Morteza Jafari.
+- **Prompt received:** 2026-06-12 (~5 days runway).
+- **Working files:** [case-study/](../case-study/) — README (rubric), approach-decisions, prompt.
+- **Debrief:** TODO (after 6/17).
 
 ---
 
