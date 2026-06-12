@@ -1,0 +1,16 @@
+services:
+  database:
+    image: postgres:18.4
+    container_name: db
+    environment:
+      POSTGRES_DB: pgdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:

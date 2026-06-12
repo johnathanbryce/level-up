@@ -277,7 +277,15 @@ Next.js consumer (debounced filter, `useDebounce`, AbortController, loading/erro
 
 **NEW: Build Reps track created** at [reps/](reps/) — fluid, pull-based hands-on coding practice
 (trigger: "let's do a rep"). See the Build Reps Track section above + [reps/CLAUDE.md](reps/CLAUDE.md).
-**Rep 001 (Postgres + Docker Compose full-stack CRUD, backend-heavy — FastAPI routes/CORS/raw psycopg + pagination; frontend light) is queued for Fri 2026-06-12.**
+**Rep 001 (Postgres + Docker Compose full-stack CRUD, backend-heavy) — COMPLETE 2026-06-12.** All 5
+routes in raw psycopg (list w/ filter + whitelisted-sort + `LIMIT`/`OFFSET` pagination, get-by-id 404,
+POST `RETURNING`, PUT, DELETE `rowcount`), guided `docker-compose.yml`, `db.py` DSN + `get_db` pool
+dependency, CORS; full loop verified in browser. Code: [reps/001-drillhole-crud/](reps/001-drillhole-crud/).
+See [reps/CLAUDE.md](reps/CLAUDE.md) Completed log #001 for concepts landed + recurring gaps (FastAPI
+`:` vs `=` annotation-vs-default — **3× in one session**; `id` int-PK vs `hole_id` text-name — 2×;
+conditional-SQL indentation/scoping). **Next rep candidate:** the queued **frontend-heavy** rep
+(rich UI over a ready-made API — the counterpart to 001). Also cleaned John's VSCode user settings this
+session (added `python.terminal.activateEnvironment`, removed the `/usr/bin/python3` interpreter hardcode).
 
 *(Diligent is also active — HM call 2026-06-11. The 2026-06-03 banner below is older regular-pipeline
 state — AI Foundations RAG group + Section 2 Capstone remain valid when no interview is active.)*
