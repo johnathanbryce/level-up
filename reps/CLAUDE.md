@@ -56,7 +56,7 @@ Not a sequence. A buffet to pull from on a rep day. Priority = interview/paired-
 
 | Category | Candidate reps | Priority |
 |---|---|---|
-| **Full-stack CRUD** | ✅ Rep 000 (samples-app, SQLite) · 🔜 Rep 001 (Postgres + Docker Compose, frontend-heavy) · CRUD + JWT auth + protected routes · CRUD w/ optimistic updates + error rollback | **HIGH** |
+| **Full-stack CRUD** | ✅ Rep 000 (samples-app, SQLite) · ✅ Rep 001 (drillhole-crud, Postgres + Docker Compose, backend-heavy) · CRUD + JWT auth + protected routes · CRUD w/ optimistic updates + error rollback | **HIGH** |
 | **Frontend / React** | **Frontend-heavy full-stack (rich UI over a ready-made API — the counterpart to Rep 001; forms+mutations + list-at-scale on the client)** · React Query dashboard (caching / retries — ties to A1's RQ discussion) · multi-step form wizard w/ validation · virtualized + debounced multi-filter list | **HIGH** |
 | **Backend / FastAPI** | Data-aggregation service (group-by / stats — Deep Core A3 shape) · pagination+filter+sort query params done right · file-upload + processing endpoint | MED-HIGH |
 | **Database / SQL** | Schema design + indexing + `EXPLAIN ANALYZE` on a slow query · multi-table JOINs · migrations | MED |
@@ -68,33 +68,8 @@ Not a sequence. A buffet to pull from on a rep day. Priority = interview/paired-
 
 ## In Progress
 
-- **Rep 001 — Postgres full-stack CRUD** (queued for Fri 2026-06-12). Spec below.
-
-### Rep 001 spec (next session)
-
-Full-stack CRUD, same shape as A1 but: **real Postgres via Docker Compose**, **BACKEND-heavy**
-(rep the FastAPI route + CORS muscle from A1 with more independence, against a real DB), **frontend
-light**. Scaffold dial **Medium-Heavy on the frontend** (Claude provides a near-complete consumer so
-John spends his time on the backend). Folder: `reps/001-<name>/` (name confirmed at session start).
-
-- **Proposed domain (swappable):** drillhole records — `id`, `hole_id` (name), `status`
-  (`planned` | `logging` | `complete`), `rock_type`, `grade` (≥0), `depth_m` (>0), `logged_at`.
-  The status enum gives a clean filter value + a meaningful `WHERE`.
-- **Claude scaffolds:** a **near-complete Next.js consumer** (list + a filter control + a minimal
-  create form, mostly wired — John just points it at his API, doesn't build it); `db.py` (psycopg
-  connection + a simple **connection pool** so John *sees* the Postgres-vs-SQLite difference);
-  Pydantic model stubs; `requirements.txt`; dummy seed.
-- **John writes (the focus):** the `docker-compose.yml` (guided — short, doubles as a DevOps rep);
-  **all API routes** — GET list (**pagination + filter + sort as query params** → `LIMIT`/`OFFSET`,
-  `ORDER BY`, `WHERE`; this is where list-at-scale lives, on the *backend*), GET by id, POST,
-  **PUT/edit** (the UPDATE A1 didn't have), DELETE — using **raw `psycopg`** (cements the DB-API
-  pattern from A1: same `connect → cursor → execute → fetch → commit → close`, just `%s` placeholders
-  + a DSN); **CORS** (recall it cold this time, less hand-holding than today).
-- **Why backend-heavy:** today's frontend was the big lift; repping the route/CORS/SQL flow while
-  it's fresh — with more independence, raw psycopg, Postgres + Docker, and `LIMIT`/`OFFSET`/`ORDER BY`
-  pagination — is the higher-value reinforcement. Frontend deliberately light here (a **frontend-heavy
-  rep is queued in the Backlog** for when he wants that focus). Raw psycopg over an ORM (cement the
-  transfer; ORM is a later rep). Docker Compose = local, realistic, a real DevOps skill.
+- *(none — Rep 001 complete 2026-06-12, see Completed log. Next candidate: the queued
+  **frontend-heavy** rep in the Backlog — rich UI over a ready-made API, the counterpart to 001.)*
 
 ---
 
@@ -103,3 +78,4 @@ John spends his time on the backend). Folder: `reps/001-<name>/` (name confirmed
 | # | Date | Rep | Category | Stack | Scaffold | What John wrote | Outcome / notes |
 |---|------|-----|----------|-------|----------|-----------------|-----------------|
 | 000 | 2026-06-10/11 | **Samples Explorer** — full-stack CRUD | Full-stack CRUD | FastAPI + Pydantic + SQLite + Next.js/TS | Medium | All backend routes (GET list+filter, GET by id/404, POST 201 two-model, DELETE 204), Pydantic validation, CORS; frontend fetch + loading/error/empty states, debounced filter, extracted `useDebounce` hook, AbortController race handling; SQLite swap (raw `sqlite3` DB-API, `lastrowid`/`rowcount`) | **Complete.** Deep Core R3 prep (A1). Code: [../interviews/deep-core/samples-app/](../interviews/deep-core/samples-app/). Concepts landed: CORS/SOP (browser-enforced, relaxes not protects), useEffect fetch lifecycle + cleanup, AbortController vs ignore-flag, debounce = setTimeout + clearTimeout, DB-API connection/cursor/commit, **DB-API cross-tool transfer (sqlite3 → psycopg)**, FastAPI lifespan, `Depends(get_db)` pattern, connection pooling rationale. |
+| 001 | 2026-06-12 | **Drillhole CRUD** — full-stack CRUD, backend-heavy | Full-stack CRUD + DevOps | FastAPI + raw psycopg + Postgres (Docker Compose) + Next.js/TS | Heavy FE / Medium-Light BE | `docker-compose.yml` (guided); `db.py` DSN + `get_db` pool dependency (the two load-bearing bits); **all 5 routes raw psycopg** — GET list (filter `WHERE` + whitelisted `ORDER BY` + `LIMIT`/`OFFSET` pagination), GET-by-id (404), POST (`RETURNING *`, 201), PUT (UPDATE … SET … RETURNING, 404), DELETE (`rowcount`, 204); CORS | **Complete.** Code: [001-drillhole-crud/](001-drillhole-crud/). Full loop verified (list/filter/create/delete green in browser). **Concepts landed:** Dockerfile-vs-compose (don't Dockerfile an off-the-shelf image), named volume + `/var/lib/postgresql` mount, **PG18 mount-path convention change** (hit + fixed live), `/docker-entrypoint-initdb.d/` auto-seed on fresh-volume-only, host→container networking (`localhost:5432` via published port), venv/pip workflow (`install -r` ← file→env vs `freeze` env→file), connection (line) vs cursor (query session), `%s` placeholder vs `LIKE %` wildcard, `dict_row` factory, `RETURNING *`, SQL-injection whitelist for *identifiers* (sort/order) vs `%s` for *values*, conditional query building (only `WHERE` is conditional; sort/pagination always apply). **Recurring gaps surfaced** → [../01-algorithms/CLAUDE.md] watchlist: (1) **FastAPI `:` vs `=`** — annotation (parse/inject) vs default — bit him **3×** in one session (query model, response_model param, POST body → "no body in Swagger"); (2) **`id` (int PK) vs `hole_id` (text name)** confusion — 2× (wrong column + wrong test value); (3) **indentation/scoping** of conditional SQL (ORDER BY/LIMIT nested under `if status`); (4) leftover dup `execute` + stub returns. **Wins:** DELETE `rowcount` transferred cleanly from Rep 000; reached for the injection whitelist correctly; debugged confidently off psycopg's error messages (read the `^` + hint). Heavy env-setup detour (VSCode interpreter / nested-venv auto-detect / PG18) ate ~40% of session — all real-world, but note for pacing. Also cleaned John's VSCode user settings: added `python.terminal.activateEnvironment`, removed the `/usr/bin/python3` `defaultInterpreterPath` hardcode that was forcing system Python. |

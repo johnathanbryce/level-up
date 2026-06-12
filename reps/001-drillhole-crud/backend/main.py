@@ -8,7 +8,6 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, APIRouter, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 from psycopg.rows import dict_row
 from db import pool, get_db
 from models import Drillhole, DrillholeCreate
@@ -42,7 +41,6 @@ def list_drillholes(
     db=Depends(get_db),
 ):
     with db.cursor(row_factory=dict_row) as cur:
-
         query = "SELECT * FROM drillholes"
         params = []
         if status:
@@ -139,18 +137,3 @@ def delete_drillhole(id: int, db=Depends(get_db)):
 
 # must come after defined routes as it takes a snapshot the instant it's called
 app.include_router(router)
-
-# ===========================================================================
-# YOUR WORK STARTS HERE (see README.md for the full spec):
-#
-#
-#   - GET    /drillholes        list, with query params:
-#                                 status (filter), sort, order, limit, offset
-#   - GET    /drillholes/{id}   single record, 404 if not found
-#   - POST   /drillholes        create, return 201 + the created record
-#   - PUT    /drillholes/{id}   update, 404 if not found
-#   - DELETE /drillholes/{id}   delete, return 204
-#
-# Use raw psycopg: db.cursor() -> cur.execute(sql, params) -> fetch -> commit.
-# Parameterize with %s placeholders (NEVER f-strings — SQL injection).
-# ===========================================================================
