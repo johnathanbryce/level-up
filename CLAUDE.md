@@ -267,6 +267,35 @@ See `09-engineering-judgment/CLAUDE.md` for scope notes.
 
 ## CURRENT STATE
 
+### PROCESS CHANGE — SECTION 2 CAPSTONE NO LONGER A BLOCKER (2026-06-12)
+
+**Section 2 (System Design) is now "Taught — Capstone earmarked," NOT a close-out gate.** John
+flagged that the remaining Section 2 close-out (case studies + 3-part Capstone) was actively
+demotivating him and holding up forward progress. Mentor assessment: **agreed.** The Capstone's
+entire value is cold whiteboarding under interview pressure — running it now, with no sys-design
+interview demanding it, then re-running equivalent reps before a real loop, is redundant. John's
+conceptual mastery of Section 2 is already documented as solid (Pre-Case-Study Review Phase). The
+Capstone is interview-grind material, so it's **earmarked for the next sys-design-heavy interview**
+— that's when it's most valuable, and it becomes the *first* prep rep at that point.
+
+**The one guardrail (mentor held the line on this):** "defer" must NOT silently become "never."
+Section 2 is therefore **"Taught, capstone earmarked"** — an honest status, not a fake checkmark,
+and NOT "closed." Do **not** announce the Capstone as a blocker or a pending gate at session start.
+
+**Keep-it-warm mechanism (replaces the dedicated-revisit hybrid John offered):** bias the
+applied-recall **bridge** questions toward sys-design topics every ~3rd–4th session so the
+vocabulary doesn't decay. No dedicated sys-design revisit session — that's the same low-motivation
+grind in disguise. Active recall via the bridge is the lighter, more effective keep-warm.
+
+**Default forward track is now Section 3 (AI Foundations) — pick up the RAG Architecture group.**
+No more sys design reps are needed before progressing. See the (2026-06-03) two-live-tracks banner
+below for the AI Foundations pickup detail — but the "ask which track (AI vs Section 2 Capstone)"
+instruction there is now **superseded**: default straight to AI Foundations RAG group unless John
+says otherwise. (If Deep Core R3 or any interview is still live, interview prep still takes priority
+when John is actively cramming — this process change governs the *regular pipeline* default.)
+
+---
+
 ### DEEP CORE R3 (PAIRED PROGRAMMING) ACTIVE + BUILD REPS TRACK CREATED (2026-06-11)
 
 **Deep Core is an ACTIVE interview cycle again** — Round 2 passed (~70% to advance); now prepping
@@ -298,11 +327,11 @@ state — AI Foundations RAG group + Section 2 Capstone remain valid when no int
 
 **Two live tracks right now:**
 
-1. **Section 2 (System Design) — ONE gate left: the End-of-Section Capstone.** All teaching + case studies are done; only the 3-part Capstone remains (Part 1 written quiz, Part 2 cold case study, Part 3 rapid-fire defense — see [02-system-design/CLAUDE.md](02-system-design/CLAUDE.md) and the SECTION 2 CLOSE block below). **John plans to do this 2026-06-04 (tomorrow)** to close Section 2 — he deferred it on 2026-06-03 due to low energy. If John says "let's do the sys design capstone," run that.
+1. **Section 2 (System Design) — Capstone EARMARKED for interview trigger, not a blocker (see 2026-06-12 banner at top).** All teaching + case studies are done; the 3-part Capstone (Part 1 written quiz, Part 2 cold case study, Part 3 rapid-fire defense — see [02-system-design/CLAUDE.md](02-system-design/CLAUDE.md)) is reserved for the next sys-design-heavy interview. Run it only if John explicitly says "let's do the sys design capstone." Do NOT announce it as a pending gate.
 
 2. **Section 3 (AI Foundations) — IN PROGRESS. Group 1 (Embeddings & Vector Concepts) COMPLETE as of 2026-06-03.** All 5 chunks done + `embeddings_demo.py` + `cosine_similarity.py`. **Next up: RAG Architecture group** — new notes file `03-ai-foundations/notes/02-rag-architecture.md`; end-to-end pipeline + chunking strategies/trade-offs + retrieval (top-K, thresholds, re-ranking) + citation/grounding + hallucination mitigation; includes a pipeline-flow diagram + `chunking_demo.py` micro-script. See [03-ai-foundations/CLAUDE.md](03-ai-foundations/CLAUDE.md) Session Log (2026-06-03 row) for full detail + carried-forward weak spots.
 
-**At session start, ask which track:** AI Foundations RAG group, or the Section 2 Capstone. Algo warmup + bridge first either way (John can skip the algo on a low-energy day — he did 2026-06-03).
+**At session start (per 2026-06-12 process change): default straight to the AI Foundations RAG group** — the Section 2 Capstone is earmarked, not an offered co-equal track. Algo warmup + bridge first (John can skip the algo on a low-energy day — he did 2026-06-03).
 
 **Carry-forward from 2026-06-03 (re-test at RAG group start):** (1) "what is an embedding, and is an LLM involved in producing one?" — John has twice re-coupled embeddings to RAG/LLM (answer: an embedding is the output vector; no LLM involved). (2) Keep drilling "name the cost/trade-off" → force the concrete thing given up, not a restatement of the decision.
 

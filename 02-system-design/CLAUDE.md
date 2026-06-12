@@ -325,6 +325,16 @@ Deep, targeted drilling on gaps surfaced during Pre-Case-Study Review AND Case S
 
 ## End-of-Section Capstone
 
+> **EARMARKED — NOT A BLOCKER (process change 2026-06-12).** This Capstone is no longer a gate that
+> holds up forward progress on the roadmap. Section 2 status is **"Taught — Capstone earmarked."**
+> The Capstone's value is cold whiteboarding under interview pressure, so it's reserved for the next
+> **sys-design-heavy interview** — that's when it's run, as the first prep rep. John's conceptual
+> mastery is already documented as solid (Pre-Case-Study Review Phase). Keep the material warm via
+> sys-design-biased applied-recall **bridge** questions every ~3rd–4th regular session — NOT a
+> dedicated revisit session. Do not announce this Capstone as a pending gate at session start.
+> Run it only if John explicitly asks, or when prepping a sys-design interview. Full reasoning in
+> root [CLAUDE.md](../CLAUDE.md) CURRENT STATE (2026-06-12 banner).
+
 Run in its own dedicated session after all sub-topics and warm-down quizzes are complete. Three parts, all required. **Format locked 2026-06-01 per John's preferences (written + MC for Part 1, oral + handwritten notes for Parts 2-3); full tracking artifact at [capstone-exam.md](./capstone-exam.md).**
 
 ### Part 1 — Written Quiz (~25-35 min)
@@ -348,7 +358,7 @@ Drawn primarily from existing [interview-questions.md](./interview-questions.md)
 ### Overall Pass / Fail
 ALL THREE parts must pass for the section to close. Failing any single part → targeted re-teach + retry of THAT part only (not the whole Capstone). The gate surfaces real gaps; it's not one-shot pass-or-fail. Log result in [capstone-exam.md](./capstone-exam.md) Overall Result section + below.
 
-**Capstone result:** NOT YET RUN
+**Capstone result:** NOT YET RUN — **EARMARKED for next sys-design-heavy interview (2026-06-12 process change).** Not blocking roadmap progress.
 
 ---
 
